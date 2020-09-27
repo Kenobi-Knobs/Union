@@ -1,0 +1,98 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.pageWrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.pageWrapper .header {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-top: 50px;
+}
+.pageWrapper .header .logo {
+  margin-top: 20px;
+  margin-right: 40px;
+}
+.pageWrapper .header .logo img {
+  width: 100px;
+}
+.pageWrapper .header .title span {
+  font-family: circe, sans-serif;
+  font-size: 100px;
+  font-weight: bold;
+}
+.pageWrapper .auth {
+  width: 50%;
+  height: 70%;
+}
+.pageWrapper .auth .formWrapper {
+  margin: 0 auto;
+  width: 60%;
+  height: 90%;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+}
+.pageWrapper .auth .formWrapper .rect {
+  position: relative;
+  height: 10%;
+  border-radius: 25px 25px 0px 0px;
+  background-color: #F26B6B;
+  text-align: center;
+}
+.pageWrapper .auth .formWrapper .rect .titleAuth {
+  display: block;
+  padding-top: 1%;
+  color: #FDFDFD;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: 350;
+  font-size: clamp(15px, 1.6em, 200px);
+}
+.pageWrapper .auth .formWrapper .contentForm ul {
+  width: 90%;
+  margin: 10% auto;
+  list-style: none;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li {
+  text-align: center;
+  margin: 30px 5px;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li input[name=mail],
+.pageWrapper .auth .formWrapper .contentForm ul li input[name=password] {
+  height: 57px;
+  width: 100%;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 25px;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li #submit {
+  width: 50%;
+  height: 45px;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  background-color: #F26B6B;
+  color: #ffffff;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li #submit:hover {
+  cursor: pointer;
+}
