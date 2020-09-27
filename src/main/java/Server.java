@@ -15,8 +15,8 @@ public class Server {
     public static void main(String[] args){
         Javalin app = Javalin.create().start(80);
         Utils utils = new Utils();
-        app.config.addStaticFiles( "/","static/MainPage/", Location.EXTERNAL);
-        app.config.addStaticFiles( "/","static/LoginPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
         try {
             DBController db = utils.connect();
             System.out.println("Database connect: [OK]");

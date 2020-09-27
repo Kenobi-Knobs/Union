@@ -1,14 +1,14 @@
 $(document).ready(function () {
 
     $(".quit").on('click', function () {
-        $(location).attr('href', 'http://t5.tss2020.site/logout');
+        $(location).attr('href', '/logout');
     });
 
     //getting agents
     console.log("Getting agents");
 
     $.get(
-        "http://t5.tss2020.site/api/getAgentList", {},
+        "/api/getAgentList", {},
         function (data) {
             data = JSON.parse(data);
 
@@ -67,7 +67,7 @@ function getInfoJSONFromAgent(nameOfServer) {
     console.log("Getting from " + nameOfServer);
 
     $.get(
-        "http://t5.tss2020.site/api/getAgentData", {
+        "/api/getAgentData", {
             "public_key": nameOfServer
         },
         function (data) {
