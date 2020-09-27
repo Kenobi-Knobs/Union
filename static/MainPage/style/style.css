@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 2vw;
+}
+
 .pageWrapper {
   width: 100%;
   min-height: 100vh;
@@ -27,7 +31,7 @@
 }
 .pageWrapper .menu .logo img {
   margin-top: 27px;
-  width: clamp(25px, 75%, 100px);
+  width: clamp(25px, 75%, 500px);
 }
 .pageWrapper .menu .navbar {
   width: 100%;
@@ -50,7 +54,7 @@
   transition: all 0.3s ease-out;
 }
 .pageWrapper .menu .navbar div i {
-  font-size: clamp(21px, 2.2em, 30px);
+  font-size: clamp(21px, 1.2em, 160px);
 }
 .pageWrapper .workSpace {
   width: 100%;
@@ -83,7 +87,6 @@
   font-weight: bold;
   font-size: clamp(45px, 4vw, 51px);
   line-height: 88px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
 }
 .pageWrapper .workSpace .head .titleAndFilter .filter {
   width: 100%;
@@ -161,7 +164,6 @@
   font-style: normal;
   font-weight: bold;
   font-size: clamp(18px, 1.6vw, 22px);
-  line-height: 47px;
   -webkit-user-select: none;
           user-select: none;
 }
@@ -178,24 +180,21 @@
   margin-left: 20px;
   margin-top: 5px;
 }
-.pageWrapper .workSpace .head .accountInfo .accountCard .exit :hover {
-  color: #F26B6B;
+.pageWrapper .workSpace .head .accountInfo .accountCard .exit svg :hover {
+  fill: #F26B6B;
   transition: 0.3s;
 }
-.pageWrapper .workSpace .head .accountInfo .accountCard .exit :not(:hover) {
-  color: #000000;
+.pageWrapper .workSpace .head .accountInfo .accountCard .exit svg :not(:hover) {
+  fill: #000000;
   transition: 0.3s;
-}
-.pageWrapper .workSpace .head .accountInfo .accountCard .exit i {
-  font-size: 25px;
 }
 .pageWrapper .workSpace .information {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  grid-template-rows: 45% 45%;
-  grid-gap: 20px;
+  grid-template-columns: minmax(250px, 25%) minmax(250px, 25%) minmax(250px, 25%);
+  grid-template-rows: 40% 40%;
+  grid-gap: 30px 60px;
   justify-content: center;
   align-content: center;
 }
@@ -218,7 +217,7 @@
   font-family: circe, sans-serif;
   font-style: normal;
   font-weight: 350;
-  font-size: 23px;
+  font-size: clamp(15px, 0.9em, 100px);
   line-height: 59px;
 }
 .pageWrapper .workSpace .information .dataDiagram .rect {
@@ -239,7 +238,7 @@
   font-family: circe, sans-serif;
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .memory {
-  padding: 20px 30px 10px 20px;
+  padding: 10px 30px 10px 20px;
   list-style: none;
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .memory .titleMemory {
@@ -247,7 +246,7 @@
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .memory li {
   padding: 3px;
-  font-size: 20px;
+  font-size: clamp(15px, 0.6em, 100px);
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .memory li .memoryInfo {
   margin-left: 15px;
@@ -256,7 +255,7 @@
   padding-left: 15px;
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .cpu {
-  padding: 20px 30px 0px 20px;
+  padding: 0px 30px 0px 20px;
   list-style: none;
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .cpu .titleCpu {
@@ -264,7 +263,7 @@
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .cpu li {
   padding: 3px;
-  font-size: 20px;
+  font-size: clamp(15px, 0.6em, 100px);
 }
 .pageWrapper .workSpace .information .anyInfoCard .agentInfo .cpu li .memoryInfo {
   margin-left: 15px;

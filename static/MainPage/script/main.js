@@ -1,49 +1,89 @@
 $(document).ready(function () {
-    let gor = $('#gor');
-    let t1 = $('#t1');
-    let t2 = $('#t2');
-    let t5 = $('#t5');
 
-    gor.on('click', function () {
-        $(this).prop('checked', true);
-        if ($(this).prop('checked') == true) {
+    $(".quit").on('click', function () {
+        $(location).attr('href', 'http://t5.tss2020.site/logout');
+    });
 
-            setInterval(getJSON, 5000);
+    //getting agents
+    console.log("Getting agents");
 
-            function getJSON() {
-                console.log("Gor is starting");
+    $.get(
+        "http://t5.tss2020.site/api/getAgentList", {},
+        function (data) {
+            data = JSON.parse(data);
 
-                $.get(
-                    "http://t5.tss2020.site/api/getAgentData", {
-                        "public_key": "gor-tss"
-                    },
-                    function (data) {
-                        data = JSON.parse(data);
-                        console.log(data.data.memory.wired);
-                    }
-                );
+            for (var key in data['agents']) {
+                console.log(data.agents[key].public_key);
+                $('.listOfServers').append(
+                    $('<li>').append(
+                        $('<input>').attr({
+                            type: 'radio',
+                            name: 'servers',
+                            id: data.agents[key].public_key,
+                            value: data.agents[key].public_key
+                        })
+                    ).append(
+                        $('<label>').attr({
+                            for: data.agents[key].public_key
+                        }).text(data.agents[key].public_key)
+                    )
+                )
             }
-        }
-    });
 
-    t1.on('click', function () {
-        $(this).prop('checked', true);
-        if ($(this).prop('checked') == true) {
-            console.log("t1");
-        }
-    });
+            //getting info from agent
+            let servers = $('input[name=servers]');
+            let gorInterval;
+            servers.on('change', function () {
+                if ($(this).val() == 'gor-tss') {
+                    clearInterval(gorInterval);
+                    getInfoJSONFromAgent($(this).val());
+                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
+                }
+                if ($(this).val() == 't1-tss') {
+                    clearInterval(gorInterval);
+                    getInfoJSONFromAgent($(this).val());
+                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
+                }
+                if ($(this).val() == 't2-tss') {
+                    clearInterval(gorInterval);
+                    getInfoJSONFromAgent($(this).val());
+                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
+                }
+                if ($(this).val() == 't5-tss') {
+                    clearInterval(gorInterval);
+                    getInfoJSONFromAgent($(this).val());
+                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
+                }
+            });
 
-    t2.on('click', function () {
-        $(this).prop('checked', true);
-        if ($(this).prop('checked') == true) {
-            console.log("t2");
         }
-    });
+    );
 
-    t5.on('click', function () {
-        $(this).prop('checked', true);
-        if ($(this).prop('checked') == true) {
-            console.log("t5");
-        }
-    })
 });
+
+
+
+function getInfoJSONFromAgent(nameOfServer) {
+    console.log("Getting from " + nameOfServer);
+
+    $.get(
+        "http://t5.tss2020.site/api/getAgentData", {
+            "public_key": nameOfServer
+        },
+        function (data) {
+            data = JSON.parse(data);
+            $('.wired').text(data.data.memory.wired);
+            $('.total').text(data.data.memory.total);
+            $('.inactive').text(data.data.memory.inactive);
+            $('.active').text(data.data.memory.active);
+            $('.free').text(data.data.memory.free);
+
+            $('.system').text(data.data.cpu[0].system);
+            $('.idle').text(data.data.cpu[0].idle);
+            $('.num').text(data.data.cpu[0].num);
+            $('.user').text(data.data.cpu[0].user);
+        }
+    );
+
+    return 0;
+}

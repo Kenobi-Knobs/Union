@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 2vw;
+}
+
 .pageWrapper {
 
     width: 100%;
@@ -30,7 +34,7 @@
 
             img {
                 margin-top: 27px;
-                width: clamp(25px, 75%, 100px);
+                width: clamp(25px, 75%, 500px);
             }
         }
 
@@ -58,7 +62,7 @@
                 }
 
                 i {
-                    font-size: clamp(21px, 2.2em, 30px);
+                    font-size: clamp(21px, 1.2em, 160px);
                 }
             }
         }
@@ -100,7 +104,7 @@
                         font-weight: bold;
                         font-size: $titleFontSize;
                         line-height: 88px;
-                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+                        //                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
                     }
                 }
 
@@ -194,7 +198,6 @@
                         font-style: normal;
                         font-weight: bold;
                         font-size: $nameFontSize;
-                        line-height: 47px;
                         user-select: none;
                     }
 
@@ -214,19 +217,19 @@
                         margin-left: 20px;
                         margin-top: 5px;
 
-                        :hover {
-                            color: $iconColorHover;
-                            transition: 0.3s;
+                        svg {
+                            :hover {
+                                fill: $iconColorHover;
+                                transition: 0.3s;
+                            }
+
+                            :not(:hover) {
+                                fill: #000000;
+                                transition: 0.3s;
+                            }
                         }
 
-                        :not(:hover) {
-                            color: #000000;
-                            transition: 0.3s;
-                        }
 
-                        i {
-                            font-size: 25px;
-                        }
                     }
                 }
             }
@@ -237,9 +240,9 @@
             height: 100%;
             //            background-color: #ECD0E5;
             display: grid;
-            grid-template-columns: 30% 30% 30%;
-            grid-template-rows: 45% 45%;
-            grid-gap: 20px;
+            grid-template-columns: minmax(250px, 25%) minmax(250px, 25%) minmax(250px, 25%);
+            grid-template-rows: 40% 40%;
+            grid-gap: 30px 60px;
             justify-content: center;
             align-content: center;
 
@@ -247,6 +250,7 @@
                 background-color: #ffffff;
                 box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
                 border-radius: 25px;
+
                 //                padding: 15px;
 
                 .rect {
@@ -265,7 +269,7 @@
                     font-family: circe, sans-serif;
                     font-style: normal;
                     font-weight: 350;
-                    font-size: 23px;
+                    font-size: clamp(15px, 0.9em, 100px);
                     line-height: 59px;
                 }
 
@@ -294,7 +298,7 @@
 
 
                     .memory {
-                        padding: 20px 30px 10px 20px;
+                        padding: 10px 30px 10px 20px;
                         list-style: none;
 
                         .titleMemory {
@@ -303,7 +307,7 @@
 
                         li {
                             padding: 3px;
-                            font-size: 20px;
+                            font-size: clamp(15px, 0.6em, 100px);
 
                             .memoryInfo {
                                 margin-left: 15px;
@@ -317,7 +321,7 @@
 
 
                     .cpu {
-                        padding: 20px 30px 0px 20px;
+                        padding: 0px 30px 0px 20px;
                         list-style: none;
 
                         .titleCpu {
@@ -326,7 +330,7 @@
 
                         li {
                             padding: 3px;
-                            font-size: 20px;
+                            font-size: clamp(15px, 0.6em, 100px);
 
                             .memoryInfo {
                                 margin-left: 15px;
