@@ -1,0 +1,23 @@
+{
+    "agents": [{
+        "public_key": "gor-tss",
+        "boot_time": "2020-09-11 21:50:39 +0000",
+        "agent_version": "0.1.1",
+        "host": "gor-tss"
+    }, {
+        "public_key": "t1-tss",
+        "boot_time": "2020-09-08 20:58:06 +0000",
+        "agent_version": "0.1.1",
+        "host": "t1-tss2020"
+    }, {
+        "public_key": "t2-tss",
+        "boot_time": "2020-09-08 20:58:06 +0000",
+        "agent_version": "0.1.1",
+        "host": "t2-tss2020"
+    }, {
+        "public_key": "t5-tss",
+        "boot_time": "2020-09-08 20:58:06 +0000",
+        "agent_version": "0.1.1",
+        "host": "t5-tss2020"
+    }]
+}

@@ -1,0 +1,392 @@
+@import "variables";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pageWrapper {
+
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+
+    .menu {
+        width: 8%;
+        min-width: 68px;
+        min-height: 100%;
+        background-color: $colorSideBar;
+        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1;
+
+        .logo {
+            width: 100%;
+            text-align: center;
+
+            img {
+                margin-top: 27px;
+                width: clamp(25px, 75%, 100px);
+            }
+        }
+
+        .navbar {
+            width: 100%;
+            text-align: center;
+            margin-top: 150px;
+            height: 55%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            //            background-color: #7FECD8;
+
+            div {
+                transition: 0.3s;
+
+                :hover {
+                    cursor: pointer;
+                    color: $iconColorHover;
+                    transition: all 0.3s ease-out;
+                }
+
+                :not(:hover) {
+                    transition: all 0.3s ease-out;
+                }
+
+                i {
+                    font-size: clamp(21px, 2.2em, 30px);
+                }
+            }
+        }
+    }
+
+    .workSpace {
+        width: 100%;
+        min-height: 100%;
+        //        background-color: #ECA497;
+        display: flex;
+        flex-direction: column;
+
+        .head {
+            width: 100%;
+            height: 30%;
+            //            background-color: #ECEA89;
+            display: flex;
+            flex-direction: row;
+
+            .titleAndFilter {
+                //                width: 100%;
+                margin-left: 56px;
+                height: 100%;
+                //                background-color: #D5ECD4;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .title {
+                    margin-top: 3%;
+                    width: 100%;
+                    height: 65%;
+                    //                    background-color: #EC887B;
+                    text-align: center;
+
+                    span {
+                        font-family: $mainFont;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: $titleFontSize;
+                        line-height: 88px;
+                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+                    }
+                }
+
+                .filter {
+                    width: 100%;
+                    height: 35%;
+                    //                    background-color: #C971EC;
+                    background-color: #FFFFFF;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    user-select: none;
+
+                    //                    transition: 0.4s;
+
+                    :hover {
+                        user-select: none;
+                        color: #FFFFFF;
+                        cursor: pointer;
+                        background-color: #F26B6B;
+                        transition: all 0.3s ease-out;
+                        //                        transition: 0.4s;
+                    }
+
+                    :not(:hover) {
+                        transition: all 0.3s ease-out;
+                    }
+
+                    :nth-child(1) {
+                        margin-right: 45px;
+                    }
+
+                    :nth-child(3) {
+                        margin-left: 45px;
+                    }
+
+                    a {
+                        height: 50px;
+                        width: 119px;
+                        text-align: center;
+                        padding-top: 10px;
+                        text-decoration: none;
+                        background: #FFFFFF;
+                        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+                        border-radius: 10px;
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 24px;
+                        color: #000000;
+
+                        :active {
+                            color: #000000;
+                        }
+
+                    }
+                }
+            }
+
+            .accountInfo {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                //                background-color: #A8D1EC;
+
+                .accountCard {
+                    width: 305px;
+                    min-width: 258px;
+                    height: 50px;
+                    margin-right: 10%;
+                    margin-left: 10%;
+                    //                    float: right;
+                    border-radius: 10px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #FFFFFF;
+                    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+
+                    :hover {
+                        cursor: pointer;
+                    }
+
+                    span {
+                        font-family: $mainFont;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: $nameFontSize;
+                        line-height: 47px;
+                        user-select: none;
+                    }
+
+                    .name {
+                        padding-right: 3%;
+                    }
+
+                    .avatarka {
+                        img {
+                            margin-top: 12%;
+                            width: 43px;
+                            clip-path: circle(20px at 23px 20px);
+                        }
+                    }
+
+                    .exit {
+                        margin-left: 20px;
+                        margin-top: 5px;
+
+                        :hover {
+                            color: $iconColorHover;
+                            transition: 0.3s;
+                        }
+
+                        :not(:hover) {
+                            color: #000000;
+                            transition: 0.3s;
+                        }
+
+                        i {
+                            font-size: 25px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .information {
+            width: 100%;
+            height: 100%;
+            //            background-color: #ECD0E5;
+            display: grid;
+            grid-template-columns: 30% 30% 30%;
+            grid-template-rows: 45% 45%;
+            grid-gap: 20px;
+            justify-content: center;
+            align-content: center;
+
+            .card {
+                background-color: #ffffff;
+                box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+                border-radius: 25px;
+                //                padding: 15px;
+
+                .rect {
+                    position: relative;
+                    height: 63px;
+                    border-radius: 25px 25px 0px 0px;
+                    background-color: #F26B6B;
+                    text-align: center;
+
+                }
+
+                .titleCard {
+                    display: block;
+                    padding-top: 1%;
+                    color: #FDFDFD;
+                    font-family: circe, sans-serif;
+                    font-style: normal;
+                    font-weight: 350;
+                    font-size: 23px;
+                    line-height: 59px;
+                }
+
+            }
+
+            .dataDiagram {
+                .rect {
+                    text-align: center;
+                }
+            }
+
+            .anyInfoCard {
+                grid-column-start: 2;
+                grid-column-end: 3;
+                grid-row-start: 1;
+                grid-row-end: 3;
+
+                .rect {
+                    text-align: center;
+                }
+
+                .agentInfo {
+                    margin: 0 auto;
+                    width: 90%;
+                    font-family: $mainFont;
+
+
+                    .memory {
+                        padding: 20px 30px 10px 20px;
+                        list-style: none;
+
+                        .titleMemory {
+                            font-weight: bold;
+                        }
+
+                        li {
+                            padding: 3px;
+                            font-size: 20px;
+
+                            .memoryInfo {
+                                margin-left: 15px;
+                            }
+                        }
+
+                        .infoMemory {
+                            padding-left: 15px;
+                        }
+                    }
+
+
+                    .cpu {
+                        padding: 20px 30px 0px 20px;
+                        list-style: none;
+
+                        .titleCpu {
+                            font-weight: bold;
+                        }
+
+                        li {
+                            padding: 3px;
+                            font-size: 20px;
+
+                            .memoryInfo {
+                                margin-left: 15px;
+                            }
+                        }
+
+                        .infoCpu {
+                            padding-left: 15px;
+                        }
+                    }
+
+
+                }
+            }
+
+            .servers {
+                grid-column-start: 3;
+                grid-column-end: 4;
+                grid-row-start: 1;
+                grid-row-end: 3;
+                background-color: #221F1F;
+
+                .titleServers {
+                    display: block;
+                    padding-top: 6%;
+                    font-family: $mainFont;
+                    font-size: 40px;
+                    color: #ffffff;
+                    text-align: center;
+                }
+
+                .nameServersWrapper {
+                    margin: 0 auto;
+                    width: 90%;
+
+                    ul {
+                        padding: 20px 20px 80px 20px;
+                        list-style-type: none;
+
+                        li {
+                            padding: 30px 20px 10px;
+                            font-size: 23px;
+                            font-family: $mainFont;
+                            border-bottom: 1px solid #e1e1e1;
+
+                            label {
+                                padding-left: 10px;
+                                color: #ffffff;
+                            }
+
+                            :hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            .pieChart {}
+        }
+    }
+}

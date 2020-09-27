@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Union</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/5b38c08690.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="pageWrapper">
+        <div class="menu">
+            <div class="logo">
+                <img src="images/logo2.png" alt="logo">
+            </div>
+            <div class="navbar">
+                <div class="home"><i class="fas fa-home"></i></div>
+                <div class="stat"><i class="fas fa-chart-pie"></i></div>
+                <div class="settings"><i class="fas fa-cog"></i></div>
+            </div>
+        </div>
+        <div class="workSpace">
+            <div class="head">
+                <div class="titleAndFilter">
+                    <div class="title">
+                        <span>This is your Union</span>
+                    </div>
+                    <div class="filter">
+                        <a id="today">Today</a>
+                        <a id="week">Week</a>
+                        <a id="month">Month</a>
+                    </div>
+                </div>
+                <div class="accountInfo">
+                    <div class="accountCard">
+                        <div class="name"><span>Malandiy Artem</span></div>
+                        <div class="avatarka"><img src="images/cat.jpg" alt="avatarka"></div>
+                        <div class="exit"><span><i class="fas fa-power-off"></i></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="information">
+                <div class="card dataDiagram">
+                    <div class="rect"><span class="titleCard">Data diagram</span></div>
+                </div>
+                <div class="card anyInfoCard">
+                    <div class="rect">
+                        <span class="titleCard">Any info card</span>
+                    </div>
+                    <div class="agentInfo">
+                        <ul class="memory">
+                            <li><span class="titleMemory">Memory</span></li>
+                            <li class="infoMemory"><span>wired:</span><span class="wired memoryInfo">123961344</span></li>
+                            <li class="infoMemory"><span>total:</span><span class="total memoryInfo">611536896</span></li>
+                            <li class="infoMemory"><span>inactive:</span><span class="inactive memoryInfo">94224384</span></li>
+                            <li class="infoMemory"><span>active:</span><span class="active memoryInfo">313458688</span></li>
+                            <li class="infoMemory"><span>free:</span><span class="free memoryInfo">19505</span></li>
+                        </ul>
+
+                        <ul class="cpu">
+                            <li><span class="titleCpu">Cpu</span></li>
+                            <li class="infoCpu"><span>system:</span><span class="system memoryInfo">0.44</span></li>
+                            <li class="infoCpu"><span>idle:</span><span class="idle memoryInfo">98.99</span></li>
+                            <li class="infoCpu"><span>num:</span><span class="num memoryInfo">0</span></li>
+                            <li class="infoCpu"><span>user:</span><span class="user memoryInfo">0.57</span></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="card servers">
+                    <div class="titleServers">Servers</div>
+                    <div class="nameServersWrapper">
+                        <ul>
+                            <li><input name="servers" id="gor" type="radio" value="gor-tss"><label for="gor">gor-tss</label></li>
+                            <li><input name="servers" id="t1" type="radio" value="t1-tss"><label for="t1">t1-tss</label></li>
+                            <li><input name="servers" id="t2" type="radio" value="t2-tss"><label for="t2">t2-tss</label></li>
+                            <li><input name="servers" id="t5" type="radio" value="t5-tss"><label for="t5">t5-tss</label></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card pieChart">
+                    <div class="rect"><span class="titleCard">Pie Chart</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script/jQuery_v3.4.1.js"></script>
+    <script src="script/main.js"></script>
+</body>
+
+</html>
