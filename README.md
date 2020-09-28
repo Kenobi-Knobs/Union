@@ -31,3 +31,4 @@ MIT
 Thanks goes to these wonderful people:
 
 Konchatniy Vitaliy - Backend developer, designer
+Mysik Misha - QA-engineer
