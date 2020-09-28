@@ -34,3 +34,4 @@ Thanks goes to these wonderful people:
 - Mysik Misha - QA-engineer
 - Pakhota Yury - Backend development helper, database architector
 - Perekhrestiuk Polina - Team Leader, QA-engineer
+- Malandiy Artem - Frontend developer
