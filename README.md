@@ -33,3 +33,4 @@ Thanks goes to these wonderful people:
 - Konchatniy Vitaliy - Backend developer, designer
 - Mysik Misha - QA-engineer
 - Pakhota Yury - Backend development helper, database architector
+- Perekhrestiuk Polina - Team Leader, QA-engineer
