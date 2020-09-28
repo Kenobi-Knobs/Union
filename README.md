@@ -30,4 +30,5 @@ MIT
 ### Contributors
 Thanks goes to these wonderful people:
 
-Konchatniy Vitaliy - Backend developer, designer
+- Konchatniy Vitaliy - Backend developer, designer
+- Perekhrestiuk Polina - Team Leader, QA-engineer
