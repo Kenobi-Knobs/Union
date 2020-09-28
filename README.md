@@ -10,6 +10,8 @@ You can also:
 
 Union uses a number of open source projects to work properly:
 
+ - jQuery makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+
 
 ### Installation
 
