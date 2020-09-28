@@ -30,8 +30,4 @@ MIT
 ### Contributors
 Thanks goes to these wonderful people:
 
-- Perekhrestiuk Polina - Team Leader, QA-engineer
-- Konchatniy Vitaliy - Backend developer, designer
-- Malandiy Artem - Frontend developer
-- Mysik Misha - QA-engineer
-- Pahota Yuriy - DataBase engineer, validator :D 
+Konchatniy Vitaliy - Backend developer, designer
