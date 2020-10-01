@@ -193,7 +193,6 @@ html {
   height: 100%;
   display: grid;
   grid-template-columns: minmax(250px, 25%) minmax(250px, 25%) minmax(250px, 25%);
-  grid-template-rows: 40% 40%;
   grid-gap: 30px 60px;
   justify-content: center;
   align-content: center;
