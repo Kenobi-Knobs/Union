@@ -15,12 +15,15 @@ public class Server {
     public static void main(String[] args){
         Javalin app = Javalin.create().start(80);
         Utils utils = new Utils();
+        app.config.addStaticFiles( "/doc","static/Doc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
+
         try {
             DBController db = utils.connect();
             System.out.println("Database connect: [OK]");
             app.get("/", ctx -> check(ctx));
+            app.get("/agreements", ctx -> sendHtml(ctx, "static/Doc/index.html"));
             app.get("/login", ctx -> sendHtml(ctx, "static/LoginPage/index.html"));
             app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
             app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
