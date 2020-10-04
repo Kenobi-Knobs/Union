@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,20 +25,24 @@ public class Server {
      * distributes the pages of the application,
      * and gets the agent's data
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
         Javalin app = Javalin.create().start(80);
         Utils utils = new Utils();
         app.config.addStaticFiles( "/doc","static/Doc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
 
         try {
-            DBController db = utils.connect();
+            DBController db;
+            db = utils.connect();
             System.out.println("Database connect: [OK]");
             app.get("/", ctx -> check(ctx));
+            app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
             app.get("/agreements", ctx -> sendHtml(ctx, "static/Doc/index.html"));
             app.get("/login", ctx -> sendHtml(ctx, "static/LoginPage/index.html"));
             app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
+
             app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
             app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(utils.getAgentData(ctx, db)); });
             app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(utils.getAgentList(ctx, db)); });
