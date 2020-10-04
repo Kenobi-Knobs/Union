@@ -6,6 +6,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +25,14 @@ public class Utils {
      * @return Returns a connected database class
      * @throws SQLException
      * @throws ClassNotFoundException
+     * @throws IOException
+     * @throws ParseException
      */
-    public DBController connect() throws SQLException, ClassNotFoundException {
-        DBController db = new DBController("HcVe4sjBJU", "A7xIVTWbwK", "jdbc:mysql://remotemysql.com:3306/HcVe4sjBJU");
+    public DBController connect() throws SQLException, ClassNotFoundException, IOException, ParseException {
+        String config = new String(Files.readAllBytes(Paths.get("config.txt")));
+        JSONParser parser = new JSONParser();
+        JSONObject jsonConfig = (JSONObject) parser.parse(config);
+        DBController db = new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
         return db;
     }
 
