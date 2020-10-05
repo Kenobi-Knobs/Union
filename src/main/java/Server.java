@@ -82,6 +82,7 @@ public class Server {
      */
     public static void cors(Context ctx) {
         if (enableCors == true) {
+            ctx.header("Cache-Control", "no-cache, no-store");
             ctx.header("Access-Control-Allow-Origin","*");
         }
     }
