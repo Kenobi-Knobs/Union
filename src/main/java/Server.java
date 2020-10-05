@@ -37,10 +37,10 @@ public class Server {
             DBController db;
             db = utils.connect();
             System.out.println("Database connect: [OK]");
-            app.get("/", ctx -> check(ctx));
+            app.get("/", ctx -> sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
             app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
-            app.get("/agreements", ctx -> sendHtml(ctx, "static/Doc/index.html"));
-            app.get("/login", ctx -> sendHtml(ctx, "static/LoginPage/index.html"));
+            app.get("/agreements", ctx -> sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
+            app.get("/login", ctx -> sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
             app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
 
             app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
@@ -56,29 +56,25 @@ public class Server {
      * Method sends an html context to the pages
      * @param ctx Data context
      * @param path Page path
+     * @param acces Acces mode
+     * @param redirect Redirect if auth false
      * @throws IOException
      */
-    public static void sendHtml(@NotNull Context ctx, String path) throws IOException {
-        String contents = new String(Files.readAllBytes(Paths.get(path)));
-        ctx.html(contents);
-    }
-
-    /**
-     * Method checks if user is authorized, otherwise sends to the login page
-     * @param ctx Context that contains authorization session
-     * @throws IOException
-     */
-    public static void check(@NotNull Context ctx) throws IOException {
-        if (ctx.sessionAttribute("auth") != null) {
-            if (ctx.sessionAttribute("auth").equals("true")) {
-                sendHtml(ctx, "static/MainPage/index.html");
+    public static void sendHtml(@NotNull Context ctx, String path, String acces, String redirect) throws IOException {
+        if(acces.equals("auth_only")){
+            if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+                String contents = new String(Files.readAllBytes(Paths.get(path)));
+                ctx.html(contents);
             } else {
-                ctx.redirect("/login");
+                ctx.redirect(redirect);
             }
-        } else {
-            ctx.redirect("/login");
+        }else if(acces.equals("public")){
+            String contents = new String(Files.readAllBytes(Paths.get(path)));
+            ctx.html(contents);
         }
     }
+
+
 
     /**
      * Method sets the access to sending the requests to the server

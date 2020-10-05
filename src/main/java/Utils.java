@@ -44,31 +44,36 @@ public class Utils {
      */
     //get actual data for public_key
     public String getAgentData(Context ctx, DBController db) {
-        if (ctx.queryParam("public_key") != null) {
-            JSONObject jsonData = new JSONObject();
-            try {
-                String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT 1";
-                PreparedStatement ps = db.getConnection().prepareStatement(query);
-                ps.setString(1, ctx.queryParam("public_key"));
-                ResultSet res = ps.executeQuery();
-                while(res.next()) {
-                    JSONParser parser = new JSONParser();
-                    jsonData.put("public_key", res.getString("public_key"));
-                    jsonData.put("scan_time", res.getString("scan_time"));
-                    String str = res.getString("data");
-                    JSONObject jsonBody = (JSONObject) parser.parse(str);
-                    jsonData.put("data", jsonBody);
+        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+            if (ctx.queryParam("public_key") != null) {
+                JSONObject jsonData = new JSONObject();
+                try {
+                    String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT 1";
+                    PreparedStatement ps = db.getConnection().prepareStatement(query);
+                    ps.setString(1, ctx.queryParam("public_key"));
+                    ResultSet res = ps.executeQuery();
+                    while(res.next()) {
+                        JSONParser parser = new JSONParser();
+                        jsonData.put("public_key", res.getString("public_key"));
+                        jsonData.put("scan_time", res.getString("scan_time"));
+                        String str = res.getString("data");
+                        JSONObject jsonBody = (JSONObject) parser.parse(str);
+                        jsonData.put("data", jsonBody);
+                    }
+                    ps.close();
+                    return jsonData.toString();
+                } catch (SQLException | ParseException throwables) {
+                    throwables.printStackTrace();
+                    ctx.status(400);
+                    return "Bad request";
                 }
-                ps.close();
-                return jsonData.toString();
-            } catch (SQLException | ParseException throwables) {
-                throwables.printStackTrace();
+            } else {
                 ctx.status(400);
                 return "Bad request";
             }
         } else {
             ctx.status(400);
-            return "Bad request";
+            return "Unauthorized";
         }
     }
 
@@ -120,29 +125,34 @@ public class Utils {
      * @return Returns a string with result
      */
     public String getAgentList(Context ctx, DBController db) {
-        JSONObject jsonResult = new JSONObject();
-        JSONArray jsonAgents = new JSONArray();
-        try {
-            String query = "SELECT * FROM `Agents`";
-            PreparedStatement ps = db.getConnection().prepareStatement(query);
-            ResultSet res = ps.executeQuery();
-            while(res.next()) {
-                JSONObject jsonAgent = new JSONObject();
-                jsonAgent.put("host", res.getString("host"));
-                jsonAgent.put("boot_time", res.getString("boot_time"));
-                jsonAgent.put("public_key", res.getString("public_key"));
-                jsonAgent.put("agent_version", res.getString("agent_version"));
-                jsonAgents.add(jsonAgent);
+        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+            JSONObject jsonResult = new JSONObject();
+            JSONArray jsonAgents = new JSONArray();
+            try {
+                String query = "SELECT * FROM `Agents`";
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    JSONObject jsonAgent = new JSONObject();
+                    jsonAgent.put("host", res.getString("host"));
+                    jsonAgent.put("boot_time", res.getString("boot_time"));
+                    jsonAgent.put("public_key", res.getString("public_key"));
+                    jsonAgent.put("agent_version", res.getString("agent_version"));
+                    jsonAgents.add(jsonAgent);
+                }
+                ps.close();
+                jsonResult.put("agents", jsonAgents);
+
+                return jsonResult.toString();
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.header("Access-Control-Allow-Origin", "*");
+                return jsonResult.toString();
             }
-            ps.close();
-            jsonResult.put("agents", jsonAgents);
-
-            return jsonResult.toString();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            ctx.header("Access-Control-Allow-Origin","*");
-            return jsonResult.toString();
+        }else{
+            ctx.status(400);
+            return "Unauthorized";
         }
     }
 
