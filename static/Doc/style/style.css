@@ -30,7 +30,6 @@
 .pageWrapper .text p {
   text-indent: 40px;
   font-family: circe, sans-serif;
-  font-weight: bold;
   font-size: 20px;
   text-align: left;
 }
@@ -38,6 +37,7 @@
   text-indent: inherit;
   text-align: center;
   font-size: 50px;
+  font-weight: bold;
 }
 .pageWrapper .text .back {
   height: 66px;
