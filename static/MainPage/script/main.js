@@ -10,10 +10,11 @@ $(document).ready(function () {
     $.get(
         "/api/getAgentList", {},
         function (data) {
+            let agents = [];
             data = JSON.parse(data);
 
             for (var key in data['agents']) {
-                console.log(data.agents[key].public_key);
+                //                console.log(data.agents[key].public_key);
                 $('.listOfServers').append(
                     $('<li>').append(
                         $('<input>').attr({
@@ -28,34 +29,25 @@ $(document).ready(function () {
                         }).text(data.agents[key].public_key)
                     )
                 )
+
+                //pushing name of agents in array
+                agents.push(data.agents[key].public_key)
+                //                console.log(agents);
             }
 
             //getting info from agent
             let servers = $('input[name=servers]');
-            let gorInterval;
+            let interval;
             servers.on('change', function () {
-                if ($(this).val() == 'gor-tss') {
-                    clearInterval(gorInterval);
-                    getInfoJSONFromAgent($(this).val());
-                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
-                }
-                if ($(this).val() == 't1-tss') {
-                    clearInterval(gorInterval);
-                    getInfoJSONFromAgent($(this).val());
-                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
-                }
-                if ($(this).val() == 't2-tss') {
-                    clearInterval(gorInterval);
-                    getInfoJSONFromAgent($(this).val());
-                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
-                }
-                if ($(this).val() == 't5-tss') {
-                    clearInterval(gorInterval);
-                    getInfoJSONFromAgent($(this).val());
-                    gorInterval = setInterval(getInfoJSONFromAgent, 60000, $(this).val());
-                }
+                let serverName = $(this).val();
+                agents.forEach(function (item, index, array) {
+                    if (serverName == item) {
+                        clearInterval(interval);
+                        getInfoJSONFromAgent(serverName);
+                        interval = setInterval(getInfoJSONFromAgent, 65000, serverName);
+                    }
+                });
             });
-
         }
     );
 

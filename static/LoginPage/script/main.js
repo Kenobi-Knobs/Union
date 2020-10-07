@@ -11,9 +11,17 @@ $(document).ready(function () {
                     console.log("ok");
                     $(location).attr('href', '/');
                 } else {
-                    alert("something went wrong")
+                    alert("Wrong login or password")
                 }
             }
         );
     });
+
+    $('#authTG').on('click', function () {
+        alert("In developing");
+    });
+    $('#signUp').on('click', function () {
+        alert("In developing");
+    });
+
 });
