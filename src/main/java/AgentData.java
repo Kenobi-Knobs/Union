@@ -29,6 +29,7 @@ public class AgentData {
     Date time;
     String jsonData;
 
+
     /**
      * Constructor - creates a new object
      * @param ctx Context that contains data
