@@ -48,23 +48,38 @@ public class Utils {
     //get actual data for public_key
     public String getAgentData(Context ctx, DBController db) {
         if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
-            if (ctx.queryParam("public_key") != null) {
-                JSONObject jsonData = new JSONObject();
+            if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
+                JSONObject jsonResult = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
+                int count = 1;
+                if(ctx.queryParam("count") != null && ctx.queryParam("count").matches("-?\\d+(\\.\\d+)?")){
+                    count = Integer.parseInt(ctx.queryParam("count"));
+                    if(count <= 0){
+                        count = 1;
+                    }
+                    if(count > 100){
+                        count = 100;
+                    }
+                }
                 try {
-                    String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT 1";
+                    JSONParser parser = new JSONParser();
+                    String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT ?";
                     PreparedStatement ps = db.getConnection().prepareStatement(query);
                     ps.setString(1, ctx.queryParam("public_key"));
+                    ps.setInt(2,count);
                     ResultSet res = ps.executeQuery();
                     while(res.next()) {
-                        JSONParser parser = new JSONParser();
+                        JSONObject jsonData = new JSONObject();
                         jsonData.put("public_key", res.getString("public_key"));
                         jsonData.put("scan_time", res.getString("scan_time"));
                         String str = res.getString("data");
                         JSONObject jsonBody = (JSONObject) parser.parse(str);
                         jsonData.put("data", jsonBody);
+                        jsonArray.add(jsonData);
                     }
                     ps.close();
-                    return jsonData.toString();
+                    jsonResult.put("datas", jsonArray);
+                    return jsonResult.toJSONString();
                 } catch (SQLException | ParseException throwables) {
                     throwables.printStackTrace();
                     ctx.status(400);
@@ -77,6 +92,26 @@ public class Utils {
         } else {
             ctx.status(400);
             return "Unauthorized";
+        }
+    }
+
+    private boolean isOwner(Context ctx,DBController db) {
+        String mail = ctx.sessionAttribute("mail");
+        String publicKey = ctx.queryParam("public_key");
+        try {
+            String query = "SELECT * from (SELECT ua.public_key FROM `User_agents` as ua, Users as u WHERE u.id = ua.user_id and u.mail = ?) as a where a.public_key = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, mail);
+            ps.setString(2, publicKey);
+            ResultSet res = ps.executeQuery();
+            if (res.next() != false) {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
         }
     }
 
@@ -370,6 +405,64 @@ public class Utils {
         }else if(acces.equals("public")){
             String contents = new String(Files.readAllBytes(Paths.get(path)));
             ctx.html(contents);
+        }
+    }
+
+    public String getAgentDataByInterval(Context ctx, DBController db) {
+        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+            if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
+                JSONObject jsonResult = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
+                if(dateValidation(ctx.queryParam("start"), ctx.queryParam("end"))) {
+                    try {
+                        JSONParser parser = new JSONParser();
+                        String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ?";
+                        PreparedStatement ps = db.getConnection().prepareStatement(query);
+                        ps.setString(1, ctx.queryParam("start") + ":05");
+                        ps.setString(2, ctx.queryParam("end") + ":05");
+                        ps.setString(3, ctx.queryParam("public_key"));
+                        ResultSet res = ps.executeQuery();
+                        while (res.next()) {
+                            JSONObject jsonData = new JSONObject();
+                            jsonData.put("public_key", res.getString("public_key"));
+                            jsonData.put("scan_time", res.getString("scan_time"));
+                            String str = res.getString("data");
+                            JSONObject jsonBody = (JSONObject) parser.parse(str);
+                            jsonData.put("data", jsonBody);
+                            jsonArray.add(jsonData);
+                        }
+                        ps.close();
+                        jsonResult.put("datas", jsonArray);
+                        return jsonResult.toJSONString();
+                    } catch (SQLException | ParseException throwables) {
+                        throwables.printStackTrace();
+                        ctx.status(400);
+                        return "Bad request";
+                    }
+                }else{
+                    ctx.status(400);
+                    return "Interval validation error";
+                }
+            } else {
+                ctx.status(400);
+                return "Bad request";
+            }
+        } else {
+            ctx.status(400);
+            return "Unauthorized";
+        }
+    }
+
+    private boolean dateValidation(String start, String end) {
+        String regex = "[0-9]{4}-(0[0-9]|1[012])-([012][0-9]|3[01]) ([01][0-9]|2[0-3])(:[0-5][0-9])";
+        if(start != null && end != null){
+            if(start.matches(regex) && end.matches(regex)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
     }
 }

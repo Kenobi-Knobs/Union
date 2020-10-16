@@ -58,6 +58,7 @@ public class Server {
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(utils.isAuth(ctx));});
         app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(utils.getAgentData(ctx, db)); });
+        app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(utils.getAgentDataByInterval(ctx, db)); });
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(utils.getAgentList(ctx, db)); });
         app.post("/api/endpoint", ctx -> utils.saveAgentData(ctx, db));
     }
