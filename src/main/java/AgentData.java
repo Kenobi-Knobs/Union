@@ -5,9 +5,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,6 +30,7 @@ import java.util.Date;
  * @version 1.0
  */
 public class AgentData {
+    String body;
     String host;
     String bootTime;
     String publicKey;
@@ -31,7 +38,6 @@ public class AgentData {
     String agentVersion;
     Date time;
     String jsonData;
-
 
     /**
      * Constructor - creates a new object
@@ -48,7 +54,7 @@ public class AgentData {
 //        System.out.println(debug_body);
 
         this.privateKey = ctx.header("Sign"); //приватный ключ из параметров запроса
-        String body = ctx.body();
+        this.body = ctx.body();
         JSONObject jsonBody = (JSONObject) parser.parse(body);
         this.host = (String) jsonBody.get("host");
         //2020-09-22 08:21:02 +0000
@@ -75,8 +81,34 @@ public class AgentData {
      * @param ctx Context that contains data
      * @return Returns a response of the validation
      */
-    public Boolean validate(Context ctx) {
-        return true;
+    public Boolean validate(Context ctx, DBController db) {
+        try {
+            String body = this.body;
+            String sign = ctx.header("Sign");
+            String publicKey = this.publicKey;
+            String secretKey = "";
+
+            String query = "select secret_key from Agents where public_key = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, publicKey);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                secretKey = res.getString("secret_key");
+            }
+
+            byte[] hash = null;
+
+            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+            mac.init(secretKeySpec);
+            hash = mac.doFinal(body.getBytes("UTF-8"));
+
+            String result = String.format("%032x", new BigInteger(1, hash));
+            return result.equals(sign);
+        } catch (NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

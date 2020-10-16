@@ -123,7 +123,7 @@ public class Utils {
     public void saveAgentData(Context ctx, DBController db) {
         try {
             AgentData sd = new AgentData(ctx);
-            if (sd.validate(ctx)){
+            if (sd.validate(ctx, db)) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String query = "SELECT * FROM `Agents` WHERE `public_key` =?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
