@@ -5,6 +5,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,10 +39,16 @@ public class AgentData {
      * @throws ParseException
      * @throws java.text.ParseException
      */
-    public AgentData(Context ctx) throws ParseException, java.text.ParseException {
+    public AgentData(Context ctx) throws ParseException, java.text.ParseException{
+        JSONParser parser = new JSONParser();
+
+//        String debug_sign = ctx.header("Sign");
+//        String debug_body = ctx.body();
+//        System.out.println(debug_sign+"\n");
+//        System.out.println(debug_body);
+
         this.privateKey = ctx.header("Sign"); //приватный ключ из параметров запроса
         String body = ctx.body();
-        JSONParser parser = new JSONParser();
         JSONObject jsonBody = (JSONObject) parser.parse(body);
         this.host = (String) jsonBody.get("host");
         //2020-09-22 08:21:02 +0000
@@ -48,7 +57,6 @@ public class AgentData {
         this.bootTime = (String) jsonBody.get("boot_time");
         this.publicKey = (String) jsonBody.get("public_key");
         this.agentVersion = (String) jsonBody.get("agent_version");
-
 
         JSONObject jsonData = new JSONObject();
         jsonData.put("cpu", jsonBody.get("cpu"));

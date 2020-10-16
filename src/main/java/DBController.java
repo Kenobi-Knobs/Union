@@ -1,6 +1,5 @@
 package main.java;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 
 /**
  * Database controller class<br>

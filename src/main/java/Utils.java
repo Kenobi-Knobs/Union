@@ -1,17 +1,16 @@
 package main.java;
 
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.crypto.KeyGenerator;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -100,7 +99,7 @@ public class Utils {
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                     insertPs.setString(1, sd.publicKey);
                     insertPs.setString(2,sd.bootTime);
-                    insertPs.setString(3,sd.bootTime);
+                    insertPs.setString(3,sd.agentVersion);
                     insertPs.setString(4, dateFormat.format(sd.time));
                     insertPs.setString(5,sd.jsonData);
                     insertPs.executeUpdate();
@@ -135,8 +134,9 @@ public class Utils {
             JSONObject jsonResult = new JSONObject();
             JSONArray jsonAgents = new JSONArray();
             try {
-                String query = "SELECT * FROM `Agents`";
+                String query = "SELECT a.* FROM `Agents` as a, (SELECT ua.public_key FROM `User_agents` as ua, Users as u WHERE ua.`user_id` = u.id and u.mail = ?) as b WHERE a.`public_key` = b.`public_key`";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, ctx.sessionAttribute("mail"));
                 ResultSet res = ps.executeQuery();
                 while (res.next()) {
                     JSONObject jsonAgent = new JSONObject();
@@ -151,8 +151,8 @@ public class Utils {
 
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-                ctx.header("Access-Control-Allow-Origin", "*");
-                return jsonResult.toString();
+                ctx.status(400);
+                return "Bad request";
             }
         }else{
             ctx.status(400);
@@ -167,29 +167,45 @@ public class Utils {
      * @param db Database to write new users or check old ones
      * @return Returns a response with the result of checking
      */
-    public String auth(Context ctx, DBController db) {
+    public String auth(Context ctx, DBController db){
         String mail = ctx.queryParam("mail");
         String pass = ctx.queryParam("pass");
         JSONObject jsonResult = new JSONObject();
         if(mail != null && pass != null) {
-            if (mail.equals("example@gmail.com")) {
-                if (pass.equals("password")) {
-                    jsonResult.put("auth", "true");
-                    jsonResult.put("info", "user is authorized");
-                    ctx.sessionAttribute("auth", "true");
-                    ctx.sessionAttribute("mail", mail);
+            try {
+                String query = "SELECT * FROM `Users` WHERE mail = ?";
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, mail);
+                ResultSet res = ps.executeQuery();
+                if (res.next() != false) {
+                    if (pass.equals(res.getString("pwd"))) {
+                        if(res.getInt("email_confirmed") == 1){
+                            jsonResult.put("auth", "true");
+                            jsonResult.put("info", "user is authorized");
+                            ctx.sessionAttribute("auth", "true");
+                            ctx.sessionAttribute("mail", mail);
+                        }else{
+                            jsonResult.put("auth", "false");
+                            jsonResult.put("info", "confirm account with mail");
+                        }
+                    } else {
+                        jsonResult.put("auth", "false");
+                        jsonResult.put("info", "wrong pass");
+                    }
                 } else {
                     jsonResult.put("auth", "false");
-                    jsonResult.put("info", "wrong pass");
+                    jsonResult.put("info", "wrong mail");
                 }
-            } else {
+                ps.close();
+            } catch (SQLException throwables) {
                 jsonResult.put("auth", "false");
-                jsonResult.put("info", "wrong mail");
+                jsonResult.put("info", "error");
             }
-        } else {
+        }else{
             ctx.status(400);
+            return "bad request";
         }
-        return jsonResult.toString();
+        return jsonResult.toJSONString();
     }
 
     /**
@@ -307,6 +323,53 @@ public class Utils {
             throwables.printStackTrace();
             ctx.status(404);
             return "You activation link wrong db";
+        }
+    }
+
+    public String getUser(Context ctx, DBController db) {
+        if(ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true") ){
+            String mail = ctx.sessionAttribute("mail");
+            JSONObject jsonResult = new JSONObject();
+            String query = "SELECT * FROM `Users` WHERE `mail` = ?";
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, mail);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    jsonResult.put("mail", res.getString("mail"));
+                    jsonResult.put("settings", res.getString("settings"));
+                }
+                ps.close();
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            return "User unauthorized";
+        }
+    }
+
+    /**
+     * Method sends an html context to the pages
+     * @param ctx Data context
+     * @param path Page path
+     * @param acces Acces mode
+     * @param redirect Redirect if auth false
+     * @throws IOException
+     */
+    public void sendHtml(@NotNull Context ctx, String path, String acces, String redirect) throws IOException {
+        if(acces.equals("auth_only")){
+            if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+                String contents = new String(Files.readAllBytes(Paths.get(path)));
+                ctx.html(contents);
+            } else {
+                ctx.redirect(redirect);
+            }
+        }else if(acces.equals("public")){
+            String contents = new String(Files.readAllBytes(Paths.get(path)));
+            ctx.html(contents);
         }
     }
 }

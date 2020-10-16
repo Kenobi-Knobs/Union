@@ -46,15 +46,15 @@ public class Server {
         Mail mail = new Mail((String) jsonConfig.get("mail"), (String) jsonConfig.get("mail-pass"), (String) jsonConfig.get("from"));
         System.out.println("SMTP connect: [OK]");
 
-        app.get("/", ctx -> sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
+        app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
-        app.get("/agreements", ctx -> sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
-        app.get("/login", ctx -> sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
+        app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
+        app.get("/login", ctx -> utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
         app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
 
         app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(utils.confirm(ctx, db, ctx.pathParam("token")));});
         app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(utils.register(ctx, db, mail));});
-        //app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
+        app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(utils.isAuth(ctx));});
         app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(utils.getAgentData(ctx, db)); });
@@ -62,27 +62,6 @@ public class Server {
         app.post("/api/endpoint", ctx -> utils.saveAgentData(ctx, db));
     }
 
-    /**
-     * Method sends an html context to the pages
-     * @param ctx Data context
-     * @param path Page path
-     * @param acces Acces mode
-     * @param redirect Redirect if auth false
-     * @throws IOException
-     */
-    public static void sendHtml(@NotNull Context ctx, String path, String acces, String redirect) throws IOException {
-        if(acces.equals("auth_only")){
-            if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
-                String contents = new String(Files.readAllBytes(Paths.get(path)));
-                ctx.html(contents);
-            } else {
-                ctx.redirect(redirect);
-            }
-        }else if(acces.equals("public")){
-            String contents = new String(Files.readAllBytes(Paths.get(path)));
-            ctx.html(contents);
-        }
-    }
 
     /**
      * Method sets the access to sending the requests to the server
