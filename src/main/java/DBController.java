@@ -8,15 +8,15 @@ import java.sql.*;
  * @version 1.0
  */
 public class DBController {
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Controller constructor, connects to the remote database with the help of JDBC (Java Database Connectivity) library
      * @param user User's login
      * @param pass User's password
      * @param url Database host
-     * @throws SQLException
-     * @throws ClassNotFoundException
+     * @throws SQLException db connection exception
+     * @throws ClassNotFoundException db connection exception
      */
     public DBController(String user, String pass, String url) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,4 +31,5 @@ public class DBController {
     public Connection getConnection() {
         return connection;
     }
+
 }

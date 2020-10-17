@@ -3,7 +3,6 @@ package main.java;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,7 +19,7 @@ import java.sql.SQLException;
  * @version 1.0
  */
 public class Server {
-    private static boolean enableCors = true;
+    private static final boolean enableCors = true;
 
     /**
      * Method starts the server, mail and database,
@@ -57,8 +56,11 @@ public class Server {
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(utils.isAuth(ctx));});
         app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
+
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(utils.getAgentData(ctx, db)); });
+        app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(utils.getInterval(ctx, db)); });
         app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(utils.getAgentDataByInterval(ctx, db)); });
+
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(utils.getAgentList(ctx, db)); });
         app.post("/api/endpoint", ctx -> utils.saveAgentData(ctx, db));
     }
@@ -69,7 +71,7 @@ public class Server {
      * @param ctx Context that contains the header with access
      */
     public static void cors(Context ctx) {
-        if (enableCors == true) {
+        if (enableCors) {
             ctx.header("Cache-Control", "no-cache, no-store");
             ctx.header("Access-Control-Allow-Origin","*");
         }

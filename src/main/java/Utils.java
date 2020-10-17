@@ -1,7 +1,6 @@
 package main.java;
 
 import io.javalin.http.Context;
-import org.jetbrains.annotations.NotNull;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,8 +10,8 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
@@ -21,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -29,20 +29,20 @@ import java.util.Random;
  * @version 1.0
  */
 public class Utils {
+    JSONParser parser = new JSONParser();
+
     /**
      * Creates the connection to the remote database
      * @return Returns a connected database class
-     * @throws SQLException
-     * @throws ClassNotFoundException
-     * @throws IOException
-     * @throws ParseException
+     * @throws SQLException db connection exception
+     * @throws ClassNotFoundException db connection exception
+     * @throws IOException Input output connection exception
+     * @throws ParseException parse json exception
      */
     public DBController connect() throws SQLException, ClassNotFoundException, IOException, ParseException {
         String config = new String(Files.readAllBytes(Paths.get("config.txt")));
-        JSONParser parser = new JSONParser();
         JSONObject jsonConfig = (JSONObject) parser.parse(config);
-        DBController db = new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
-        return db;
+        return new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
     }
 
     /**
@@ -53,13 +53,13 @@ public class Utils {
      */
     //get actual data for public_key
     public String getAgentData(Context ctx, DBController db) {
-        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+        if (authCheck(ctx)) {
             if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
                 JSONObject jsonResult = new JSONObject();
                 JSONArray jsonArray = new JSONArray();
                 int count = 1;
-                if(ctx.queryParam("count") != null && ctx.queryParam("count").matches("-?\\d+(\\.\\d+)?")){
-                    count = Integer.parseInt(ctx.queryParam("count"));
+                if(ctx.queryParam("count") != null && Objects.requireNonNull(ctx.queryParam("count")).matches("-?\\d+(\\.\\d+)?")){
+                    count = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("count")));
                     if(count <= 0){
                         count = 1;
                     }
@@ -68,7 +68,6 @@ public class Utils {
                     }
                 }
                 try {
-                    JSONParser parser = new JSONParser();
                     String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT ?";
                     PreparedStatement ps = db.getConnection().prepareStatement(query);
                     ps.setString(1, ctx.queryParam("public_key"));
@@ -84,7 +83,7 @@ public class Utils {
                         jsonArray.add(jsonData);
                     }
                     ps.close();
-                    jsonResult.put("datas", jsonArray);
+                    jsonResult.put("dataset", jsonArray);
                     return jsonResult.toJSONString();
                 } catch (SQLException | ParseException throwables) {
                     throwables.printStackTrace();
@@ -110,11 +109,7 @@ public class Utils {
             ps.setString(1, mail);
             ps.setString(2, publicKey);
             ResultSet res = ps.executeQuery();
-            if (res.next() != false) {
-                return true;
-            }else{
-                return false;
-            }
+            return res.next();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -124,13 +119,12 @@ public class Utils {
     /**
      * Data validation by private key (method checks if any value is null, and checks jsonData)
      * @param ctx Context that contains data
-     * @param body
+     * @param body body of request
      * @return Returns a response of the validation
      */
     public Boolean validate(Context ctx, DBController db, String body) {
         try {
             String sign = ctx.header("Sign");
-            JSONParser parser = new JSONParser();
             JSONObject jsonBody = (JSONObject) parser.parse(body);
             String publicKey = (String) jsonBody.get("public_key");
             if(publicKey == null){
@@ -145,16 +139,16 @@ public class Utils {
                 secretKey = res.getString("secret_key");
             }
 
-            byte[] hash = null;
+            byte[] hash;
 
             Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
             mac.init(secretKeySpec);
-            hash = mac.doFinal(body.getBytes("UTF-8"));
+            hash = mac.doFinal(body.getBytes(StandardCharsets.UTF_8));
 
             String result = String.format("%032x", new BigInteger(1, hash));
             return result.equals(sign);
-        } catch (NullPointerException | NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException | SQLException | ParseException e) {
+        } catch (NullPointerException | NoSuchAlgorithmException | InvalidKeyException | SQLException | ParseException e) {
             //e.printStackTrace();
             return false;
         }
@@ -211,10 +205,10 @@ public class Utils {
      * Method gets and returns the list of all agents
      * @param ctx Context that contains header with access to sending requests
      * @param db Database with agents list
-     * @return Returns a string with resultд
+     * @return Returns a string with result
      */
     public String getAgentList(Context ctx, DBController db) {
-        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+        if (authCheck(ctx)) {
             JSONObject jsonResult = new JSONObject();
             JSONArray jsonAgents = new JSONArray();
             try {
@@ -261,7 +255,7 @@ public class Utils {
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
-                if (res.next() != false) {
+                if (res.next()) {
                     if (pass.equals(res.getString("pwd"))) {
                         if(res.getInt("email_confirmed") == 1){
                             jsonResult.put("auth", "true");
@@ -299,7 +293,7 @@ public class Utils {
      */
     public String isAuth(Context ctx) {
         JSONObject jsonResult = new JSONObject();
-        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) { ;
+        if (authCheck(ctx)) {
             jsonResult.put("mail", ctx.sessionAttribute("mail"));
             jsonResult.put("auth", "true");
         }else{
@@ -312,9 +306,8 @@ public class Utils {
     public String register(Context ctx, DBController db, Mail mailService) {
         JSONObject jsonResult = new JSONObject();
         String params = ctx.body();
-        String mail = null;
-        String pass = null;
-        JSONParser parser = new JSONParser();
+        String mail;
+        String pass;
 
         try {
             JSONObject jsonBody = (JSONObject) parser.parse(params);
@@ -331,7 +324,7 @@ public class Utils {
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
-                if(res.next() == false){
+                if(!res.next()){
                     mailService.sendActivationLink(key,mail);
                     String insertQuery = "INSERT INTO `Users`(`mail`, `pwd`, `confirm_code`,`settings`) VALUES (?,?,?,?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
@@ -342,7 +335,7 @@ public class Utils {
                     insertPs.executeUpdate();
                     insertPs.close();
                     jsonResult.put("register","true");
-                    jsonResult.put("info","Confirmation mail sended");
+                    jsonResult.put("info","Confirmation mail sent");
                     jsonResult.put("mail",mail);
                 }else{
                    jsonResult.put("register","false");
@@ -369,8 +362,7 @@ public class Utils {
             char c = chars[random.nextInt(chars.length)];
             sb.append(c);
         }
-        String output = sb.toString();
-        return output;
+        return sb.toString();
     }
 
     //проверка пароля и почты
@@ -388,7 +380,7 @@ public class Utils {
             PreparedStatement ps = db.getConnection().prepareStatement(query);
             ps.setString(1, token);
             ResultSet res = ps.executeQuery();
-            if(res.next() != false){
+            if(res.next()){
                 String mail = res.getString("mail");
                 String insertQuery = "UPDATE `Users` SET `email_confirmed`= 1,`confirm_code`= null WHERE `mail` = ?";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
@@ -411,7 +403,7 @@ public class Utils {
     }
 
     public String getUser(Context ctx, DBController db) {
-        if(ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true") ){
+        if(authCheck(ctx)){
             String mail = ctx.sessionAttribute("mail");
             JSONObject jsonResult = new JSONObject();
             String query = "SELECT * FROM `Users` WHERE `mail` = ?";
@@ -421,11 +413,11 @@ public class Utils {
                 ResultSet res = ps.executeQuery();
                 while (res.next()) {
                     jsonResult.put("mail", res.getString("mail"));
-                    jsonResult.put("settings", res.getString("settings"));
+                    jsonResult.put("settings", parser.parse(res.getString("settings")));
                 }
                 ps.close();
                 return jsonResult.toJSONString();
-            } catch (SQLException throwables) {
+            } catch (SQLException | ParseException throwables) {
                 throwables.printStackTrace();
                 ctx.status(400);
                 return "Bad request";
@@ -439,26 +431,26 @@ public class Utils {
      * Method sends an html context to the pages
      * @param ctx Data context
      * @param path Page path
-     * @param acces Acces mode
+     * @param access Access mode
      * @param redirect Redirect if auth false
-     * @throws IOException
+     * @throws IOException input output exception
      */
-    public void sendHtml(@NotNull Context ctx, String path, String acces, String redirect) throws IOException {
-        if(acces.equals("auth_only")){
-            if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+    public void sendHtml(Context ctx, String path, String access, String redirect) throws IOException {
+        if(access.equals("auth_only")){
+            if (authCheck(ctx)) {
                 String contents = new String(Files.readAllBytes(Paths.get(path)));
                 ctx.html(contents);
             } else {
                 ctx.redirect(redirect);
             }
-        }else if(acces.equals("public")){
+        }else if(access.equals("public")){
             String contents = new String(Files.readAllBytes(Paths.get(path)));
             ctx.html(contents);
         }
     }
 
     public String getAgentDataByInterval(Context ctx, DBController db) {
-        if (ctx.sessionAttribute("auth") != null && ctx.sessionAttribute("auth").equals("true")) {
+        if (authCheck(ctx)) {
             if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
                 JSONObject jsonResult = new JSONObject();
                 JSONArray jsonArray = new JSONArray();
@@ -481,7 +473,7 @@ public class Utils {
                             jsonArray.add(jsonData);
                         }
                         ps.close();
-                        jsonResult.put("datas", jsonArray);
+                        jsonResult.put("dataset", jsonArray);
                         return jsonResult.toJSONString();
                     } catch (SQLException | ParseException throwables) {
                         throwables.printStackTrace();
@@ -505,13 +497,45 @@ public class Utils {
     private boolean dateValidation(String start, String end) {
         String regex = "[0-9]{4}-(0[0-9]|1[012])-([012][0-9]|3[01]) ([01][0-9]|2[0-3])(:[0-5][0-9])";
         if(start != null && end != null){
-            if(start.matches(regex) && end.matches(regex)){
-                return true;
-            }else{
-                return false;
-            }
+            return start.matches(regex) && end.matches(regex);
         }else{
             return false;
         }
+    }
+
+    public String getInterval(Context ctx, DBController db) {
+        if(!authCheck(ctx)){
+            ctx.status(400);
+            return "Unauthorized";
+        }
+        if(ctx.queryParam("public_key") != null && isOwner(ctx, db)){
+            String publicKey = ctx.queryParam("public_key");
+            JSONObject jsonResult = new JSONObject();
+            String query = "SELECT MAX(`scan_time`) as max, MIN(`scan_time`) as min FROM `AgentData` WHERE `public_key` = ?";
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, publicKey);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    jsonResult.put("public_key", publicKey);
+                    jsonResult.put("min", res.getString("min"));
+                    jsonResult.put("max", res.getString("max"));
+                }
+                ps.close();
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Bad request";
+        }
+
+    }
+
+    public boolean authCheck(Context ctx) {
+        return ctx.sessionAttribute("auth") != null && Objects.equals(ctx.sessionAttribute("auth"), "true");
     }
 }

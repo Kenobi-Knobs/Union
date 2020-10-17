@@ -1,7 +1,6 @@
 package main.java;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -12,12 +11,8 @@ import java.util.Properties;
  * @author Vitaliy Konchatniy
  */
 public class Mail {
-    private String email;
-    private String pass;
-    private String from;
-    private final String host = "smtp.gmail.com";
-    private Properties properties;
-    private Session session;
+    private final String from;
+    private final Session session;
 
 
     /**
@@ -27,11 +22,10 @@ public class Mail {
      * @param from  From  address
      */
     public Mail(String email, String pass, String from){
-        this.email = email;
-        this.pass = pass;
         this.from = from;
 
-        properties = System.getProperties();
+        Properties properties = System.getProperties();
+        String host = "smtp.gmail.com";
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.ssl.enable", "true");
