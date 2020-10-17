@@ -45,7 +45,7 @@ public class AgentData {
      * @throws ParseException
      * @throws java.text.ParseException
      */
-    public AgentData(Context ctx) throws ParseException, java.text.ParseException{
+    public AgentData(Context ctx, String body) throws ParseException, java.text.ParseException{
         JSONParser parser = new JSONParser();
 
 //        String debug_sign = ctx.header("Sign");
@@ -54,7 +54,7 @@ public class AgentData {
 //        System.out.println(debug_body);
 
         this.privateKey = ctx.header("Sign"); //приватный ключ из параметров запроса
-        this.body = ctx.body();
+        this.body = body;
         JSONObject jsonBody = (JSONObject) parser.parse(body);
         this.host = (String) jsonBody.get("host");
         //2020-09-22 08:21:02 +0000
@@ -72,43 +72,6 @@ public class AgentData {
         jsonData.put("network", jsonBody.get("network"));
 
         this.jsonData = jsonData.toString();
-    }
-
-    /**
-     * Data validation by private key (method checks if any value is null, and checks jsonData)
-     * @see #privateKey
-     * @see #jsonData
-     * @param ctx Context that contains data
-     * @return Returns a response of the validation
-     */
-    public Boolean validate(Context ctx, DBController db) {
-        try {
-            String body = this.body;
-            String sign = ctx.header("Sign");
-            String publicKey = this.publicKey;
-            String secretKey = "";
-
-            String query = "select secret_key from Agents where public_key = ?";
-            PreparedStatement ps = db.getConnection().prepareStatement(query);
-            ps.setString(1, publicKey);
-            ResultSet res = ps.executeQuery();
-            while (res.next()) {
-                secretKey = res.getString("secret_key");
-            }
-
-            byte[] hash = null;
-
-            Mac mac = Mac.getInstance("HmacSHA256");
-            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-            mac.init(secretKeySpec);
-            hash = mac.doFinal(body.getBytes("UTF-8"));
-
-            String result = String.format("%032x", new BigInteger(1, hash));
-            return result.equals(sign);
-        } catch (NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException | SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     /**

@@ -7,10 +7,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,14 +122,54 @@ public class Utils {
     }
 
     /**
+     * Data validation by private key (method checks if any value is null, and checks jsonData)
+     * @param ctx Context that contains data
+     * @param body
+     * @return Returns a response of the validation
+     */
+    public Boolean validate(Context ctx, DBController db, String body) {
+        try {
+            String sign = ctx.header("Sign");
+            JSONParser parser = new JSONParser();
+            JSONObject jsonBody = (JSONObject) parser.parse(body);
+            String publicKey = (String) jsonBody.get("public_key");
+            if(publicKey == null){
+                return false;
+            }
+            String secretKey = "";
+            String query = "SELECT secret_key FROM Agents WHERE public_key = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, publicKey);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                secretKey = res.getString("secret_key");
+            }
+
+            byte[] hash = null;
+
+            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
+            mac.init(secretKeySpec);
+            hash = mac.doFinal(body.getBytes("UTF-8"));
+
+            String result = String.format("%032x", new BigInteger(1, hash));
+            return result.equals(sign);
+        } catch (NullPointerException | NoSuchAlgorithmException | InvalidKeyException | UnsupportedEncodingException | SQLException | ParseException e) {
+            //e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Method saves and writes the data from an agent to the database
      * @param ctx Data context from an agent
      * @param db Connected database
      */
     public void saveAgentData(Context ctx, DBController db) {
+        String body = ctx.body();
         try {
-            AgentData sd = new AgentData(ctx);
-            if (sd.validate(ctx, db)) {
+            if (validate(ctx, db, body)) {
+                AgentData sd = new AgentData(ctx, body);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String query = "SELECT * FROM `Agents` WHERE `public_key` =?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
@@ -146,14 +192,17 @@ public class Utils {
                 ps.close();
             } else {
                 ctx.status(400);
+                ctx.result("validation error");
             }
         } catch (ParseException e) {
             ctx.status(500);
+            e.printStackTrace();
         }
         catch (SQLException e) {
             e.printStackTrace();
             ctx.status(500);
         } catch (java.text.ParseException e) {
+            e.printStackTrace();
             ctx.status(400);
         }
     }
