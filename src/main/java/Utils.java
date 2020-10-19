@@ -521,10 +521,9 @@ public class Utils {
     public String addAgent(Context ctx, DBController db) {
         JSONObject jsonResult = new JSONObject();
         if(!authCheck(ctx)){
-            ctx.status(400);
+            ctx.status(401);
             return "Unathorized";
         }
-        String params = ctx.body();
         String publicKey = ctx.formParam("public_key");
         String privateKey = ctx.formParam("secret_key");
         String host = ctx.formParam("host");
@@ -541,7 +540,7 @@ public class Utils {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 ctx.status(400);
-                return "Bad request s";
+                return "Bad request";
             }
             try {
                 String makeLink = "INSERT INTO `User_agents`(`user_id`, `public_key`) VALUES ((SELECT id from Users where mail = ?), ?)";
@@ -565,6 +564,31 @@ public class Utils {
     }
 
     public String deleteAgent(Context ctx, DBController db) {
-        return null;
+        JSONObject jsonResult = new JSONObject();
+        if(!authCheck(ctx)){
+            ctx.status(401);
+            return "Unathorized";
+        }
+        String publicKey = ctx.formParam("public_key");
+        if (publicKey != null && isOwner(ctx, db, publicKey)){
+            try {
+                String insertQuery = "DELETE FROM `User_agents` WHERE `user_id` = (Select id from Users WHERE mail = ?) and `public_key` = ?";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, ctx.sessionAttribute("mail"));
+                insertPs.setString(2, publicKey);
+                insertPs.executeUpdate();
+                insertPs.close();
+                jsonResult.put("add", "true");
+                jsonResult.put("info", publicKey + " deleted");
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Bad request";
+        }
     }
 }
