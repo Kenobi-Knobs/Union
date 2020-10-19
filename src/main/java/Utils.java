@@ -7,6 +7,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import javax.crypto.Mac;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -16,10 +18,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Base64.Encoder;
+import java.util.Base64.Decoder;
 import java.util.Objects;
 import java.util.Random;
 
@@ -245,7 +252,7 @@ public class Utils {
      * @param db Database to write new users or check old ones
      * @return Returns a response with the result of checking
      */
-    public String auth(Context ctx, DBController db){
+    public String auth(Context ctx, DBController db) {
         String mail = ctx.queryParam("mail");
         String pass = ctx.queryParam("pass");
         JSONObject jsonResult = new JSONObject();
@@ -256,7 +263,14 @@ public class Utils {
                 ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
                 if (res.next()) {
-                    if (pass.equals(res.getString("pwd"))) {
+                    Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+                    Decoder decoder = Base64.getUrlDecoder();
+                    byte[] salt = decoder.decode(res.getString("salt"));
+                    byte[] expectedHash = hash(pass, salt);
+                    String hash = res.getString("pwd");
+                    String expectedHashString = encoder.encodeToString(expectedHash);
+
+                    if (hash.equals(expectedHashString)) {
                         if(res.getInt("email_confirmed") == 1){
                             jsonResult.put("auth", "true");
                             jsonResult.put("info", "user is authorized");
@@ -278,8 +292,11 @@ public class Utils {
             } catch (SQLException throwables) {
                 jsonResult.put("auth", "false");
                 jsonResult.put("info", "error");
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                ctx.status(400);
+                return "bad request";
             }
-        }else{
+        } else {
             ctx.status(400);
             return "bad request";
         }
@@ -304,6 +321,7 @@ public class Utils {
     }
 
     public String register(Context ctx, DBController db, Mail mailService) {
+        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         JSONObject jsonResult = new JSONObject();
         String params = ctx.body();
         String mail;
@@ -318,20 +336,25 @@ public class Utils {
         }
 
         String key = generateKey();
-        try{
-            if(mail != null && pass != null && validation(mail, pass)){
+        try {
+            if (mail != null && pass != null && validation(mail, pass)) {
                 String query = "SELECT * FROM `Users` WHERE mail = ?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
-                if(!res.next()){
-                    mailService.sendActivationLink(key,mail);
-                    String insertQuery = "INSERT INTO `Users`(`mail`, `pwd`, `confirm_code`,`settings`) VALUES (?,?,?,?)";
+                if (!res.next()) {
+                    mailService.sendActivationLink(key, mail);
+                    String insertQuery = "INSERT INTO `Users`(`mail`, `salt`, `pwd`, `confirm_code`, `settings`) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+
+                    byte[] salt = getSalt();
+                    byte[] hash = hash(pass, salt);
+
                     insertPs.setString(1, mail);
-                    insertPs.setString(2, pass);
-                    insertPs.setString(3, key);
-                    insertPs.setString(4, "{}");
+                    insertPs.setString(2, encoder.encodeToString(salt));
+                    insertPs.setString(3, encoder.encodeToString(hash));
+                    insertPs.setString(4, key);
+                    insertPs.setString(5, "{}");
                     insertPs.executeUpdate();
                     insertPs.close();
                     jsonResult.put("register","true");
@@ -346,12 +369,28 @@ public class Utils {
                 jsonResult.put("register","false");
                 jsonResult.put("info","Validation error");
             }
-        }catch (SQLException | MessagingException throwables) {
+        } catch (SQLException | MessagingException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
             throwables.printStackTrace();
             ctx.status(400);
             return "Bad request";
         }
         return jsonResult.toString();
+    }
+
+    public byte[] getSalt() {
+        byte[] salt = new byte[16];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(salt);
+
+        return salt;
+    }
+
+    public byte[] hash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 10000, 256);
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = keyFactory.generateSecret(keySpec).getEncoded();
+
+        return hash;
     }
 
     public String generateKey() {
@@ -366,7 +405,7 @@ public class Utils {
     }
 
     //проверка пароля и почты
-    public boolean validation(String mail, String pass){
+    public boolean validation(String mail, String password) {
         return true;
     }
 
