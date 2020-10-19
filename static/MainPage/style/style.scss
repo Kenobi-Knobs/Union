@@ -40,6 +40,7 @@ html {
         }
 
         .navbar {
+            opacity: 0;
             width: 100%;
             text-align: center;
             margin-top: 150px;
@@ -52,13 +53,13 @@ html {
             div {
                 transition: 0.3s;
 
-                :hover {
-                    cursor: pointer;
+                &:hover {
+                    //                    cursor: pointer;
                     color: $iconColorHover;
                     transition: all 0.3s ease-out;
                 }
 
-                :not(:hover) {
+                &:not(:hover) {
                     transition: all 0.3s ease-out;
                 }
 
@@ -103,13 +104,13 @@ html {
                         font-family: $mainFont;
                         font-style: normal;
                         font-weight: bold;
-                        font-size: $titleFontSize;
-                        line-height: 88px;
+                        font-size: 1em;
                         //                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
                     }
                 }
 
                 .filter {
+                    opacity: 0;
                     width: 100%;
                     height: 35%;
                     //                    background-color: #C971EC;
@@ -122,24 +123,24 @@ html {
 
                     //                    transition: 0.4s;
 
-                    :hover {
-                        user-select: none;
+                    &:hover {
+                        //                        user-select: none;
                         color: #FFFFFF;
-                        cursor: pointer;
+                        //                        cursor: pointer;
                         background-color: #F26B6B;
                         transition: all 0.3s ease-out;
                         //                        transition: 0.4s;
                     }
 
-                    :not(:hover) {
+                    &:not(:hover) {
                         transition: all 0.3s ease-out;
                     }
 
-                    :nth-child(1) {
+                    &:nth-child(1) {
                         margin-right: 45px;
                     }
 
-                    :nth-child(3) {
+                    &:nth-child(3) {
                         margin-left: 45px;
                     }
 
@@ -158,7 +159,7 @@ html {
                         font-size: 24px;
                         color: #000000;
 
-                        :active {
+                        &:active {
                             color: #000000;
                         }
 

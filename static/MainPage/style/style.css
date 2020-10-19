@@ -35,6 +35,7 @@ html {
   width: clamp(25px, 75%, 500px);
 }
 .pageWrapper .menu .navbar {
+  opacity: 0;
   width: 100%;
   text-align: center;
   margin-top: 150px;
@@ -46,12 +47,11 @@ html {
 .pageWrapper .menu .navbar div {
   transition: 0.3s;
 }
-.pageWrapper .menu .navbar div :hover {
-  cursor: pointer;
+.pageWrapper .menu .navbar div:hover {
   color: #F26B6B;
   transition: all 0.3s ease-out;
 }
-.pageWrapper .menu .navbar div :not(:hover) {
+.pageWrapper .menu .navbar div:not(:hover) {
   transition: all 0.3s ease-out;
 }
 .pageWrapper .menu .navbar div i {
@@ -86,10 +86,10 @@ html {
   font-family: circe, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: clamp(45px, 4vw, 51px);
-  line-height: 88px;
+  font-size: 1em;
 }
 .pageWrapper .workSpace .head .titleAndFilter .filter {
+  opacity: 0;
   width: 100%;
   height: 35%;
   background-color: #FFFFFF;
@@ -100,21 +100,18 @@ html {
   -webkit-user-select: none;
           user-select: none;
 }
-.pageWrapper .workSpace .head .titleAndFilter .filter :hover {
-  -webkit-user-select: none;
-          user-select: none;
+.pageWrapper .workSpace .head .titleAndFilter .filter:hover {
   color: #FFFFFF;
-  cursor: pointer;
   background-color: #F26B6B;
   transition: all 0.3s ease-out;
 }
-.pageWrapper .workSpace .head .titleAndFilter .filter :not(:hover) {
+.pageWrapper .workSpace .head .titleAndFilter .filter:not(:hover) {
   transition: all 0.3s ease-out;
 }
-.pageWrapper .workSpace .head .titleAndFilter .filter :nth-child(1) {
+.pageWrapper .workSpace .head .titleAndFilter .filter:nth-child(1) {
   margin-right: 45px;
 }
-.pageWrapper .workSpace .head .titleAndFilter .filter :nth-child(3) {
+.pageWrapper .workSpace .head .titleAndFilter .filter:nth-child(3) {
   margin-left: 45px;
 }
 .pageWrapper .workSpace .head .titleAndFilter .filter a {
@@ -132,7 +129,7 @@ html {
   font-size: 24px;
   color: #000000;
 }
-.pageWrapper .workSpace .head .titleAndFilter .filter a :active {
+.pageWrapper .workSpace .head .titleAndFilter .filter a:active {
   color: #000000;
 }
 .pageWrapper .workSpace .head .accountInfo {
