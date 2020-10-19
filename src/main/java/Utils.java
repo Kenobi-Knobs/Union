@@ -29,6 +29,8 @@ import java.util.Base64.Encoder;
 import java.util.Base64.Decoder;
 import java.util.Objects;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Project's server side utility class
@@ -385,11 +387,18 @@ public class Utils {
 
     //проверка пароля и почты
     public boolean validation(String mail, String password) {
-        return true;
+        Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher mailMatcher = mailPattern.matcher(mail);
+
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
+        Matcher passMatcher = passPattern.matcher(password);
+
+        if (mailMatcher.find() && passMatcher.find()) return true;
+        else return false;
     }
 
     public String confirm(Context ctx, DBController db, String token) {
-        if(token.length() != 20){
+        if (token.length() != 20){
             ctx.status(404);
             return "You activation link wrong";
         }
@@ -398,16 +407,16 @@ public class Utils {
             PreparedStatement ps = db.getConnection().prepareStatement(query);
             ps.setString(1, token);
             ResultSet res = ps.executeQuery();
-            if(res.next()){
+            if (res.next()) {
                 String mail = res.getString("mail");
-                String insertQuery = "UPDATE `Users` SET `email_confirmed`= 1,`confirm_code`= null WHERE `mail` = ?";
+                String insertQuery = "UPDATE `Users` SET `email_confirmed`= 1, `confirm_code`= null WHERE `mail` = ?";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                 insertPs.setString(1, mail);
                 insertPs.executeUpdate();
                 insertPs.close();
                 ctx.status(200);
                 ctx.redirect("../../login?info=confirmed");
-            }else{
+            } else {
                 ctx.status(404);
                 return "You activation link wrong db";
             }
