@@ -399,7 +399,7 @@ public class Utils {
 
     public String confirm(Context ctx, DBController db, String token) {
         if (token.length() != 20){
-            ctx.status(404);
+            ctx.status(400);
             return "You activation link wrong";
         }
         try {
@@ -417,15 +417,15 @@ public class Utils {
                 ctx.status(200);
                 ctx.redirect("../../login?info=confirmed");
             } else {
-                ctx.status(404);
+                ctx.status(400);
                 return "You activation link wrong db";
             }
             ps.close();
             return "confirm";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            ctx.status(404);
-            return "You activation link wrong db";
+            ctx.status(400);
+            return "You activation link wrong";
         }
     }
 
@@ -683,5 +683,59 @@ public class Utils {
             return jsonResult.toJSONString();
         }
 
+    }
+
+    public String changePassword(Context ctx, DBController db){
+        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        JSONObject jsonResult = new JSONObject();
+        String token = ctx.formParam("token");
+        String newPass = ctx.formParam("new_pass");
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
+        Matcher passMatcher = passPattern.matcher(newPass);
+        if(!passMatcher.find()){
+            jsonResult.put("reset", "false");
+            jsonResult.put("info","validation error");
+            return jsonResult.toJSONString();
+        }
+        try {
+            byte[] salt = getSalt();
+            byte[] hash = hash(newPass, salt);
+            String query = "UPDATE `Users` SET `salt`= ?,`pwd`= ?,`reset_code`= NULL WHERE `reset_code` = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, encoder.encodeToString(salt));
+            ps.setString(2, encoder.encodeToString(hash));
+            ps.setString(3, token);
+            ps.executeUpdate();
+            ps.close();
+            jsonResult.put("reset", "true");
+            jsonResult.put("info","new password set");
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
+            throwables.printStackTrace();
+            jsonResult.put("reset", "false");
+            jsonResult.put("info","token no found");
+        }
+        return jsonResult.toJSONString();
+    }
+
+    public void showChangePassword(Context ctx, DBController db){
+        String token = ctx.pathParam("token");
+        if(token.length() != 20){
+            ctx.status(404);
+        }
+        try {
+            String query = "SELECT * FROM `Users` WHERE reset_code = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, token);
+            ResultSet res = ps.executeQuery();
+            if(res.next()){
+                sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
+            }else{
+                ctx.status(404);
+            }
+            ps.close();
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+            ctx.status(404);
+        }
     }
 }

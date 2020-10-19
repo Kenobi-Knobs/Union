@@ -58,7 +58,7 @@ public class Server {
         //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         //app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
-        app.get("/new-password/:token", ctx -> ctx.result("reset"));
+        app.get("/new-password/:token", ctx -> utils.showChangePassword(ctx,db));
         app.get("/reset", ctx -> utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login"));
         app.get("/sign-in", ctx -> utils.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login"));
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
@@ -66,7 +66,8 @@ public class Server {
         app.get("/login", ctx -> utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
         app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
 
-        app.post("/api/resetPassword", ctx -> {cors(ctx); ctx.result(utils.resetPassword(ctx, db, mail));});
+        app.post("/api/changePassword", ctx -> {cors(ctx); ctx.result(utils.changePassword(ctx, db));});
+        app.post("/api/resetPasswordMail", ctx -> {cors(ctx); ctx.result(utils.resetPassword(ctx, db, mail));});
         app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(utils.confirm(ctx, db, ctx.pathParam("token")));});
         app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(utils.register(ctx, db, mail));});
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
