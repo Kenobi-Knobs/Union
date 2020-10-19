@@ -39,20 +39,6 @@ public class Utils {
     JSONParser parser = new JSONParser();
 
     /**
-     * Creates the connection to the remote database
-     * @return Returns a connected database class
-     * @throws SQLException db connection exception
-     * @throws ClassNotFoundException db connection exception
-     * @throws IOException Input output connection exception
-     * @throws ParseException parse json exception
-     */
-    public DBController connect() throws SQLException, ClassNotFoundException, IOException, ParseException {
-        String config = new String(Files.readAllBytes(Paths.get("config.txt")));
-        JSONObject jsonConfig = (JSONObject) parser.parse(config);
-        return new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
-    }
-
-    /**
      * Method gets data from an agent
      * @param ctx Context that contains agent's data
      * @param db Connected database
@@ -61,7 +47,7 @@ public class Utils {
     //get actual data for public_key
     public String getAgentData(Context ctx, DBController db) {
         if (authCheck(ctx)) {
-            if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
+            if (ctx.queryParam("public_key") != null && isOwner(ctx, db, ctx.queryParam("public_key"))) {
                 JSONObject jsonResult = new JSONObject();
                 JSONArray jsonArray = new JSONArray();
                 int count = 1;
@@ -107,16 +93,17 @@ public class Utils {
         }
     }
 
-    private boolean isOwner(Context ctx,DBController db) {
+    private boolean isOwner(Context ctx,DBController db, String publicKey) {
         String mail = ctx.sessionAttribute("mail");
-        String publicKey = ctx.queryParam("public_key");
         try {
             String query = "SELECT * from (SELECT ua.public_key FROM `User_agents` as ua, Users as u WHERE u.id = ua.user_id and u.mail = ?) as a where a.public_key = ?";
             PreparedStatement ps = db.getConnection().prepareStatement(query);
             ps.setString(1, mail);
             ps.setString(2, publicKey);
             ResultSet res = ps.executeQuery();
-            return res.next();
+            Boolean result = res.next();
+            ps.close();
+            return result;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -145,7 +132,7 @@ public class Utils {
             while (res.next()) {
                 secretKey = res.getString("secret_key");
             }
-
+            ps.close();
             byte[] hash;
 
             Mac mac = Mac.getInstance("HmacSHA256");
@@ -290,6 +277,7 @@ public class Utils {
                 }
                 ps.close();
             } catch (SQLException throwables) {
+                throwables.printStackTrace();
                 jsonResult.put("auth", "false");
                 jsonResult.put("info", "error");
             } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -323,17 +311,8 @@ public class Utils {
     public String register(Context ctx, DBController db, Mail mailService) {
         Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         JSONObject jsonResult = new JSONObject();
-        String params = ctx.body();
-        String mail;
-        String pass;
-
-        try {
-            JSONObject jsonBody = (JSONObject) parser.parse(params);
-            mail = (String) jsonBody.get("mail");
-            pass = (String) jsonBody.get("pass");
-        } catch (ParseException e) {
-           return "Bad request";
-        }
+        String mail = ctx.formParam("mail");
+        String pass = ctx.formParam("pass");
 
         String key = generateKey();
         try {
@@ -490,7 +469,7 @@ public class Utils {
 
     public String getAgentDataByInterval(Context ctx, DBController db) {
         if (authCheck(ctx)) {
-            if (ctx.queryParam("public_key") != null && isOwner(ctx, db)) {
+            if (ctx.queryParam("public_key") != null && isOwner(ctx, db, ctx.queryParam("public_key") )) {
                 JSONObject jsonResult = new JSONObject();
                 JSONArray jsonArray = new JSONArray();
                 if(dateValidation(ctx.queryParam("start"), ctx.queryParam("end"))) {
@@ -547,7 +526,7 @@ public class Utils {
             ctx.status(400);
             return "Unauthorized";
         }
-        if(ctx.queryParam("public_key") != null && isOwner(ctx, db)){
+        if(ctx.queryParam("public_key") != null && isOwner(ctx, db, ctx.queryParam("public_key"))){
             String publicKey = ctx.queryParam("public_key");
             JSONObject jsonResult = new JSONObject();
             String query = "SELECT MAX(`scan_time`) as max, MIN(`scan_time`) as min FROM `AgentData` WHERE `public_key` = ?";
@@ -576,5 +555,79 @@ public class Utils {
 
     public boolean authCheck(Context ctx) {
         return ctx.sessionAttribute("auth") != null && Objects.equals(ctx.sessionAttribute("auth"), "true");
+    }
+
+    public String addAgent(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        if(!authCheck(ctx)){
+            ctx.status(401);
+            return "Unathorized";
+        }
+        String publicKey = ctx.formParam("public_key");
+        String privateKey = ctx.formParam("secret_key");
+        String host = ctx.formParam("host");
+
+        if (publicKey != null && privateKey != null && host != null){
+            try {
+                String insertQuery = "INSERT IGNORE INTO `Agents`(`public_key`, `secret_key`, `host`) VALUES (?,?,?)";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, publicKey);
+                insertPs.setString(2, privateKey);
+                insertPs.setString(3, host);
+                insertPs.executeUpdate();
+                insertPs.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+            try {
+                String makeLink = "INSERT INTO `User_agents`(`user_id`, `public_key`) VALUES ((SELECT id from Users where mail = ?), ?)";
+                PreparedStatement linkPs = db.getConnection().prepareStatement(makeLink);
+                linkPs.setString(1, ctx.sessionAttribute("mail"));
+                linkPs.setString(2, publicKey);
+                linkPs.executeUpdate();
+                linkPs.close();
+                jsonResult.put("add", "true");
+                jsonResult.put("info", "Added");
+                return jsonResult.toJSONString();
+            }catch (SQLException throwables) {
+                jsonResult.put("add", "false");
+                jsonResult.put("info", "Is exist");
+                return jsonResult.toJSONString();
+            }
+        }else{
+            ctx.status(400);
+            return "Bad request";
+        }
+    }
+
+    public String deleteAgent(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        if(!authCheck(ctx)){
+            ctx.status(401);
+            return "Unathorized";
+        }
+        String publicKey = ctx.formParam("public_key");
+        if (publicKey != null && isOwner(ctx, db, publicKey)){
+            try {
+                String insertQuery = "DELETE FROM `User_agents` WHERE `user_id` = (Select id from Users WHERE mail = ?) and `public_key` = ?";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, ctx.sessionAttribute("mail"));
+                insertPs.setString(2, publicKey);
+                insertPs.executeUpdate();
+                insertPs.close();
+                jsonResult.put("add", "true");
+                jsonResult.put("info", publicKey + " deleted");
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Bad request";
+        }
     }
 }

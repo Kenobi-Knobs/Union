@@ -33,18 +33,27 @@ public class Server {
         Javalin app = Javalin.create().start(8080);
         Utils utils = new Utils();
 
+        app.config.addStaticFiles( "/","static/Root/", Location.EXTERNAL);
         app.config.addStaticFiles( "/doc","static/Doc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
+        //app.config.addStaticFiles( "/settings","static/SettingsPage/", Location.EXTERNAL);
+        //app.config.addStaticFiles( "/statistic","static/StatisticPage/", Location.EXTERNAL);
+        //app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/404","static/NotFoundPage", Location.EXTERNAL);
 
-        DBController db;
-        db = utils.connect();
+        DBController db = new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
         System.out.println("Database connect: [OK]");
 
         Mail mail = new Mail((String) jsonConfig.get("mail"), (String) jsonConfig.get("mail-pass"), (String) jsonConfig.get("from"));
         System.out.println("SMTP connect: [OK]");
 
+        app.error(404, ctx -> utils.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
+
+        //app.get("/admin", ctx -> utils.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
+        //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
+        //app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
         app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
@@ -61,7 +70,10 @@ public class Server {
         app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(utils.getInterval(ctx, db)); });
         app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(utils.getAgentDataByInterval(ctx, db)); });
 
+        app.post("/api/deleteAgent", ctx -> { cors(ctx); ctx.result(utils.deleteAgent(ctx, db)); });
+        app.post("/api/addAgent", ctx -> { cors(ctx); ctx.result(utils.addAgent(ctx, db)); });
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(utils.getAgentList(ctx, db)); });
+
         app.post("/api/endpoint", ctx -> utils.saveAgentData(ctx, db));
     }
 
