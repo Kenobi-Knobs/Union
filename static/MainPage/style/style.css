@@ -6,6 +6,7 @@
 
 html {
   font-size: 2vw;
+  display: none;
 }
 
 .pageWrapper {
@@ -143,7 +144,6 @@ html {
   align-items: center;
 }
 .pageWrapper .workSpace .head .accountInfo .accountCard {
-  width: 305px;
   min-width: 258px;
   height: 50px;
   margin-right: 10%;

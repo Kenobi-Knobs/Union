@@ -4,18 +4,21 @@
     box-sizing: border-box;
 }
 
+html {
+    font-size: 2vw;
+}
 
 .pageWrapper {
     text-align: center;
-    margin: 0 50px;
+    margin: 0 5%;
 
     .logo {
         display: inline-block;
-        margin-top: 20px;
-        margin-right: 20px;
+        margin-top: 2%;
+        margin-right: 1%;
 
         img {
-            width: 65px;
+            width: 5.5vw;
         }
     }
 
@@ -24,7 +27,7 @@
 
         span {
             font-family: circe, sans-serif;
-            font-size: 70px;
+            font-size: 3em;
             font-weight: bold;
         }
     }
@@ -33,36 +36,36 @@
         text-align: left;
 
         p {
-            text-indent: 40px;
+            text-indent: 1.5em;
             font-family: circe, sans-serif;
-            font-size: 20px;
+            font-size: 0.7em;
             text-align: left;
 
             &:nth-child(1) {
                 text-indent: inherit;
                 text-align: center;
-                font-size: 50px;
+                font-size: 1.8em;
                 font-weight: bold;
             }
 
         }
 
         .back {
-            height: 66px;
-            width: 200px;
+            height: 5vw;
+            width: 15vw;
             background-color: #F26B6B;
-            margin: 70px auto;
-            border-radius: 25px;
+            margin: 4% auto;
+            border-radius: 0.8em;
             text-align: center;
 
             a {
                 display: inline-block;
-                margin-top: 15px;
+                margin-top: 6%;
                 color: #EAEAEA;
                 text-decoration: none;
                 font-family: circe, sans-serif;
                 font-weight: bold;
-                font-size: 25px;
+                font-size: 1em;
 
                 &:hover,
                 &:active,
@@ -86,3 +89,149 @@
 
     }
 }
+
+//phone
+@media screen and (max-width: 575.98px) {
+    .pageWrapper {
+        .logo {
+            margin-top: 5%;
+
+            img {
+                width: 12vw;
+            }
+        }
+
+        .title {
+            span {
+                font-size: 7em;
+            }
+        }
+
+        .text {
+            p {
+                text-indent: 4em;
+                font-size: 1.5em;
+
+                &:nth-child(1) {
+                    font-size: 3.5em;
+                    font-weight: bold;
+
+                    //                    color: red;
+                }
+
+            }
+
+            .back {
+                height: 8.5vw;
+                width: 28vw;
+                border-radius: 2em;
+
+                a {
+                    font-size: 1.8em;
+                    margin-top: 6%;
+                }
+            }
+        }
+    }
+}
+
+//tablet
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+    .pageWrapper {
+        .logo {
+            margin-top: 5%;
+
+            img {
+                width: 11vw;
+            }
+        }
+
+        .title {
+            span {
+                font-size: 6em;
+            }
+        }
+
+        .text {
+            p {
+                text-indent: 4em;
+                font-size: 1em;
+
+                &:nth-child(1) {
+                    font-size: 3em;
+                    font-weight: bold;
+
+                    //                    color: red;
+                }
+
+            }
+
+            .back {
+                height: 8.5vw;
+                width: 28vw;
+                border-radius: 2em;
+
+                a {
+                    font-size: 1.8em;
+                    margin-top: 6%;
+                }
+            }
+        }
+    }
+}
+
+//tablet landscape
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+    .pageWrapper {
+        .logo {
+            margin-top: 5%;
+
+            img {
+                width: 10vw;
+            }
+        }
+
+        .title {
+            span {
+                font-size: 5em;
+            }
+        }
+
+        .text {
+            p {
+                text-indent: 4em;
+                font-size: 1em;
+
+                &:nth-child(1) {
+                    font-size: 2em;
+                    font-weight: bold;
+
+                    //                    color: aqua;
+                }
+
+            }
+
+            .back {
+                height: 7vw;
+                width: 22vw;
+                border-radius: 2em;
+
+                a {
+                    font-size: 1.5em;
+                    margin-top: 6%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1380.98px) {}
+
+//landscape
+
+@media screen and (max-width: 653.98px) and (max-height: 280px) {}
+
+//landscape
+@media screen and (max-width: 575.98px) and (max-height: 360.98px) {}
+
+@media screen and (min-width: 576px) and (max-width: 896.98px) and (min-height: 359.98px) and (max-height: 540px) {}

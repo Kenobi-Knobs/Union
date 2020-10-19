@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 2vw;
+}
+
 .pageWrapper {
   width: 100%;
   height: 100vh;
@@ -13,36 +17,36 @@
   flex-direction: column;
 }
 .pageWrapper .header {
+  margin-top: 4%;
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  margin-top: 50px;
 }
 .pageWrapper .header .logo {
-  margin-top: 20px;
-  margin-right: 40px;
+  margin-top: 5%;
+  margin-right: 5%;
 }
 .pageWrapper .header .logo img {
-  width: 100px;
+  width: 5vw;
 }
 .pageWrapper .header .title span {
   font-family: circe, sans-serif;
-  font-size: 100px;
+  font-size: 2.5em;
   font-weight: bold;
 }
 .pageWrapper .auth {
-  width: 50%;
+  width: 60vw;
+  height: 75vh;
 }
 .pageWrapper .auth .formWrapper {
   margin: 0 auto;
-  width: 60%;
-  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
+  width: 30vw;
+  box-shadow: 0 0.8em 2.8em rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
 }
 .pageWrapper .auth .formWrapper .rect {
   position: relative;
-  height: 10%;
-  border-radius: 25px 25px 0px 0px;
+  border-radius: 0.4em 0.4em 0px 0px;
   background-color: #F26B6B;
   text-align: center;
 }
@@ -53,72 +57,132 @@
   font-family: circe, sans-serif;
   font-style: normal;
   font-weight: 350;
-  font-size: clamp(15px, 1.6em, 200px);
+  font-size: 1em;
 }
 .pageWrapper .auth .formWrapper .contentForm ul {
-  width: 90%;
-  height: 100%;
   margin: 5%;
   list-style: none;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li {
   text-align: center;
-  margin: 30px 5px;
+  margin: 10% 2%;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) {
-  margin-bottom: 0px;
+  height: 4vw;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 1em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1em;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) {
-  margin-top: 0px;
+  height: 4vw;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword {
-  display: inline-block;
+  height: 100%;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle {
   position: relative;
-  background-color: #c4c4c4;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  top: 47px;
   left: 40%;
+  bottom: 85%;
+  border-radius: 50%;
+  display: inline-block;
+  height: 2.7vw;
+  width: 2.7vw;
+  background-color: #c4c4c4;
+  z-index: 2;
 }
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword i {
-  position: relative;
-  top: 10px;
-}
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword:hover {
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle:hover {
   cursor: pointer;
   background-color: #b2b2b2;
   transition: 0.3s;
 }
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword:not(:hover) {
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle:not(:hover) {
+  transition: 0.3s;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword input[name=password] {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 1em;
+  padding-right: 2.5em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1em;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword i {
+  position: relative;
+  float: right;
+  z-index: 1;
+  top: 25%;
+  right: 30%;
+  font-size: 1.5vw;
+  -webkit-user-select: none;
+          user-select: none;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) {
+  margin-bottom: 0;
+  height: 3vw;
+  clear: both;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit {
+  width: 50%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-radius: 0.4em;
+  background-color: #F26B6B;
+  color: #f8f8f8;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit:hover {
+  cursor: pointer;
+  background-color: #F25959;
+  transition: 0.3s;
+}
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit:not(:hover) {
   transition: 0.3s;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(4) {
-  margin: 14px;
+  margin: 4%;
   color: #666666;
   font-family: circe, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: clamp(15px, 1em, 200px);
+  font-size: 0.6em;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) {
   margin-top: 0;
+  height: 3vw;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div {
   display: inline-block;
   width: 50%;
-  height: 45px;
-  border-radius: 15px;
+  height: 100%;
+  border-radius: 0.4em;
   background-color: #7C97F8;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span {
-  display: block;
-  margin-top: 3%;
   color: #f1f1f1;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: clamp(15px, 1.6em, 200px);
+  font-size: 0.8em;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span i {
   margin-left: 5%;
@@ -131,62 +195,297 @@
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div:not(:hover) {
   transition: 0.3s;
 }
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) {
-  margin-bottom: 0;
-}
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit {
-  width: 50%;
-  height: 45px;
-  outline: none;
-  border: none;
-  border-radius: 15px;
-  background-color: #F26B6B;
-  color: #f8f8f8;
-  font-family: Circe, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-}
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit:hover {
-  cursor: pointer;
-  background-color: #F25959;
-  transition: 0.3s;
-}
-.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit:not(:hover) {
-  transition: 0.3s;
+.pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) {
+  margin-top: 5%;
+  padding-bottom: 2%;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) span {
   color: #616161;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 0.5em;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) a {
-  margin-left: 5px;
+  margin-left: 1%;
   color: #616161;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 0.5em;
 }
-.pageWrapper .auth .formWrapper .contentForm ul li input[name=mail],
-.pageWrapper .auth .formWrapper .contentForm ul li input[name=password] {
-  height: 57px;
-  width: 100%;
-  border-radius: 15px;
-  padding: 15px;
-  font-family: Circe, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 25px;
-  background: #EAEAEA;
-  outline: none;
-  border: none;
+.pageWrapper .auth .formWrapper .doc {
+  text-align: center;
+  margin-bottom: 20px;
 }
-.pageWrapper .doc a {
+.pageWrapper .auth .formWrapper .doc a {
+  color: #ADADAD;
+  font-size: 0.6em;
+}
+.pageWrapper .auth .formWrapper .doc a:hover, .pageWrapper .auth .formWrapper .doc a:active, .pageWrapper .auth .formWrapper .doc a:visited {
   color: #ADADAD;
 }
-.pageWrapper .doc a:hover, .pageWrapper .doc a:active, .pageWrapper .doc a:visited {
-  color: #ADADAD;
+
+@media screen and (max-width: 575.98px) {
+  .pageWrapper .header {
+    margin-top: 0%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .auth {
+    margin-right: 20%;
+  }
+  .pageWrapper .auth .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .auth .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle {
+    left: 40%;
+    bottom: 95%;
+    height: 7vw;
+    width: 7vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit {
+    font-size: 3em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(4) {
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div {
+    padding-top: 1%;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span i {
+    margin-left: 5%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) {
+    margin-top: 8%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) a {
+    font-size: 1.4em;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper .header {
+    margin-top: 0%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .auth {
+    margin-right: 20%;
+  }
+  .pageWrapper .auth .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .auth .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle {
+    left: 40%;
+    bottom: 95%;
+    height: 7vw;
+    width: 7vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit {
+    font-size: 3em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(4) {
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div {
+    padding-top: 1%;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span i {
+    margin-left: 5%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) {
+    margin-top: 8%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) a {
+    font-size: 1.4em;
+  }
+  .pageWrapper .auth .formWrapper .doc {
+    text-align: center;
+    padding-bottom: 5%;
+  }
+  .pageWrapper .auth .formWrapper .doc a {
+    color: #ADADAD;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .doc a:hover, .pageWrapper .auth .formWrapper .doc a:active, .pageWrapper .auth .formWrapper .doc a:visited {
+    color: #ADADAD;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .pageWrapper .header {
+    margin-top: 0%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .auth {
+    margin-right: 20%;
+  }
+  .pageWrapper .auth .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .auth .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle {
+    left: 40%;
+    bottom: 95%;
+    height: 7vw;
+    width: 7vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(3) #submit {
+    font-size: 3em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(4) {
+    font-size: 2em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) {
+    height: 9vw;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div {
+    padding-top: 1%;
+    border-radius: 1em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span {
+    font-size: 2.5em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(5) div span i {
+    margin-left: 5%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) {
+    margin-top: 8%;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) a {
+    font-size: 1.4em;
+  }
 }

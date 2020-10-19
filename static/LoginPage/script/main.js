@@ -16,12 +16,4 @@ $(document).ready(function () {
             }
         );
     });
-
-    $('#authTG').on('click', function () {
-        alert("In developing");
-    });
-    $('#signUp').on('click', function () {
-        alert("In developing");
-    });
-
 });
