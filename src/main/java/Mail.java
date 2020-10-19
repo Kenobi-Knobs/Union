@@ -1,6 +1,7 @@
 package main.java;
 
 import javax.mail.*;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -53,6 +54,17 @@ public class Mail {
                 "Hello friend, it seems that you have successfully registered your Union," +
                         "what do you have to do by click the link : https://t5.tss2020.site/api/confirm/" + token  +
                         " (if you did not register then just ignore this message)");
+        Transport.send(message);
+    }
+
+    public void sendResetLink(String token, String mailTo) throws MessagingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
+        message.setSubject("Union: Reset password");
+        message.setText(
+                "Hello you reset link ,  https://t5.tss2020.site/new-password/" + token  +
+                        " (if you did not reset you password then just ignore this message)");
         Transport.send(message);
     }
 }

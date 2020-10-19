@@ -639,4 +639,49 @@ public class Utils {
             return "Bad request";
         }
     }
+
+    public String resetPassword(Context ctx, DBController db, Mail mailService) {
+        JSONObject jsonResult = new JSONObject();
+        String mail = ctx.formParam("mail");
+        String query = "SELECT * FROM `Users` WHERE `mail` = ?";
+        try {
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, mail);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                if (res.getInt("email_confirmed") == 1) {
+                    String key = generateKey();
+                    mailService.sendResetLink(key, mail);
+                    String insertQuery = "UPDATE `Users` SET `reset_code`= ? WHERE `mail` = ?";
+                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                    insertPs.setString(1, key);
+                    insertPs.setString(2, mail);
+                    insertPs.executeUpdate();
+                    insertPs.close();
+                    jsonResult.put("reset", "true");
+                    jsonResult.put("info", "Confirmation mail sent");
+                    jsonResult.put("mail", mail);
+                    ps.close();
+                    return jsonResult.toJSONString();
+                } else {
+                    ps.close();
+                    jsonResult.put("reset", "false");
+                    jsonResult.put("info", "mail not confirm");
+                    return jsonResult.toJSONString();
+                }
+            } else {
+                ps.close();
+                jsonResult.put("reset", "false");
+                jsonResult.put("info", "mail not found");
+                return jsonResult.toJSONString();
+            }
+        } catch (SQLException | MessagingException throwables) {
+
+            throwables.printStackTrace();
+            jsonResult.put("reset", "false");
+            jsonResult.put("info", "mail not found or not sent");
+            return jsonResult.toJSONString();
+        }
+
+    }
 }

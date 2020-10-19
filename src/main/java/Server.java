@@ -33,6 +33,9 @@ public class Server {
         Javalin app = Javalin.create().start(8080);
         Utils utils = new Utils();
 
+        app.config.addStaticFiles( "/new-password","static/NewPasswordPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/reset","static/ResetPasswordPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/sign-in","static/SignInPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/","static/Root/", Location.EXTERNAL);
         app.config.addStaticFiles( "/doc","static/Doc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
@@ -55,11 +58,15 @@ public class Server {
         //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         //app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
+        app.get("/new-password/:token", ctx -> ctx.result("reset"));
+        app.get("/reset", ctx -> utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login"));
+        app.get("/sign-in", ctx -> utils.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login"));
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
         app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
         app.get("/login", ctx -> utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
         app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
 
+        app.post("/api/resetPassword", ctx -> {cors(ctx); ctx.result(utils.resetPassword(ctx, db, mail));});
         app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(utils.confirm(ctx, db, ctx.pathParam("token")));});
         app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(utils.register(ctx, db, mail));});
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
