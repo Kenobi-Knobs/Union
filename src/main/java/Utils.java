@@ -331,7 +331,7 @@ public class Utils {
                     byte[] salt = getSalt();
                     byte[] hash = hash(pass, salt);
 
-                    insertPs.setString(1, mail);
+                    insertPs.setString(1, mail.toLowerCase());
                     insertPs.setString(2, encoder.encodeToString(salt));
                     insertPs.setString(3, encoder.encodeToString(hash));
                     insertPs.setString(4, key);
@@ -341,7 +341,7 @@ public class Utils {
                     jsonResult.put("register","true");
                     jsonResult.put("info","Confirmation mail sent");
                     jsonResult.put("mail",mail);
-                }else{
+                } else {
                    jsonResult.put("register","false");
                    jsonResult.put("info","User already exist");
                 }
@@ -388,9 +388,9 @@ public class Utils {
     //проверка пароля и почты
     public boolean validation(String mail, String password) {
         Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher mailMatcher = mailPattern.matcher(mail);
+        Matcher mailMatcher = mailPattern.matcher(mail.toLowerCase());
 
-        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
         if (mailMatcher.find() && passMatcher.find()) return true;
@@ -638,50 +638,5 @@ public class Utils {
             ctx.status(400);
             return "Bad request";
         }
-    }
-
-    public String resetPassword(Context ctx, DBController db, Mail mailService) {
-        JSONObject jsonResult = new JSONObject();
-        String mail = ctx.formParam("mail");
-        String query = "SELECT * FROM `Users` WHERE `mail` = ?";
-        try {
-            PreparedStatement ps = db.getConnection().prepareStatement(query);
-            ps.setString(1, mail);
-            ResultSet res = ps.executeQuery();
-            if (res.next()) {
-                if (res.getInt("email_confirmed") == 1) {
-                    String key = generateKey();
-                    mailService.sendResetLink(key, mail);
-                    String insertQuery = "UPDATE `Users` SET `reset_code`= ? WHERE `mail` = ?";
-                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
-                    insertPs.setString(1, key);
-                    insertPs.setString(2, mail);
-                    insertPs.executeUpdate();
-                    insertPs.close();
-                    jsonResult.put("reset", "true");
-                    jsonResult.put("info", "Confirmation mail sent");
-                    jsonResult.put("mail", mail);
-                    ps.close();
-                    return jsonResult.toJSONString();
-                } else {
-                    ps.close();
-                    jsonResult.put("reset", "false");
-                    jsonResult.put("info", "mail not confirm");
-                    return jsonResult.toJSONString();
-                }
-            } else {
-                ps.close();
-                jsonResult.put("reset", "false");
-                jsonResult.put("info", "mail not found");
-                return jsonResult.toJSONString();
-            }
-        } catch (SQLException | MessagingException throwables) {
-
-            throwables.printStackTrace();
-            jsonResult.put("reset", "false");
-            jsonResult.put("info", "mail not found or not sent");
-            return jsonResult.toJSONString();
-        }
-
     }
 }
