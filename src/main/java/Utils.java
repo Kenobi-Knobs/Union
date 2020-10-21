@@ -331,7 +331,7 @@ public class Utils {
                     byte[] salt = getSalt();
                     byte[] hash = hash(pass, salt);
 
-                    insertPs.setString(1, mail.toLowerCase());
+                    insertPs.setString(1, mail);
                     insertPs.setString(2, encoder.encodeToString(salt));
                     insertPs.setString(3, encoder.encodeToString(hash));
                     insertPs.setString(4, key);
@@ -341,7 +341,7 @@ public class Utils {
                     jsonResult.put("register","true");
                     jsonResult.put("info","Confirmation mail sent");
                     jsonResult.put("mail",mail);
-                } else {
+                }else{
                    jsonResult.put("register","false");
                    jsonResult.put("info","User already exist");
                 }
@@ -388,9 +388,9 @@ public class Utils {
     //проверка пароля и почты
     public boolean validation(String mail, String password) {
         Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher mailMatcher = mailPattern.matcher(mail.toLowerCase());
+        Matcher mailMatcher = mailPattern.matcher(mail);
 
-        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
         if (mailMatcher.find() && passMatcher.find()) return true;
@@ -399,7 +399,7 @@ public class Utils {
 
     public String confirm(Context ctx, DBController db, String token) {
         if (token.length() != 20){
-            ctx.status(404);
+            ctx.status(400);
             return "You activation link wrong";
         }
         try {
@@ -417,15 +417,15 @@ public class Utils {
                 ctx.status(200);
                 ctx.redirect("../../login?info=confirmed");
             } else {
-                ctx.status(404);
+                ctx.status(400);
                 return "You activation link wrong db";
             }
             ps.close();
             return "confirm";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            ctx.status(404);
-            return "You activation link wrong db";
+            ctx.status(400);
+            return "You activation link wrong";
         }
     }
 
@@ -637,6 +637,105 @@ public class Utils {
         }else{
             ctx.status(400);
             return "Bad request";
+        }
+    }
+
+    public String resetPassword(Context ctx, DBController db, Mail mailService) {
+        JSONObject jsonResult = new JSONObject();
+        String mail = ctx.formParam("mail");
+        String query = "SELECT * FROM `Users` WHERE `mail` = ?";
+        try {
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, mail);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                if (res.getInt("email_confirmed") == 1) {
+                    String key = generateKey();
+                    mailService.sendResetLink(key, mail);
+                    String insertQuery = "UPDATE `Users` SET `reset_code`= ? WHERE `mail` = ?";
+                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                    insertPs.setString(1, key);
+                    insertPs.setString(2, mail);
+                    insertPs.executeUpdate();
+                    insertPs.close();
+                    jsonResult.put("reset", "true");
+                    jsonResult.put("info", "Confirmation mail sent");
+                    jsonResult.put("mail", mail);
+                    ps.close();
+                    return jsonResult.toJSONString();
+                } else {
+                    ps.close();
+                    jsonResult.put("reset", "false");
+                    jsonResult.put("info", "mail not confirm");
+                    return jsonResult.toJSONString();
+                }
+            } else {
+                ps.close();
+                jsonResult.put("reset", "false");
+                jsonResult.put("info", "mail not found");
+                return jsonResult.toJSONString();
+            }
+        } catch (SQLException | MessagingException throwables) {
+
+            throwables.printStackTrace();
+            jsonResult.put("reset", "false");
+            jsonResult.put("info", "mail not found or not sent");
+            return jsonResult.toJSONString();
+        }
+
+    }
+
+    public String changePassword(Context ctx, DBController db){
+        Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        JSONObject jsonResult = new JSONObject();
+        String token = ctx.formParam("token");
+        String newPass = ctx.formParam("new_pass");
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
+        Matcher passMatcher = passPattern.matcher(newPass);
+        if(!passMatcher.find()){
+            jsonResult.put("reset", "false");
+            jsonResult.put("info","validation error");
+            return jsonResult.toJSONString();
+        }
+        try {
+            byte[] salt = getSalt();
+            byte[] hash = hash(newPass, salt);
+            String query = "UPDATE `Users` SET `salt`= ?,`pwd`= ?,`reset_code`= NULL WHERE `reset_code` = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, encoder.encodeToString(salt));
+            ps.setString(2, encoder.encodeToString(hash));
+            ps.setString(3, token);
+            ps.executeUpdate();
+            ps.close();
+            jsonResult.put("reset", "true");
+            jsonResult.put("info","new password set");
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
+            throwables.printStackTrace();
+            jsonResult.put("reset", "false");
+            jsonResult.put("info","token no found");
+        }
+        return jsonResult.toJSONString();
+    }
+
+    public void showChangePassword(Context ctx, DBController db){
+        String token = ctx.pathParam("token");
+        if(token.length() != 20){
+            ctx.status(404);
+        }
+        try {
+            String query = "SELECT * FROM `Users` WHERE reset_code = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, token);
+            ResultSet res = ps.executeQuery();
+            if(res.next()){
+                sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
+            }else{
+                ctx.status(404);
+            }
+            ps.close();
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+            ctx.status(404);
         }
     }
 }
