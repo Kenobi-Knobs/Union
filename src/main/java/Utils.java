@@ -331,7 +331,7 @@ public class Utils {
                     byte[] salt = getSalt();
                     byte[] hash = hash(pass, salt);
 
-                    insertPs.setString(1, mail);
+                    insertPs.setString(1, mail.toLowerCase());
                     insertPs.setString(2, encoder.encodeToString(salt));
                     insertPs.setString(3, encoder.encodeToString(hash));
                     insertPs.setString(4, key);
@@ -388,9 +388,9 @@ public class Utils {
     //проверка пароля и почты
     public boolean validation(String mail, String password) {
         Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher mailMatcher = mailPattern.matcher(mail);
+        Matcher mailMatcher = mailPattern.matcher(mail.toLowerCase());
 
-        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
+        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
         if (mailMatcher.find() && passMatcher.find()) return true;
