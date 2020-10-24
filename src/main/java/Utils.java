@@ -580,8 +580,11 @@ public class Utils {
         String publicKey = ctx.formParam("public_key");
         String privateKey = ctx.formParam("secret_key");
         String host = ctx.formParam("host");
-
         if (publicKey != null && privateKey != null && host != null){
+            if(publicKey.contains("<") && host.contains("<")){
+                ctx.status(400);
+                return "Bad request (xss detect)";
+            }
             try {
                 String insertQuery = "INSERT IGNORE INTO `Agents`(`public_key`, `secret_key`, `host`) VALUES (?,?,?)";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);

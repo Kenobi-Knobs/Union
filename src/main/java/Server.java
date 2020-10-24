@@ -93,8 +93,8 @@ public class Server {
      * @param ctx Context that contains the header with access
      */
     public static void cors(Context ctx) {
+        ctx.header("Cache-Control", "no-cache, no-store");
         if (enableCors) {
-            ctx.header("Cache-Control", "no-cache, no-store");
             ctx.header("Access-Control-Allow-Origin","*");
         }
     }
