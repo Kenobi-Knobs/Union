@@ -1,0 +1,462 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 2vw;
+}
+
+.pageWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.pageWrapper .infoWrapper {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  z-index: 2;
+}
+.pageWrapper .infoWrapper::before {
+  content: "";
+  background: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  z-index: 3;
+}
+.pageWrapper .infoWrapper .info {
+  position: relative;
+  top: 35%;
+  left: 35%;
+  padding: 1%;
+  width: 30vw;
+  border-radius: 0.4em;
+  background-color: #f26b6b;
+  z-index: 3;
+}
+.pageWrapper .infoWrapper .info span {
+  color: #FFFFFF;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  font-weight: bold;
+}
+.pageWrapper .infoWrapper .info input[type=button] {
+  margin: 10% 0 0 30%;
+  padding: 1% 3%;
+  width: 40%;
+  border-radius: 0.4em;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:active, .pageWrapper .infoWrapper .info input[type=button]:focus, .pageWrapper .infoWrapper .info input[type=button]:hover {
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
+}
+.pageWrapper .header {
+  margin-top: 4%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.pageWrapper .header .logo {
+  margin-top: 5%;
+  margin-right: 5%;
+}
+.pageWrapper .header .logo img {
+  width: 5vw;
+}
+.pageWrapper .header .title span {
+  font-family: circe, sans-serif;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+.pageWrapper .signin {
+  width: 60vw;
+}
+.pageWrapper .signin .formWrapper {
+  margin: 0 auto;
+  width: 30vw;
+  box-shadow: 0 0.8em 2.8em rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
+}
+.pageWrapper .signin .formWrapper .rect {
+  position: relative;
+  border-radius: 0.4em 0.4em 0px 0px;
+  background-color: #F26B6B;
+  text-align: center;
+}
+.pageWrapper .signin .formWrapper .rect .titleAuth {
+  display: block;
+  padding-top: 1%;
+  color: #FDFDFD;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: 350;
+  font-size: 1em;
+}
+.pageWrapper .signin .formWrapper .contentForm ul {
+  margin: 5%;
+  list-style: none;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li {
+  text-align: center;
+  margin: 10% 2%;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
+  height: 4vw;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 1em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.7em;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
+  height: 4vw;
+  margin-bottom: 5%;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 1em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.7em;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) i {
+  position: relative;
+  float: right;
+  z-index: 1;
+  top: 25%;
+  right: 30%;
+  font-size: 1.5vw;
+  -webkit-user-select: none;
+          user-select: none;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
+  margin: 0%;
+  color: #666666;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.6em;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox + label {
+  display: inline-flex;
+  align-items: center;
+  -webkit-user-select: none;
+          user-select: none;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox + label::before {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 0.1em solid #adb5bd;
+  border-radius: 0.25em;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox:checked + label::before {
+  border-color: #0b76ef;
+  background-color: #0b76ef;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox:checked + label:hover::before {
+  cursor: pointer;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox:not(:disabled):not(:checked) + label:hover::before {
+  cursor: pointer;
+  border-color: #b3d7ff;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) #checkbox:not(:disabled):active + label::before {
+  background-color: #b3d7ff;
+  border-color: #b3d7ff;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) a {
+  position: relative;
+  bottom: 0.35em;
+  margin-left: 2%;
+  color: #ADADAD;
+  font-size: 0.9em;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) a:hover, .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) a:active, .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) a:visited {
+  color: #ADADAD;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
+  margin-top: 5%;
+  height: 5vw;
+  clear: both;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
+  width: 50%;
+  height: 60%;
+  outline: none;
+  border: none;
+  border-radius: 0.4em;
+  color: #f8f8f8;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit:hover {
+  background-color: #F25959;
+  transition: 0.3s;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit:not(:hover) {
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 575.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 25%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .signin {
+    margin-right: 20%;
+  }
+  .pageWrapper .signin .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .signin .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .signin .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+    margin-bottom: 8%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
+    font-size: 1.7em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
+    height: 13vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .signin {
+    margin-right: 20%;
+  }
+  .pageWrapper .signin .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .signin .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .signin .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+    margin-bottom: 8%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
+    font-size: 1.7em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
+    height: 13vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .signin {
+    margin-right: 20%;
+  }
+  .pageWrapper .signin .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .signin .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .signin .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
+    height: 9vw;
+    margin-bottom: 8%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
+    padding: 1.3em;
+    padding-right: 3em;
+    font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) i {
+    top: 22%;
+    right: 28%;
+    font-size: 4vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
+    font-size: 1.7em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
+    height: 13vw;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
+    font-size: 2em;
+  }
+}

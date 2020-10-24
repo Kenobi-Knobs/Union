@@ -1,0 +1,326 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 2vw;
+}
+
+.pageWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.pageWrapper .infoWrapper {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  z-index: 2;
+}
+.pageWrapper .infoWrapper::before {
+  content: "";
+  background: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  z-index: 5;
+}
+.pageWrapper .infoWrapper .info {
+  position: relative;
+  top: 35%;
+  left: 35%;
+  padding: 1%;
+  width: 30vw;
+  border-radius: 0.4em;
+  background-color: #f26b6b;
+  z-index: 5;
+}
+.pageWrapper .infoWrapper .info span {
+  color: #FFFFFF;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  font-weight: bold;
+}
+.pageWrapper .infoWrapper .info input[type=button] {
+  margin: 10% 0 0 30%;
+  padding: 1% 3%;
+  width: 40%;
+  border-radius: 0.4em;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:active, .pageWrapper .infoWrapper .info input[type=button]:focus, .pageWrapper .infoWrapper .info input[type=button]:hover {
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
+}
+.pageWrapper .header {
+  margin-top: 4%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.pageWrapper .header .logo {
+  margin-top: 5%;
+  margin-right: 5%;
+}
+.pageWrapper .header .logo img {
+  width: 5vw;
+}
+.pageWrapper .header .title span {
+  font-family: circe, sans-serif;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+.pageWrapper .reset {
+  width: 60vw;
+}
+.pageWrapper .reset .formWrapper {
+  margin: 0 auto;
+  width: 30vw;
+  box-shadow: 0 0.8em 2.8em rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
+}
+.pageWrapper .reset .formWrapper .rect {
+  position: relative;
+  border-radius: 0.4em 0.4em 0px 0px;
+  background-color: #F26B6B;
+  text-align: center;
+}
+.pageWrapper .reset .formWrapper .rect .titleAuth {
+  display: block;
+  padding-top: 1%;
+  color: #FDFDFD;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: 350;
+  font-size: 1em;
+}
+.pageWrapper .reset .formWrapper .contentForm ul {
+  margin: 5%;
+  list-style: none;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li {
+  text-align: center;
+  margin: 10% 2%;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) {
+  height: 4vw;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.4em;
+  padding: 1em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.7em;
+  background: #EAEAEA;
+  outline: none;
+  border: none;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) {
+  margin-top: 5%;
+  height: 5vw;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit {
+  width: 45%;
+  height: 60%;
+  outline: none;
+  border: none;
+  border-radius: 0.4em;
+  background-color: #F26B6B;
+  color: #f8f8f8;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit:hover {
+  cursor: pointer;
+  background-color: #F25959;
+  transition: 0.3s;
+}
+.pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit:not(:hover) {
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 575.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .reset {
+    margin-right: 20%;
+  }
+  .pageWrapper .reset .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .reset .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .reset .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) {
+    height: 13vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit {
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .reset {
+    margin-right: 20%;
+  }
+  .pageWrapper .reset .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .reset .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .reset .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) {
+    height: 13vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit {
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
+  .pageWrapper .header {
+    margin-top: 10%;
+  }
+  .pageWrapper .header .logo img {
+    width: 16vw;
+  }
+  .pageWrapper .header .title span {
+    font-size: 8em;
+  }
+  .pageWrapper .reset {
+    margin-right: 20%;
+  }
+  .pageWrapper .reset .formWrapper {
+    width: 80vw;
+    border-radius: 1em;
+  }
+  .pageWrapper .reset .formWrapper .rect {
+    border-radius: 1em 1em 0px 0px;
+  }
+  .pageWrapper .reset .formWrapper .rect .titleAuth {
+    font-size: 2.5em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li {
+    margin: 10% 2%;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) {
+    height: 9vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
+    padding: 1.3em;
+    font-size: 2em;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) {
+    height: 13vw;
+  }
+  .pageWrapper .reset .formWrapper .contentForm ul li:nth-child(2) #submit {
+    font-size: 2em;
+  }
+}

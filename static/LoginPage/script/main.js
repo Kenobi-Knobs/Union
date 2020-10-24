@@ -1,4 +1,32 @@
 $(document).ready(function () {
+
+    //checking authorized use or not
+    $.get(
+        "api/isAuth", {},
+        function (data) {
+            data = JSON.parse(data);
+
+            if (data.auth == "true") {
+                //                console.log("Auth is true");
+                $(location).attr('href', '/');
+            }
+        }
+    );
+
+    //get "confirm" from URL
+    let url = window.location.href;
+    let isConfirmed = getURLParameter(url, 'info');
+    //    console.log(isConfirmed);
+
+    if (isConfirmed == 'confirmed') {
+        $('.infoWrapper').fadeIn(300);
+        $('.infoWrapper').css({
+            'display': 'block',
+        });
+        $('#singInInfo').text('Mail was confirmed');
+        $('#singInInfo').css('paddingLeft', '35%');
+    }
+
     $('#submit').on('click', function () {
         $.get(
             "/api/auth", {
@@ -8,12 +36,46 @@ $(document).ready(function () {
             function (data) {
                 data = JSON.parse(data);
                 if (data.auth == "true") {
-                    console.log("ok");
+                    //                    console.log("ok");
                     $(location).attr('href', '/');
                 } else {
-                    alert("Wrong login or password")
+                    $('.infoWrapper').fadeIn(300);
+                    $('.infoWrapper').css({
+                        'display': 'block'
+                    });
+                    $('#singInInfo').text('Login or password are wrong');
+                    $('#singInInfo').css('paddingLeft', '30%');
                 }
             }
         );
     });
+
+    $('.circle').on('click', function () {
+        $(location).attr('href', '/reset');
+    });
+
+
+    $('#understandInfo').on('click', function () {
+        $('.infoWrapper').fadeOut(300);
+        setTimeout(function () {
+            $('.infoWrapper').css({
+                'display': 'none'
+            });
+            //        location.reload();
+        }, 400);
+
+    });
+
 });
+
+
+function getURLParameter(sUrl, sParam) {
+    let sPageURL = sUrl.substring(sUrl.indexOf('?') + 1);
+    let sURLVariables = sPageURL.split('&');
+    for (let i = 0; i < sURLVariables.length; i++) {
+        let sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+            return sParameterName[1];
+        }
+    }
+}

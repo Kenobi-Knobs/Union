@@ -10,7 +10,7 @@ html {
 
 .pageWrapper {
     width: 100%;
-    height: 100vh;
+    //    height: 100vh;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -32,7 +32,7 @@ html {
             width: 100%;
             height: 100%;
             opacity: 0.6;
-            z-index: 5;
+            z-index: 3;
         }
 
         .info {
@@ -45,7 +45,7 @@ html {
             background-color: rgba(242, 107, 107, 1);
             //            background-color: #C6FFAA;
             //            text-align: center;
-            z-index: 5;
+            z-index: 3;
 
             span {
                 color: #FFFFFF;
@@ -106,9 +106,8 @@ html {
         }
     }
 
-    .auth {
+    .signin {
         width: 60vw;
-        height: 75vh; //регулировка всоты User agreement
 
         .formWrapper {
             margin: 0 auto;
@@ -169,73 +168,122 @@ html {
 
                         &:nth-child(2) {
                             height: 4vw;
+                            margin-bottom: 5%;
 
-                            .forgotPassword {
+                            input[name="password"] {
                                 height: 100%;
+                                width: 100%;
+                                border-radius: 0.4em;
+                                padding: 1em;
+                                font-family: Circe, sans-serif;
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 0.7em;
+                                background: #EAEAEA;
+                                outline: none;
+                                border: none;
+                            }
 
-                                .circle {
-                                    position: relative;
-                                    left: 40%;
-                                    bottom: 85%;
-                                    border-radius: 50%;
-                                    display: inline-block;
-                                    height: 2.7vw;
-                                    width: 2.7vw;
-                                    background-color: #c4c4c4;
-                                    z-index: 1;
-
-                                    &:hover {
-                                        cursor: pointer;
-                                        background-color: #b2b2b2;
-                                        transition: 0.3s;
-                                    }
-
-                                    &:not(:hover) {
-                                        transition: 0.3s;
-                                    }
-                                }
-
-                                input[name="password"] {
-                                    height: 100%;
-                                    width: 100%;
-                                    border-radius: 0.4em;
-                                    padding: 1em;
-                                    padding-right: 3em;
-                                    font-family: Circe, sans-serif;
-                                    font-style: normal;
-                                    font-weight: normal;
-                                    font-size: 0.7em;
-                                    background: #EAEAEA;
-                                    outline: none;
-                                    border: none;
-                                }
-
-                                i {
-                                    position: relative;
-                                    float: right;
-                                    z-index: 1;
-                                    top: 25%;
-                                    right: 30%;
-                                    font-size: 1.5vw;
-                                    user-select: none;
-                                }
+                            i {
+                                position: relative;
+                                float: right;
+                                z-index: 1;
+                                top: 25%;
+                                right: 30%;
+                                font-size: 1.5vw;
+                                user-select: none;
                             }
                         }
 
-
                         &:nth-child(3) {
-                            margin-bottom: 0;
-                            height: 3vw;
+                            //                            height: 1vw;
+                            margin: 0%;
+                            color: #666666;
+                            font-family: circe, sans-serif;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 0.6em;
+
+                            #checkbox {
+                                position: absolute;
+                                z-index: -1;
+                                opacity: 0;
+                            }
+
+                            #checkbox + label {
+                                display: inline-flex;
+                                align-items: center;
+                                user-select: none;
+
+                                &::before {
+                                    content: '';
+                                    display: inline-block;
+                                    width: 0.9em;
+                                    height: 0.9em;
+                                    flex-shrink: 0;
+                                    flex-grow: 0;
+                                    border: 0.1em solid #adb5bd;
+                                    border-radius: 0.25em;
+                                    margin-right: 0.5em;
+                                    background-repeat: no-repeat;
+                                    background-position: center center;
+                                    background-size: 50% 50%;
+                                }
+                            }
+
+                            //                            вид чекбокса в состоянии checked
+                            #checkbox:checked + label::before {
+                                border-color: #0b76ef;
+                                background-color: #0b76ef;
+                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+                            }
+
+                            #checkbox:checked + label:hover::before {
+                                cursor: pointer;
+                            }
+
+                            //вид чекбокса при наведении
+                            #checkbox:not(:disabled):not(:checked) + label:hover::before {
+                                cursor: pointer;
+                                border-color: #b3d7ff;
+                            }
+
+                            //стили для акивного состояния чекбокса (при нажатии на него)
+                            #checkbox:not(:disabled):active + label::before {
+                                background-color: #b3d7ff;
+                                border-color: #b3d7ff;
+                            }
+
+                            a {
+                                position: relative;
+                                bottom: 0.35em;
+                                margin-left: 2%;
+                                color: #ADADAD;
+                                font-size: 0.9em;
+
+                                &:hover,
+                                &:active,
+                                &:visited {
+                                    color: #ADADAD;
+                                }
+
+                            }
+                        }
+
+                        &:nth-child(4) {
+                            margin-top: 5%;
+                            //                            padding-bottom: 5%;
+                            height: 5vw;
                             clear: both;
 
                             #submit {
                                 width: 50%;
                                 //                                padding: 0px;
-                                height: 100%;
+                                height: 60%;
                                 outline: none;
                                 border: none;
                                 border-radius: 0.4em;
-                                background-color: #F26B6B;
+                                //                                background-color: #F26B6B;
                                 color: #f8f8f8;
                                 font-family: Circe, sans-serif;
                                 font-style: normal;
@@ -244,7 +292,6 @@ html {
                                 //                                padding: 1% 0;
 
                                 &:hover {
-                                    cursor: pointer;
                                     background-color: #F25959;
                                     transition: 0.3s;
                                 }
@@ -253,77 +300,6 @@ html {
                                     transition: 0.3s;
                                 }
 
-                            }
-                        }
-
-                        &:nth-child(4) {
-                            margin: 4%;
-                            color: #666666;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 0.6em;
-
-                        }
-
-                        &:nth-child(5) {
-                            margin-top: 0;
-                            height: 3vw;
-
-                            div {
-                                display: inline-block;
-                                width: 50%;
-                                height: 100%;
-                                border-radius: 0.4em;
-                                background-color: #7C97F8;
-
-                                span {
-                                    //                                    display: block;
-                                    //                                    margin-top: 4%;
-                                    //                                    padding: 10% 0;
-                                    color: #f1f1f1;
-                                    font-family: Circe, sans-serif;
-                                    font-style: normal;
-                                    font-weight: bold;
-                                    font-size: 0.8em;
-
-                                    i {
-                                        margin-left: 5%;
-                                    }
-
-                                }
-
-                                &:hover {
-                                    cursor: pointer;
-                                    background-color: #6686F8;
-                                    transition: 0.3s;
-                                }
-
-                                &:not(:hover) {
-                                    transition: 0.3s;
-                                }
-                            }
-                        }
-
-                        &:nth-child(6) {
-                            margin-top: 5%;
-                            padding-bottom: 2%;
-
-                            span {
-                                color: #616161;
-                                font-family: Circe, sans-serif;
-                                font-style: normal;
-                                font-weight: bold;
-                                font-size: 0.5em;
-                            }
-
-                            a {
-                                margin-left: 1%;
-                                color: #616161;
-                                font-family: Circe, sans-serif;
-                                font-style: normal;
-                                font-weight: bold;
-                                font-size: 0.5em;
                             }
                         }
                     }
@@ -336,6 +312,7 @@ html {
 //phone
 @media screen and (max-width: 575.98px) {
     .pageWrapper {
+
         .infoWrapper {
             .info {
                 top: 25%;
@@ -357,7 +334,7 @@ html {
         }
 
         .header {
-            margin-top: 0%;
+            margin-top: 10%;
 
             .logo {
 
@@ -370,12 +347,12 @@ html {
 
                 span {
                     font-size: 8em;
-                    //                    color: chartreuse;
+                    //                    color: red;
                 }
             }
         }
 
-        .auth {
+        .signin {
             margin-right: 20%;
 
             .formWrapper {
@@ -410,72 +387,35 @@ html {
 
                             &:nth-child(2) {
                                 height: 9vw;
+                                margin-bottom: 8%;
 
-                                .forgotPassword {
-
-                                    .circle {
-                                        left: 40%;
-                                        bottom: 95%;
-                                        height: 7vw;
-                                        width: 7vw;
-                                    }
-
-                                    input[name="password"] {
-                                        padding: 1.3em;
-                                        padding-right: 3em;
-                                        font-size: 2em;
-                                    }
-
-                                    i {
-                                        top: 22%;
-                                        right: 28%;
-                                        font-size: 4vw;
-                                    }
+                                input[name="password"] {
+                                    padding: 1.3em;
+                                    padding-right: 3em;
+                                    font-size: 2em;
                                 }
+
+                                i {
+                                    top: 22%;
+                                    right: 28%;
+                                    font-size: 4vw;
+                                }
+
                             }
 
-
                             &:nth-child(3) {
-                                height: 9vw;
-
-                                #submit {
-                                    font-size: 3em;
-                                }
+                                //                                height: 9vw;
+                                font-size: 1.7em;
                             }
 
                             &:nth-child(4) {
-                                font-size: 2em;
-                            }
+                                height: 13vw;
 
-                            &:nth-child(5) {
-                                height: 9vw;
-
-                                div {
-                                    padding-top: 1%;
-                                    border-radius: 1em;
-
-                                    span {
-                                        font-size: 2.5em;
-
-                                        i {
-                                            margin-left: 5%;
-                                        }
-
-                                    }
+                                #submit {
+                                    font-size: 2em;
                                 }
                             }
 
-                            &:nth-child(6) {
-                                margin-top: 8%;
-
-                                span {
-                                    font-size: 1.4em;
-                                }
-
-                                a {
-                                    font-size: 1.4em;
-                                }
-                            }
                         }
                     }
                 }
@@ -509,7 +449,7 @@ html {
         }
 
         .header {
-            margin-top: 0%;
+            margin-top: 10%;
 
             .logo {
 
@@ -527,7 +467,7 @@ html {
             }
         }
 
-        .auth {
+        .signin {
             margin-right: 20%;
 
             .formWrapper {
@@ -562,72 +502,35 @@ html {
 
                             &:nth-child(2) {
                                 height: 9vw;
+                                margin-bottom: 8%;
 
-                                .forgotPassword {
-
-                                    .circle {
-                                        left: 40%;
-                                        bottom: 95%;
-                                        height: 7vw;
-                                        width: 7vw;
-                                    }
-
-                                    input[name="password"] {
-                                        padding: 1.3em;
-                                        padding-right: 3em;
-                                        font-size: 2em;
-                                    }
-
-                                    i {
-                                        top: 22%;
-                                        right: 28%;
-                                        font-size: 4vw;
-                                    }
+                                input[name="password"] {
+                                    padding: 1.3em;
+                                    padding-right: 3em;
+                                    font-size: 2em;
                                 }
+
+                                i {
+                                    top: 22%;
+                                    right: 28%;
+                                    font-size: 4vw;
+                                }
+
                             }
 
-
                             &:nth-child(3) {
-                                height: 9vw;
-
-                                #submit {
-                                    font-size: 3em;
-                                }
+                                //                                height: 9vw;
+                                font-size: 1.7em;
                             }
 
                             &:nth-child(4) {
-                                font-size: 2em;
-                            }
+                                height: 13vw;
 
-                            &:nth-child(5) {
-                                height: 9vw;
-
-                                div {
-                                    padding-top: 1%;
-                                    border-radius: 1em;
-
-                                    span {
-                                        font-size: 2.5em;
-
-                                        i {
-                                            margin-left: 5%;
-                                        }
-
-                                    }
+                                #submit {
+                                    font-size: 2em;
                                 }
                             }
 
-                            &:nth-child(6) {
-                                margin-top: 8%;
-
-                                span {
-                                    font-size: 1.4em;
-                                }
-
-                                a {
-                                    font-size: 1.4em;
-                                }
-                            }
                         }
                     }
                 }
@@ -639,6 +542,7 @@ html {
 //tablet landscape
 @media screen and (min-width: 992px) and (max-width: 1199.98px) {
     .pageWrapper {
+
         .infoWrapper {
             .info {
                 top: 35%;
@@ -660,7 +564,7 @@ html {
         }
 
         .header {
-            margin-top: 0%;
+            margin-top: 10%;
 
             .logo {
 
@@ -673,12 +577,12 @@ html {
 
                 span {
                     font-size: 8em;
-                    //                    color: blue;
+                    //                    color: red;
                 }
             }
         }
 
-        .auth {
+        .signin {
             margin-right: 20%;
 
             .formWrapper {
@@ -713,72 +617,35 @@ html {
 
                             &:nth-child(2) {
                                 height: 9vw;
+                                margin-bottom: 8%;
 
-                                .forgotPassword {
-
-                                    .circle {
-                                        left: 40%;
-                                        bottom: 95%;
-                                        height: 7vw;
-                                        width: 7vw;
-                                    }
-
-                                    input[name="password"] {
-                                        padding: 1.3em;
-                                        padding-right: 3em;
-                                        font-size: 2em;
-                                    }
-
-                                    i {
-                                        top: 22%;
-                                        right: 28%;
-                                        font-size: 4vw;
-                                    }
+                                input[name="password"] {
+                                    padding: 1.3em;
+                                    padding-right: 3em;
+                                    font-size: 2em;
                                 }
+
+                                i {
+                                    top: 22%;
+                                    right: 28%;
+                                    font-size: 4vw;
+                                }
+
                             }
 
-
                             &:nth-child(3) {
-                                height: 9vw;
-
-                                #submit {
-                                    font-size: 3em;
-                                }
+                                //                                height: 9vw;
+                                font-size: 1.7em;
                             }
 
                             &:nth-child(4) {
-                                font-size: 2em;
-                            }
+                                height: 13vw;
 
-                            &:nth-child(5) {
-                                height: 9vw;
-
-                                div {
-                                    padding-top: 1%;
-                                    border-radius: 1em;
-
-                                    span {
-                                        font-size: 2.5em;
-
-                                        i {
-                                            margin-left: 5%;
-                                        }
-
-                                    }
+                                #submit {
+                                    font-size: 2em;
                                 }
                             }
 
-                            &:nth-child(6) {
-                                margin-top: 8%;
-
-                                span {
-                                    font-size: 1.4em;
-                                }
-
-                                a {
-                                    font-size: 1.4em;
-                                }
-                            }
                         }
                     }
                 }
@@ -790,7 +657,7 @@ html {
 //@media screen and (min-width: 1200px) and (max-width: 1380.98px) {
 //    .pageWrapper {
 //        .header {
-//            margin-top: 0%;
+//            margin-top: 10%;
 //
 //            .logo {
 //
@@ -803,12 +670,12 @@ html {
 //
 //                span {
 //                    font-size: 8em;
-//                    //                    color: darkgoldenrod;
+//                    //                    color: red;
 //                }
 //            }
 //        }
 //
-//        .auth {
+//        .signin {
 //            margin-right: 20%;
 //
 //            .formWrapper {
@@ -843,72 +710,35 @@ html {
 //
 //                            &:nth-child(2) {
 //                                height: 9vw;
+//                                margin-bottom: 8%;
 //
-//                                .forgotPassword {
-//
-//                                    .circle {
-//                                        left: 40%;
-//                                        bottom: 95%;
-//                                        height: 7vw;
-//                                        width: 7vw;
-//                                    }
-//
-//                                    input[name="password"] {
-//                                        padding: 1.3em;
-//                                        padding-right: 3em;
-//                                        font-size: 2em;
-//                                    }
-//
-//                                    i {
-//                                        top: 22%;
-//                                        right: 28%;
-//                                        font-size: 4vw;
-//                                    }
+//                                input[name="password"] {
+//                                    padding: 1.3em;
+//                                    padding-right: 3em;
+//                                    font-size: 2em;
 //                                }
+//
+//                                i {
+//                                    top: 22%;
+//                                    right: 28%;
+//                                    font-size: 4vw;
+//                                }
+//
 //                            }
 //
-//
 //                            &:nth-child(3) {
-//                                height: 9vw;
-//
-//                                #submit {
-//                                    font-size: 3em;
-//                                }
+//                                //                                height: 9vw;
+//                                font-size: 1.7em;
 //                            }
 //
 //                            &:nth-child(4) {
-//                                font-size: 2em;
-//                            }
+//                                height: 13vw;
 //
-//                            &:nth-child(5) {
-//                                height: 9vw;
-//
-//                                div {
-//                                    padding-top: 1%;
-//                                    border-radius: 1em;
-//
-//                                    span {
-//                                        font-size: 2.5em;
-//
-//                                        i {
-//                                            margin-left: 5%;
-//                                        }
-//
-//                                    }
+//                                #submit {
+//                                    font-size: 2em;
 //                                }
 //                            }
 //
-//                            &:nth-child(6) {
-//                                margin-top: 8%;
-//
-//                                span {
-//                                    font-size: 1.4em;
-//                                }
-//
-//                                a {
-//                                    font-size: 1.4em;
-//                                }
-//                            }
 //                        }
 //                    }
 //                }

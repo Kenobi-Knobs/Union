@@ -13,6 +13,11 @@
 
 <body>
     <div class="pageWrapper">
+        <div class="infoWrapper">
+            <div class="info"><span id="singInInfo"></span><br>
+                <input type="button" id="understandInfo" value="Ok">
+            </div>
+        </div>
         <div class="header">
             <div class="logo">
                 <img src="login/images/logo.png" alt="logo">
@@ -33,7 +38,7 @@
                         <li><input id="mail" type="text" name="mail" placeholder="Login"></li>
                         <li>
                             <div class="forgotPassword"><input id="password" type="password" name="password" placeholder="Password">
-                                <!--                                <div class="circle"><i class="fas fa-question"></i></div>-->
+                                <div class="circle"><i class="fas fa-question"></i></div>
                             </div>
                         </li>
                         <li><input type="button" id="submit" name="logIn" value="Log In"></li>
@@ -43,11 +48,8 @@
                         <li hidden>
                             <div id="authTG"><span>Auth with <i class="fab fa-telegram-plane"></i></span></div>
                         </li>
-                        <li hidden><span class="question">Don't have an account?</span><a id="signUp" href="/SignUp">Sign up </a></li>
+                        <li><span class="question">Don't have an account?</span><a id="sign-in" href="/sign-in">Sign up </a></li>
                     </ul>
-                </div>
-                <div class="doc">
-                    <a href="/agreements">User agreement</a>
                 </div>
             </div>
         </div>

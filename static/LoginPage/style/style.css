@@ -16,6 +16,58 @@ html {
   align-items: center;
   flex-direction: column;
 }
+.pageWrapper .infoWrapper {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  z-index: 2;
+}
+.pageWrapper .infoWrapper::before {
+  content: "";
+  background: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  z-index: 5;
+}
+.pageWrapper .infoWrapper .info {
+  position: relative;
+  top: 35%;
+  left: 35%;
+  padding: 1%;
+  width: 30vw;
+  border-radius: 0.4em;
+  background-color: #f26b6b;
+  z-index: 5;
+}
+.pageWrapper .infoWrapper .info span {
+  color: #FFFFFF;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  font-weight: bold;
+}
+.pageWrapper .infoWrapper .info input[type=button] {
+  margin: 10% 0 0 30%;
+  padding: 1% 3%;
+  width: 40%;
+  border-radius: 0.4em;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:active, .pageWrapper .infoWrapper .info input[type=button]:focus, .pageWrapper .infoWrapper .info input[type=button]:hover {
+  border: none;
+  outline: none;
+}
+.pageWrapper .infoWrapper .info input[type=button]:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
+}
 .pageWrapper .header {
   margin-top: 4%;
   display: flex;
@@ -78,7 +130,7 @@ html {
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 1em;
+  font-size: 0.7em;
   background: #EAEAEA;
   outline: none;
   border: none;
@@ -98,7 +150,7 @@ html {
   height: 2.7vw;
   width: 2.7vw;
   background-color: #c4c4c4;
-  z-index: 2;
+  z-index: 1;
 }
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle:hover {
   cursor: pointer;
@@ -113,11 +165,11 @@ html {
   width: 100%;
   border-radius: 0.4em;
   padding: 1em;
-  padding-right: 2.5em;
+  padding-right: 3em;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 1em;
+  font-size: 0.7em;
   background: #EAEAEA;
   outline: none;
   border: none;
@@ -214,19 +266,23 @@ html {
   font-weight: bold;
   font-size: 0.5em;
 }
-.pageWrapper .auth .formWrapper .doc {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.pageWrapper .auth .formWrapper .doc a {
-  color: #ADADAD;
-  font-size: 0.6em;
-}
-.pageWrapper .auth .formWrapper .doc a:hover, .pageWrapper .auth .formWrapper .doc a:active, .pageWrapper .auth .formWrapper .doc a:visited {
-  color: #ADADAD;
-}
 
 @media screen and (max-width: 575.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 25%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
   .pageWrapper .header {
     margin-top: 0%;
   }
@@ -311,6 +367,21 @@ html {
   }
 }
 @media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
   .pageWrapper .header {
     margin-top: 0%;
   }
@@ -393,19 +464,23 @@ html {
   .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(6) a {
     font-size: 1.4em;
   }
-  .pageWrapper .auth .formWrapper .doc {
-    text-align: center;
-    padding-bottom: 5%;
-  }
-  .pageWrapper .auth .formWrapper .doc a {
-    color: #ADADAD;
-    font-size: 2em;
-  }
-  .pageWrapper .auth .formWrapper .doc a:hover, .pageWrapper .auth .formWrapper .doc a:active, .pageWrapper .auth .formWrapper .doc a:visited {
-    color: #ADADAD;
-  }
 }
 @media screen and (min-width: 992px) and (max-width: 1199.98px) {
+  .pageWrapper .infoWrapper .info {
+    top: 35%;
+    left: 10%;
+    padding: 3%;
+    width: 80vw;
+  }
+  .pageWrapper .infoWrapper .info span {
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .info input[type=button] {
+    margin: 10% 0 0 30%;
+    padding: 1% 3%;
+    width: 40%;
+    font-size: 1.5em;
+  }
   .pageWrapper .header {
     margin-top: 0%;
   }
