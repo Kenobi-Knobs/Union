@@ -45,6 +45,7 @@ public class Server {
         //app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/404","static/NotFoundPage", Location.EXTERNAL);
+        app.config.addStaticFiles( "/api/404","static/NotFoundPage", Location.EXTERNAL);
 
         DBController db = new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
         System.out.println("Database connect: [OK]");
@@ -64,7 +65,8 @@ public class Server {
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
         app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
         app.get("/login", ctx -> utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
-        app.get("/logout", ctx -> {ctx.sessionAttribute("auth", null); ctx.redirect("/login");});
+        app.get("/logout", ctx -> {
+            System.out.println(ctx.sessionAttribute("mail") + " logout");ctx.sessionAttribute("auth", null); ctx.sessionAttribute("mail", null); ctx.redirect("/login");});
 
         app.post("/api/changePassword", ctx -> {cors(ctx); ctx.result(utils.changePassword(ctx, db));});
         app.post("/api/resetPasswordMail", ctx -> {cors(ctx); ctx.result(utils.resetPassword(ctx, db, mail));});

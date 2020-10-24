@@ -32,6 +32,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * Project's server side utility class
  * @author Vitaliy Konchatniy, Pakhota Yury
@@ -103,7 +104,7 @@ public class Utils {
             ps.setString(1, mail);
             ps.setString(2, publicKey);
             ResultSet res = ps.executeQuery();
-            Boolean result = res.next();
+            boolean result = res.next();
             ps.close();
             return result;
         } catch (SQLException throwables) {
@@ -120,8 +121,13 @@ public class Utils {
      */
     public Boolean validate(Context ctx, DBController db, String body) {
         try {
+            JSONObject jsonBody;
             String sign = ctx.header("Sign");
-            JSONObject jsonBody = (JSONObject) parser.parse(body);
+            try{
+                jsonBody = (JSONObject) parser.parse(body);
+            }catch(ClassCastException e){
+                return false;
+            }
             String publicKey = (String) jsonBody.get("public_key");
             if(publicKey == null){
                 return false;
@@ -265,6 +271,7 @@ public class Utils {
                             jsonResult.put("info", "user is authorized");
                             ctx.sessionAttribute("auth", "true");
                             ctx.sessionAttribute("mail", mail);
+                            System.out.println( mail + " auth");
                         }else{
                             jsonResult.put("auth", "false");
                             jsonResult.put("info", "confirm account with mail");
@@ -341,6 +348,7 @@ public class Utils {
                     jsonResult.put("register","true");
                     jsonResult.put("info","Confirmation mail sent");
                     jsonResult.put("mail",mail);
+                    System.out.println( mail + " register");
                 }else{
                    jsonResult.put("register","false");
                    jsonResult.put("info","User already exist");
@@ -369,9 +377,7 @@ public class Utils {
     public byte[] hash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 10000, 256);
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = keyFactory.generateSecret(keySpec).getEncoded();
-
-        return hash;
+        return keyFactory.generateSecret(keySpec).getEncoded();
     }
 
     public String generateKey() {
@@ -393,8 +399,7 @@ public class Utils {
         Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
-        if (mailMatcher.find() && passMatcher.find()) return true;
-        else return false;
+        return mailMatcher.find() && passMatcher.find();
     }
 
     public String confirm(Context ctx, DBController db, String token) {
@@ -570,7 +575,7 @@ public class Utils {
         JSONObject jsonResult = new JSONObject();
         if(!authCheck(ctx)){
             ctx.status(401);
-            return "Unathorized";
+            return "Unauthorized";
         }
         String publicKey = ctx.formParam("public_key");
         String privateKey = ctx.formParam("secret_key");
@@ -615,7 +620,7 @@ public class Utils {
         JSONObject jsonResult = new JSONObject();
         if(!authCheck(ctx)){
             ctx.status(401);
-            return "Unathorized";
+            return "Unauthorized";
         }
         String publicKey = ctx.formParam("public_key");
         if (publicKey != null && isOwner(ctx, db, publicKey)){
@@ -662,19 +667,17 @@ public class Utils {
                     jsonResult.put("info", "Confirmation mail sent");
                     jsonResult.put("mail", mail);
                     ps.close();
-                    return jsonResult.toJSONString();
                 } else {
                     ps.close();
                     jsonResult.put("reset", "false");
                     jsonResult.put("info", "mail not confirm");
-                    return jsonResult.toJSONString();
                 }
             } else {
                 ps.close();
                 jsonResult.put("reset", "false");
                 jsonResult.put("info", "mail not found");
-                return jsonResult.toJSONString();
             }
+            return jsonResult.toJSONString();
         } catch (SQLException | MessagingException throwables) {
 
             throwables.printStackTrace();
@@ -691,7 +694,7 @@ public class Utils {
         String token = ctx.formParam("token");
         String newPass = ctx.formParam("new_pass");
         Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
-        Matcher passMatcher = passPattern.matcher(newPass);
+        Matcher passMatcher = passPattern.matcher(Objects.requireNonNull(newPass));
         if(!passMatcher.find()){
             jsonResult.put("reset", "false");
             jsonResult.put("info","validation error");
@@ -728,7 +731,7 @@ public class Utils {
             ps.setString(1, token);
             ResultSet res = ps.executeQuery();
             if(res.next()){
-                sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
+                sendHtml(ctx, "static/NewPasswordPage/index.html", "public", "/login");
             }else{
                 ctx.status(404);
             }
