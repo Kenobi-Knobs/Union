@@ -252,6 +252,8 @@ public class Utils {
         String pass = ctx.queryParam("pass");
         JSONObject jsonResult = new JSONObject();
         if(mail != null && pass != null) {
+            mail = mail.trim();
+            pass = pass.trim();
             try {
                 String query = "SELECT * FROM `Users` WHERE mail = ?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);

@@ -40,7 +40,7 @@ public class Server {
         app.config.addStaticFiles( "/doc","static/Doc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
-        //app.config.addStaticFiles( "/settings","static/SettingsPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/settings","static/SettingsPage/", Location.EXTERNAL);
         //app.config.addStaticFiles( "/statistic","static/StatisticPage/", Location.EXTERNAL);
         //app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
@@ -57,7 +57,7 @@ public class Server {
 
         //app.get("/admin", ctx -> utils.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
         //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
-        //app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
+        app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/new-password/:token", ctx -> utils.showChangePassword(ctx,db));
         app.get("/reset", ctx -> utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login"));
