@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Project's server side class<br>
@@ -59,12 +60,32 @@ public class Server {
         //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
-        app.get("/new-password/:token", ctx -> utils.showChangePassword(ctx,db));
-        app.get("/reset", ctx -> utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login"));
-        app.get("/sign-in", ctx -> utils.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login"));
+        app.get("/new-password/:token", ctx -> {
+            if (ctx.sessionAttribute("auth") != null){
+                ctx.redirect("/");
+            }
+            utils.showChangePassword(ctx,db);
+        });
+        app.get("/reset", ctx -> {
+            if (ctx.sessionAttribute("auth") != null){
+                ctx.redirect("/");
+            }
+            utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
+        });
+        app.get("/sign-in", ctx -> {
+            if (ctx.sessionAttribute("auth") != null){
+                ctx.redirect("/");
+            }
+            utils.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login");
+        });
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
         app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
-        app.get("/login", ctx -> utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login"));
+        app.get("/login", ctx -> {
+            if (ctx.sessionAttribute("auth") != null){
+                ctx.redirect("/");
+            }
+            utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login");
+        });
         app.get("/logout", ctx -> {
             System.out.println(ctx.sessionAttribute("mail") + " logout");ctx.sessionAttribute("auth", null); ctx.sessionAttribute("mail", null); ctx.redirect("/login");});
 
