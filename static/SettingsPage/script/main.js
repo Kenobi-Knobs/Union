@@ -1,15 +1,56 @@
 $(document).ready(function () {
 
-    //checking authorized use or not
+    $(".quit").on('click', function () {
+        $(location).attr('href', '/logout');
+    });
+
+    $('#home').on('click', function () {
+        $(location).attr('href', '/');
+    });
+
+    $('#settings').on('click', function () {
+        $(location).attr('href', '/settings');
+    });
+
+    //adding servers
+    $('#Save').on('click', function () {
+        let public_key = $('#addPublicKey').val();
+        let secret_key = $('#addSecretKey').val();
+        let host = $('#addHost').val();
+        $.post(
+            "/api/addAgent", {
+                public_key: public_key,
+                secret_key: secret_key,
+                host: host
+            },
+            function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+
+                if (data.add == 'true' && data.info == 'Added') {
+                    location.reload();
+                }
+                if (data.add == 'false' && data.info == 'Is exist') {
+                    console.log('server is exist');
+                }
+            }
+        );
+    });
+
+    //    checking authorized user or not
     $.get(
         "api/isAuth", {},
         function (data) {
             data = JSON.parse(data);
 
+            let userName;
+
             if (data.auth == "true") {
                 console.log("Auth is true");
                 $('#userName').text(data.mail);
                 $('html').css('display', 'block');
+                userName = data.mail.split('@');
+                $('#userName').text(userName[0]);
             }
             if (data.auth == "false") {
                 $(location).attr('href', '/login');
@@ -17,97 +58,103 @@ $(document).ready(function () {
         }
     );
 
-    $(".quit").on('click', function () {
-        $(location).attr('href', '/logout');
-    });
-
-    //getting agents
-    console.log("Getting agents");
-
     $.get(
         "/api/getAgentList", {},
         function (data) {
-            let agents = [];
             data = JSON.parse(data);
 
             for (var key in data['agents']) {
-                console.log(data.agents[key].public_key);
+                //                console.log(data.agents[key].public_key);
                 $('.listOfServers').append(
                     $('<li>').append(
-                        $('<input>').attr({
-                            type: 'radio',
-                            name: 'servers',
+                        $('<span>').attr({
+                            class: "nameServer",
                             id: data.agents[key].public_key,
-                            value: data.agents[key].public_key
-                        })
-                    ).append(
-                        $('<label>').attr({
-                            for: data.agents[key].public_key
                         }).text(data.agents[key].public_key)
+                    ).append(
+                        $('<span>').attr({
+                            class: "trashIcon",
+                            id: data.agents[key].public_key + "_Delete"
+                        }).append(
+                            $('<i>').attr({
+                                class: "far fa-trash-alt",
+                            })
+                        )
                     )
-                )
-
-                //pushing name of agents in array
-                agents.push(data.agents[key].public_key)
+                );
             }
 
-            //getting info from agent
-            let servers = $('input[name=servers]');
-            let interval;
-            servers.on('change', function () {
-                let currentServer = $(this).val();
+            $('#addNew').on('click', function () {
+                $('.formWrapper').css('display', 'block');
+                $('.form').css('display', 'block');
+                $('.infoDeletingWrapper').css('display', 'none');
+                $('.titleCard').text('Add new server');
+                $('.infoWrapper').fadeIn(300);
+                setTimeout(function () {
+                    $('.infoWrapper').css({
+                        'display': 'block'
+                    });
+                }, 400);
 
-                agents.forEach(function (item, index, array) {
-                    if (currentServer == item) {
-                        clearInterval(interval);
-                        getInfoJSONFromAgent(currentServer);
-                        interval = setInterval(getInfoJSONFromAgent, 65000, currentServer);
-                    }
+            });
+
+            $('#close').on('click', function () {
+                $('.formWrapper').css('display', 'none');
+                $('.infoDeletingWrapper').css('display', 'none');
+                $('.infoWrapper').fadeOut(300);
+                setTimeout(function () {
+                    $('.infoWrapper').css({
+                        'display': 'none'
+                    });
+                }, 400);
+
+            });
+
+            //deleting servers
+            $('.trashIcon').on('click', function () {
+                let public_keyToDelete = $(this).attr('id').split('_')[0];
+
+                $('.formWrapper').css('display', 'block');
+                $('.form').css('display', 'none');
+                $('.titleCard').text('Delete server');
+                $('.infoDeletingWrapper').css('display', 'block');
+                $('#infoDelete').text(`Are you sure you want to delete ${public_keyToDelete}?`);
+                $('.infoWrapper').fadeIn(300);
+
+                $('#Yes').on('click', function () {
+                    $.post(
+                        "/api/deleteAgent", {
+                            public_key: public_keyToDelete
+                        },
+                        function (data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+
+                            if (data.delete == 'true') {
+                                location.reload();
+                            }
+                        }
+                    );
                 });
+
+                setTimeout(function () {
+                    $('.infoWrapper').css({
+                        'display': 'block'
+                    });
+                }, 400);
+            });
+
+            $('#Cancel').on('click', function () {
+                $('.formWrapper').css('display', 'none');
+                $('.infoDeletingWrapper').css('display', 'none');
+                $('.infoWrapper').fadeOut(300);
+                setTimeout(function () {
+                    $('.infoWrapper').css({
+                        'display': 'none'
+                    });
+                }, 400);
             });
         }
     );
 
 });
-
-
-
-function getInfoJSONFromAgent(nameOfServer) {
-    console.log("Getting from " + nameOfServer);
-
-    $.get(
-        "/api/getAgentData", {
-            "public_key": nameOfServer
-        },
-        function (data) {
-            data = JSON.parse(data);
-            if (data['dataset'].length == 0) {
-                $('.wired').text('no data');
-                $('.total').text('no data');
-                $('.inactive').text('no data');
-                $('.active').text('no data');
-                $('.free').text('no data');
-
-                $('.system').text('no data');
-                $('.idle').text('no data');
-                $('.num').text('no data');
-                $('.user').text('no data');
-            } else {
-                for (var key in data['dataset']) {
-                    $('.wired').text(data.dataset[key].data.memory.wired);
-                    $('.total').text(data.dataset[key].data.memory.total);
-                    $('.inactive').text(data.dataset[key].data.memory.inactive);
-                    $('.active').text(data.dataset[key].data.memory.active);
-                    $('.free').text(data.dataset[key].data.memory.free);
-
-                    $('.system').text(data.dataset[key].data.cpu[0].system);
-                    $('.idle').text(data.dataset[key].data.cpu[0].idle);
-                    $('.num').text(data.dataset[key].data.cpu[0].num);
-                    $('.user').text(data.dataset[key].data.cpu[0].user);
-                }
-            }
-        }
-    );
-
-    return 0;
-}

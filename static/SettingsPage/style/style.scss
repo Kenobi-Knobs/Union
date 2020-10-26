@@ -7,392 +7,494 @@
 }
 
 html {
-    font-size: 2vw;
     display: none;
+    width: 100%;
+    font-size: 2vw;
+    overflow-x: hidden;
 }
 
 .pageWrapper {
-
-    width: 100%;
-    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: row;
+    //    padding: 2%;
 
-    .menu {
-        width: 8%;
-        min-width: 68px;
-        min-height: 100%;
-        background-color: $colorSideBar;
-        box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.25);
+    .infoWrapper {
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100vw;
+        z-index: 2;
+
+        &::before {
+            content: '';
+            background: #000;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            z-index: 5;
+        }
+
+        .card {
+            position: relative;
+            top: 15%;
+            left: 35%;
+            width: 30vw;
+            border-radius: 0.4em;
+            background-color: #FFFFFF;
+            //            background-color: #C6FFAA;
+            //            text-align: center;
+            z-index: 5;
+
+            .rect {
+                position: relative;
+                height: 1.5em;
+                border-radius: 0.4em 0.4em 0 0;
+                background-color: #292929;
+                text-align: center;
+
+                .titleCard {
+                    padding: 1em;
+                    float: left;
+                    color: #FFFFFF;
+                    //                color: #000000;
+                    font-family: circe, sans-serif;
+                    font-size: 0.5em;
+                    font-weight: bold;
+                }
+
+                #close {
+                    margin: 1em;
+                    float: right;
+                    color: #FFFFFF;
+                    //                color: #000000;
+                    font-family: circe, sans-serif;
+                    font-size: 0.5em;
+                    font-weight: bold;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+
+            }
+
+            .formWrapper {
+                display: none;
+                clear: both;
+
+                ul {
+                    list-style: none;
+                    font-family: circe, sans-serif;
+                    font-size: 0.5em;
+
+                    li {
+                        margin: 5% 5%;
+                        //                        height: 20%;
+
+                        &:nth-child(1) {
+                            margin-top: 5%;
+                        }
+
+                        &:nth-child(4) {
+                            text-align: center;
+                            height: 5vw;
+                            padding-bottom: 8%;
+                        }
+                    }
+                }
+
+                #Save {
+                    width: 30%;
+                    //                                padding: 0px;
+                    height: 100%;
+                    outline: none;
+                    border: none;
+                    border-radius: 0.4em;
+                    background-color: #F26B6B;
+                    color: #f8f8f8;
+                    font-family: Circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 1.5em;
+                    //                                padding: 1% 0;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #F25959;
+                        transition: 0.3s;
+                    }
+
+                    &:not(:hover) {
+                        transition: 0.3s;
+                    }
+                }
+            }
+
+            input[type="text"] {
+                height: 100%;
+                width: 100%;
+                border-radius: 0.4em;
+                padding: 1em;
+                font-family: Circe, sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 1em;
+                background: #EAEAEA;
+                outline: none;
+                border: none;
+            }
+
+            .infoDeletingWrapper {
+                padding: 0.8em 1em 1em 1em;
+                text-align: center;
+                clear: both;
+
+                span {
+                    font-family: circe, sans-serif;
+                    font-size: 0.6em;
+                    font-weight: bold;
+                }
+
+                .answers {
+                    margin-top: 0.8em;
+
+                    #Yes {
+                        margin-right: 0.5em;
+                        padding: 0.4em 0;
+                        width: 20%;
+                        outline: none;
+                        border: none;
+                        border-radius: 0.4em;
+                        background-color: #292929;
+                        color: #f8f8f8;
+                        font-family: Circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 0.6em;
+                        //                                padding: 1% 0;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #474747;
+                            transition: 0.3s;
+                        }
+
+                        &:not(:hover) {
+                            transition: 0.3s;
+                        }
+                    }
+
+                    #Cancel {
+                        margin-left: 0.5em;
+                        padding: 0.4em 0;
+                        width: 20%;
+                        outline: none;
+                        border: none;
+                        border-radius: 0.4em;
+                        background-color: #989898;
+                        color: #f8f8f8;
+                        font-family: Circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 0.6em;
+                        //                                padding: 1% 0;
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: #BDBDBD;
+                            transition: 0.3s;
+                        }
+
+                        &:not(:hover) {
+                            transition: 0.3s;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    .sidebar {
+        position: fixed;
+        height: 100vh;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 1.5em rgba(0, 0, 0, 0.25);
         display: flex;
         flex-direction: column;
-        align-items: center;
-        z-index: 1;
+        justify-content: flex-start;
 
         .logo {
-            width: 100%;
+            width: 2em;
+            height: 30%;
             text-align: center;
 
             img {
-                margin-top: 27px;
-                width: clamp(25px, 75%, 500px);
+                margin-top: 50%;
+                width: 1.5em;
             }
         }
 
         .navbar {
-            opacity: 0;
-            width: 100%;
             text-align: center;
-            margin-top: 150px;
-            height: 55%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            //            background-color: #7FECD8;
 
-            div {
-                transition: 0.3s;
+            ul {
+                li {
+                    padding: 60% 0;
+                    font-size: 0.7em;
 
-                &:hover {
-                    //                    cursor: pointer;
-                    color: $iconColorHover;
-                    transition: all 0.3s ease-out;
+                    i {
+                        transition: 0.3s;
+
+                        &:hover {
+                            cursor: pointer;
+                            color: #F98181;
+                            transition: 0.3s;
+                        }
+                    }
+
+                    &:nth-child(4) {
+                        color: #F98181;
+                    }
+
                 }
+            }
+        }
 
-                &:not(:hover) {
-                    transition: all 0.3s ease-out;
-                }
+        .mobileExit {
+            display: none;
+            text-align: center;
+            margin-top: 90%;
 
-                i {
-                    font-size: clamp(21px, 1.2em, 160px);
-                }
+            svg {
+                padding: 5%;
+                border-radius: 0.2em;
+                box-shadow: 0 0 1.5em rgba(0, 0, 0, 0.6);
             }
         }
     }
 
-    .workSpace {
-        width: 100%;
-        min-height: 100%;
-        //        background-color: #ECA497;
+    .main {
+        margin-left: 2.5em;
         display: flex;
         flex-direction: column;
 
         .head {
-            width: 100%;
-            height: 30%;
-            //            background-color: #ECEA89;
+            width: 100vw;
             display: flex;
             flex-direction: row;
+            justify-content: flex-start;
 
-            .titleAndFilter {
-                //                width: 100%;
-                margin-left: 56px;
-                height: 100%;
-                //                background-color: #D5ECD4;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+            .title {
+                width: 100%;
+                padding-top: 2%;
+                padding-left: 4%;
 
-                .title {
-                    margin-top: 3%;
-                    width: 100%;
-                    height: 65%;
-                    //                    background-color: #EC887B;
-                    text-align: center;
-
-                    span {
-                        font-family: $mainFont;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 1em;
-                        //                        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
-                    }
-                }
-
-                .filter {
-                    opacity: 0;
-                    width: 100%;
-                    height: 35%;
-                    //                    background-color: #C971EC;
-                    background-color: #FFFFFF;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    user-select: none;
-
-                    //                    transition: 0.4s;
-
-                    &:hover {
-                        //                        user-select: none;
-                        color: #FFFFFF;
-                        //                        cursor: pointer;
-                        background-color: #F26B6B;
-                        transition: all 0.3s ease-out;
-                        //                        transition: 0.4s;
-                    }
-
-                    &:not(:hover) {
-                        transition: all 0.3s ease-out;
-                    }
-
-                    &:nth-child(1) {
-                        margin-right: 45px;
-                    }
-
-                    &:nth-child(3) {
-                        margin-left: 45px;
-                    }
-
-                    a {
-                        height: 50px;
-                        width: 119px;
-                        text-align: center;
-                        padding-top: 10px;
-                        text-decoration: none;
-                        background: #FFFFFF;
-                        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-                        border-radius: 10px;
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 24px;
-                        color: #000000;
-
-                        &:active {
-                            color: #000000;
-                        }
-
-                    }
+                span {
+                    font-family: Circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 1.7em;
                 }
             }
 
-            .accountInfo {
+            .exit {
                 width: 100%;
-                height: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-end;
-                align-items: center;
-                //                background-color: #A8D1EC;
 
                 .accountCard {
-                    //                    width: 305px;
-                    min-width: 258px;
-                    height: 50px;
-                    margin-right: 10%;
-                    margin-left: 10%;
-                    //                    float: right;
-                    border-radius: 10px;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #FFFFFF;
-                    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-
-                    :hover {
-                        cursor: pointer;
-                    }
+                    display: inline-block;
+                    margin: 7% 0 0 15%;
+                    padding: 0.1em 1.4em;
+                    border-radius: 0.4em;
+                    box-shadow: 0px 0.1em 0.8em rgba(0, 0, 0, 0.25);
 
                     span {
-                        font-family: $mainFont;
+                        position: relative;
+                        bottom: 0.2em;
+                        right: 0.5em;
+                        font-family: Circe, sans-serif;
                         font-style: normal;
                         font-weight: bold;
-                        font-size: $nameFontSize;
-                        user-select: none;
+                        font-size: 0.7em;
                     }
 
-                    .name {
-                        padding-right: 3%;
-                    }
+                    svg {
+                        position: relative;
+                        top: 0.15em;
+                        left: 0.7em;
+                        width: 1em;
+                        height: 1em;
+                        //                            z-index: 10;
 
-                    .avatarka {
-                        img {
-                            margin-top: 12%;
-                            width: 43px;
-                            clip-path: circle(20px at 23px 20px);
-                        }
-                    }
-
-                    .exit {
-                        margin-left: 20px;
-                        margin-top: 5px;
-
-                        svg {
-                            :hover {
-                                fill: $iconColorHover;
-                                transition: 0.3s;
-                            }
-
-                            :not(:hover) {
-                                fill: #000000;
-                                transition: 0.3s;
-                            }
+                        path {
+                            stroke: inherit;
+                            stroke-width: inherit;
+                            fill: inherit;
                         }
 
+                        &:hover {
+                            cursor: pointer;
+                            fill: #F98181;
+                            transition: 0.3s;
+                        }
 
+                        &:not(:hover) {
+                            fill: #000000;
+                            transition: 0.3s;
+                        }
                     }
                 }
             }
         }
 
-        .information {
+        .settigsBlock {
+            margin-top: 2em;
+            padding: 1em 0 1em 1.5em;
+            margin-right: 2%;
             width: 100%;
             height: 100%;
-            //            background-color: #ECD0E5;
+            //            background-color: aquamarine;
             display: grid;
-            grid-template-columns: minmax(250px, 25%) minmax(250px, 25%) minmax(250px, 25%);
-            //            grid-template-rows: 40% 40%;
-            grid-gap: 30px 60px;
-            justify-content: center;
-            align-content: center;
+            grid-template-columns: 14em 14em 14em;
+            grid-gap: 1em 1em;
 
-            .card {
-                background-color: #ffffff;
-                box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
-                border-radius: 25px;
-
-                //                padding: 15px;
-
-                .rect {
-                    position: relative;
-                    height: 63px;
-                    border-radius: 25px 25px 0px 0px;
-                    background-color: #F26B6B;
-                    text-align: center;
-
-                }
-
-                .titleCard {
-                    display: block;
-                    padding-top: 1%;
-                    color: #FDFDFD;
-                    font-family: circe, sans-serif;
-                    font-style: normal;
-                    font-weight: 350;
-                    font-size: clamp(15px, 0.9em, 100px);
-                    line-height: 59px;
-                }
-
-            }
-
-            .dataDiagram {
-                .rect {
-                    text-align: center;
-                }
-            }
-
-            .anyInfoCard {
-                grid-column-start: 2;
+            .settings {
+                grid-column-start: 1;
                 grid-column-end: 3;
-                grid-row-start: 1;
-                grid-row-end: 3;
+                //                background-color: beige;
 
-                .rect {
-                    text-align: center;
-                }
-
-                .agentInfo {
-                    margin: 0 auto;
-                    width: 90%;
-                    font-family: $mainFont;
-
-
-                    .memory {
-                        padding: 10px 30px 10px 20px;
+                ul {
+                    li {
+                        padding: 1em 1em 0.2em 1em;
                         list-style: none;
+                        border-bottom: 0.01em solid #D0D0D0;
+                        font-family: circe, sans-serif;
 
-                        .titleMemory {
-                            font-weight: bold;
+
+                        .titleOption {
+                            font-size: 0.8em;
                         }
 
-                        li {
-                            padding: 3px;
-                            font-size: clamp(15px, 0.6em, 100px);
+                        span {
+                            display: block;
+                            font-size: 0.5em;
 
-                            .memoryInfo {
-                                margin-left: 15px;
+                            a {
+                                color: #182CEF;
+
+                                &:active,
+                                &:visited {
+                                    color: #182CEF;
+                                }
                             }
                         }
 
-                        .infoMemory {
-                            padding-left: 15px;
-                        }
                     }
-
-
-                    .cpu {
-                        padding: 0px 30px 0px 20px;
-                        list-style: none;
-
-                        .titleCpu {
-                            font-weight: bold;
-                        }
-
-                        li {
-                            padding: 3px;
-                            font-size: clamp(15px, 0.6em, 100px);
-
-                            .memoryInfo {
-                                margin-left: 15px;
-                            }
-                        }
-
-                        .infoCpu {
-                            padding-left: 15px;
-                        }
-                    }
-
-
                 }
             }
 
-            .servers {
+            .addServerWrapper {
                 grid-column-start: 3;
                 grid-column-end: 4;
-                grid-row-start: 1;
-                grid-row-end: 3;
-                background-color: #221F1F;
 
-                .titleServers {
-                    display: block;
-                    padding-top: 6%;
-                    font-family: $mainFont;
-                    font-size: 40px;
-                    color: #ffffff;
-                    text-align: center;
-                }
+                .addserver {
+                    width: 100%;
+                    background-color: #221F1F;
+                    border-radius: 0.4em;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    font-family: circe, sans-serif;
+                    color: #FFFFFF;
 
-                .nameServersWrapper {
-                    margin: 0 auto;
-                    width: 90%;
+                    .titleAddServer {
+                        padding-top: 0.5em;
+                        text-align: center;
 
-                    ul {
-                        padding: 20px 20px 80px 20px;
-                        list-style-type: none;
+                        span {
+                            font-size: 1.3em;
+                        }
+                    }
 
-                        li {
-                            padding: 30px 20px 10px;
-                            font-size: 23px;
-                            font-family: $mainFont;
-                            border-bottom: 1px solid #e1e1e1;
+                    .servers {
+                        ul {
+                            padding: 0.5em 1em 1em 1em;
+                            list-style-type: none;
 
-                            label {
-                                padding-left: 10px;
-                                color: #ffffff;
-                            }
+                            li {
+                                width: 100%;
+                                padding: 1em 0.7em 0.2em 0;
+                                font-size: 0.8em;
+                                font-family: circe, sans-serif;
+                                border-bottom: 0.05em solid #e1e1e1;
 
-                            :hover {
-                                cursor: pointer;
+                                .nameServer {
+                                    padding-left: 0.4em;
+                                    color: #FFFFFF;
+                                    user-select: none;
+                                }
+
+                                .trashIcon {
+                                    float: right;
+                                    color: #A7A7A7;
+
+                                    &:hover {
+                                        color: #FFFFFF;
+                                        cursor: pointer;
+                                        transition: 0.3s;
+                                    }
+
+                                    &:not(:hover) {
+                                        color: #A7A7A7;
+                                        transition: 0.3s;
+                                    }
+                                }
+
                             }
                         }
                     }
-                }
 
+                    .addServerButtonWrapper {
+                        //                    height: 200px;
+                        text-align: center;
+
+                        #addNew {
+                            margin-bottom: 1em;
+                            width: 50%;
+                            padding: 0.2em 0.5em;
+                            height: 100%;
+                            outline: none;
+                            border: none;
+                            border-radius: 0.4em;
+                            background-color: #4A4A4A;
+                            color: #ffffff;
+                            font-family: Circe, sans-serif;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 0.85em;
+                            //                                padding: 1% 0;
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #636363;
+                                transition: 0.3s;
+                            }
+
+                            &:not(:hover) {
+                                transition: 0.3s;
+                            }
+
+                        }
+                    }
+
+                }
             }
 
-            .pieChart {}
         }
     }
 }

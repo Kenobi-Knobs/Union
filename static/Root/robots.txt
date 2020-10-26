@@ -1,10 +1,1 @@
-# robots.txt file for Union
-# This file is the only file capable of stopping the Skynet, it was created to prevent a disaster.
-# If you are not a robot and find him, please find Sarah Conor and save her,
-# an attempt on her life will happen on March 3, 2021, if this is not prevented,
-# then humanity will be doomed. You may need this:
-# 01101000011101000111010001110000011100110011101000101111001011110110001001101001011101000010111001101100011110010010111100110011001101110101000101101000001101010110000101110010
-
-User-agent: *
-Disallow: /
-
+this is robots.txt
