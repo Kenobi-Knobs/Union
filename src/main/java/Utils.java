@@ -636,7 +636,7 @@ public class Utils {
                 insertPs.setString(2, publicKey);
                 insertPs.executeUpdate();
                 insertPs.close();
-                jsonResult.put("add", "true");
+                jsonResult.put("delete", "true");
                 jsonResult.put("info", publicKey + " deleted");
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
