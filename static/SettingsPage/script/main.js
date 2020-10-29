@@ -14,27 +14,42 @@ $(document).ready(function () {
 
     //adding servers
     $('#Save').on('click', function () {
-        let public_key = $('#addPublicKey').val();
-        let secret_key = $('#addSecretKey').val();
-        let host = $('#addHost').val();
-        $.post(
-            "/api/addAgent", {
-                public_key: public_key,
-                secret_key: secret_key,
-                host: host
-            },
-            function (data) {
-                data = JSON.parse(data);
-                console.log(data);
+        let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
+        let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
+        let host = $('#addHost').val().replace(/\s/gi, '');
 
-                if (data.add == 'true' && data.info == 'Added') {
-                    location.reload();
+
+        if (public_key.length <= 0 || secret_key.length <= 0 || host.length <= 0) {
+            //            alert('field must be filled');
+            $('#addPublicKey').val('');
+            $('#addSecretKey').val('');
+            $('#addHost').val('');
+            $('#info').text('All fields must be filled');
+
+            $('.emptyWrapper').fadeIn(300);
+
+        } else {
+            $.post(
+                "/api/addAgent", {
+                    public_key: public_key,
+                    secret_key: secret_key,
+                    host: host
+                },
+                function (data) {
+                    data = JSON.parse(data);
+                    //                    console.log(data);
+
+                    if (data.add == 'true' && data.info == 'Added') {
+                        location.reload();
+                        $('.emptyWrapper').css('display', 'none');
+                    }
+                    if (data.add == 'false' && data.info == 'Is exist') {
+                        $('#info').text('This server is already exist');
+                        $('.emptyWrapper').fadeIn(300);
+                    }
                 }
-                if (data.add == 'false' && data.info == 'Is exist') {
-                    console.log('server is exist');
-                }
-            }
-        );
+            );
+        }
     });
 
     //    checking authorized user or not
@@ -99,9 +114,16 @@ $(document).ready(function () {
             });
 
             $('#close').on('click', function () {
+
+                $('#addPublicKey').val('');
+                $('#addSecretKey').val('');
+                $('#addHost').val('');
+
                 $('.formWrapper').css('display', 'none');
                 $('.infoDeletingWrapper').css('display', 'none');
+                $('.emptyWrapper').css('display', 'none');
                 $('.infoWrapper').fadeOut(300);
+
                 setTimeout(function () {
                     $('.infoWrapper').css({
                         'display': 'none'
@@ -128,7 +150,7 @@ $(document).ready(function () {
                         },
                         function (data) {
                             data = JSON.parse(data);
-                            console.log(data);
+                            //                            console.log(data);
 
                             if (data.delete == 'true') {
                                 location.reload();

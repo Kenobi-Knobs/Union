@@ -5,7 +5,6 @@
 }
 
 html {
-  display: none;
   width: 100%;
   font-size: 2vw;
   overflow-x: hidden;
@@ -42,6 +41,26 @@ html {
   border-radius: 0.4em;
   background-color: #FFFFFF;
   z-index: 5;
+}
+.pageWrapper .infoWrapper .card .emptyWrapper {
+  display: none;
+  position: absolute;
+  left: 3em;
+  bottom: 15.5em;
+}
+.pageWrapper .infoWrapper .card .emptyWrapper .empty {
+  padding: 0.3em 1em;
+  border-radius: 0.4em;
+  border: 0.01em solid #FF3B45;
+  display: inline;
+  background-color: #FFFFFF;
+}
+.pageWrapper .infoWrapper .card .emptyWrapper .empty span {
+  color: #000000;
+  font-family: circe, sans-serif;
+  font-size: 0.7em;
+  font-weight: bold;
+  letter-spacing: 0.01em;
 }
 .pageWrapper .infoWrapper .card .rect {
   position: relative;
@@ -201,6 +220,9 @@ html {
 .pageWrapper .sidebar .navbar {
   text-align: center;
 }
+.pageWrapper .sidebar .navbar ul {
+  list-style: none;
+}
 .pageWrapper .sidebar .navbar ul li {
   padding: 60% 0;
   font-size: 0.7em;
@@ -302,6 +324,9 @@ html {
   grid-column-start: 1;
   grid-column-end: 3;
 }
+.pageWrapper .main .settigsBlock .settings ul {
+  list-style: none;
+}
 .pageWrapper .main .settigsBlock .settings ul li {
   padding: 1em 1em 0.2em 1em;
   list-style: none;
@@ -341,6 +366,9 @@ html {
 }
 .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
   font-size: 1.3em;
+}
+.pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers {
+  list-style: none;
 }
 .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
   padding: 0.5em 1em 1em 1em;
@@ -397,4 +425,962 @@ html {
 }
 .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew:not(:hover) {
   transition: 0.3s;
+}
+
+@media screen and (max-width: 575.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .infoWrapper {
+    display: none;
+    position: absolute;
+    right: 20vw;
+    top: 10%;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+  }
+  .pageWrapper .infoWrapper::before {
+    content: "";
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card {
+    position: relative;
+    top: 10%;
+    left: 35%;
+    width: 70vw;
+    border-radius: 1.5em;
+    background-color: #FFFFFF;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper {
+    display: none;
+    position: absolute;
+    left: 8em;
+    bottom: 0vw;
+    top: 83vw;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty {
+    padding: 0.8em 2em;
+    border-radius: 0.4em;
+    border: 0.01em solid #FF3B45;
+    display: inline;
+    background-color: #FFFFFF;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+  }
+  .pageWrapper .infoWrapper .card .rect {
+    position: relative;
+    height: 4em;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #292929;
+    text-align: center;
+  }
+  .pageWrapper .infoWrapper .card .rect .titleCard {
+    padding: 0.3em 0.7em;
+    float: left;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close {
+    margin: 0.3em 1em 0 0;
+    float: right;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close:hover {
+    cursor: pointer;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper {
+    display: none;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul {
+    list-style: none;
+    font-family: circe, sans-serif;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li {
+    margin: 5% 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
+    margin-top: 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
+    text-align: center;
+    height: 15vw;
+    padding-bottom: 8%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save {
+    width: 30%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #F26B6B;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:hover {
+    cursor: pointer;
+    background-color: #F25959;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card input[type=text] {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.4em;
+    padding: 1em;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1em;
+    background: #EAEAEA;
+    outline: none;
+    border: none;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper {
+    padding: 2em;
+    text-align: center;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
+    font-family: circe, sans-serif;
+    font-size: 1.9em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
+    margin-top: 0.8em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes {
+    margin-right: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #292929;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:hover {
+    cursor: pointer;
+    background-color: #474747;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel {
+    margin-left: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #989898;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:hover {
+    cursor: pointer;
+    background-color: #BDBDBD;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 0;
+  }
+  .pageWrapper .main .head .title span {
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+  }
+  .pageWrapper .main .settigsBlock {
+    padding: 0 5em 1em 5em;
+    margin-top: 0;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .settigsBlock .settings {
+    margin-bottom: 1em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .titleOption {
+    font-size: 2.2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper {
+    margin: 0 4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
+    width: 100%;
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
+    font-size: 3em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
+    height: 10vw;
+    margin: 2em 0;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
+    margin-bottom: 1em;
+    width: 50%;
+    padding: 0.2em 0.5em;
+    border-radius: 1.5em;
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .infoWrapper {
+    display: none;
+    position: absolute;
+    right: 20vw;
+    top: 10%;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+  }
+  .pageWrapper .infoWrapper::before {
+    content: "";
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card {
+    position: relative;
+    top: 10%;
+    left: 35%;
+    width: 70vw;
+    border-radius: 1.5em;
+    background-color: #FFFFFF;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper {
+    display: none;
+    position: absolute;
+    left: 8em;
+    bottom: 0vw;
+    top: 83vw;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty {
+    padding: 0.8em 2em;
+    border-radius: 0.4em;
+    border: 0.01em solid #FF3B45;
+    display: inline;
+    background-color: #FFFFFF;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+  }
+  .pageWrapper .infoWrapper .card .rect {
+    position: relative;
+    height: 4em;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #292929;
+    text-align: center;
+  }
+  .pageWrapper .infoWrapper .card .rect .titleCard {
+    padding: 0.3em 0.7em;
+    float: left;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close {
+    margin: 0.3em 1em 0 0;
+    float: right;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close:hover {
+    cursor: pointer;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper {
+    display: none;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul {
+    list-style: none;
+    font-family: circe, sans-serif;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li {
+    margin: 5% 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
+    margin-top: 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
+    text-align: center;
+    height: 15vw;
+    padding-bottom: 8%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save {
+    width: 30%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #F26B6B;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:hover {
+    cursor: pointer;
+    background-color: #F25959;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card input[type=text] {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.4em;
+    padding: 1em;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1em;
+    background: #EAEAEA;
+    outline: none;
+    border: none;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper {
+    padding: 2em;
+    text-align: center;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
+    font-family: circe, sans-serif;
+    font-size: 1.9em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
+    margin-top: 0.8em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes {
+    margin-right: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #292929;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:hover {
+    cursor: pointer;
+    background-color: #474747;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel {
+    margin-left: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #989898;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:hover {
+    cursor: pointer;
+    background-color: #BDBDBD;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 0;
+  }
+  .pageWrapper .main .head .title span {
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+  }
+  .pageWrapper .main .settigsBlock {
+    padding: 0 5em 1em 5em;
+    margin-top: 0;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .settigsBlock .settings {
+    margin-bottom: 1em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .titleOption {
+    font-size: 2.2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper {
+    margin: 0 4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
+    width: 100%;
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
+    font-size: 3em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
+    height: 10vw;
+    margin: 2em 0;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
+    margin-bottom: 1em;
+    width: 50%;
+    padding: 0.2em 0.5em;
+    border-radius: 1.5em;
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1030.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .infoWrapper {
+    display: none;
+    position: absolute;
+    right: 20vw;
+    top: 10%;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+  }
+  .pageWrapper .infoWrapper::before {
+    content: "";
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card {
+    position: relative;
+    top: 10%;
+    left: 35%;
+    width: 70vw;
+    border-radius: 1.5em;
+    background-color: #FFFFFF;
+    z-index: 5;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper {
+    display: none;
+    position: absolute;
+    left: 8em;
+    bottom: 0vw;
+    top: 83vw;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty {
+    padding: 0.8em 2em;
+    border-radius: 0.4em;
+    border: 0.01em solid #FF3B45;
+    display: inline;
+    background-color: #FFFFFF;
+  }
+  .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+  }
+  .pageWrapper .infoWrapper .card .rect {
+    position: relative;
+    height: 4em;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #292929;
+    text-align: center;
+  }
+  .pageWrapper .infoWrapper .card .rect .titleCard {
+    padding: 0.3em 0.7em;
+    float: left;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close {
+    margin: 0.3em 1em 0 0;
+    float: right;
+    color: #FFFFFF;
+    font-family: circe, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .rect #close:hover {
+    cursor: pointer;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper {
+    display: none;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul {
+    list-style: none;
+    font-family: circe, sans-serif;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li {
+    margin: 5% 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
+    margin-top: 5%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
+    text-align: center;
+    height: 15vw;
+    padding-bottom: 8%;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save {
+    width: 30%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #F26B6B;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:hover {
+    cursor: pointer;
+    background-color: #F25959;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .formWrapper #Save:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card input[type=text] {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.4em;
+    padding: 1em;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1em;
+    background: #EAEAEA;
+    outline: none;
+    border: none;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper {
+    padding: 2em;
+    text-align: center;
+    clear: both;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
+    font-family: circe, sans-serif;
+    font-size: 1.9em;
+    font-weight: bold;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
+    margin-top: 0.8em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes {
+    margin-right: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #292929;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:hover {
+    cursor: pointer;
+    background-color: #474747;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Yes:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel {
+    margin-left: 0.5em;
+    padding: 0.4em 0;
+    width: 30%;
+    outline: none;
+    border: none;
+    border-radius: 0.4em;
+    background-color: #989898;
+    color: #f8f8f8;
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:hover {
+    cursor: pointer;
+    background-color: #BDBDBD;
+    transition: 0.3s;
+  }
+  .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers #Cancel:not(:hover) {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
+    display: none;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 0;
+  }
+  .pageWrapper .main .head .title span {
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+  }
+  .pageWrapper .main .settigsBlock {
+    padding: 0 5em 1em 5em;
+    margin-top: 0;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .settigsBlock .settings {
+    margin-bottom: 1em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .titleOption {
+    font-size: 2.2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper {
+    margin: 0 4em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
+    width: 100%;
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
+    font-size: 3em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
+    height: 10vw;
+    margin: 2em 0;
+  }
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
+    margin-bottom: 1em;
+    width: 50%;
+    padding: 0.2em 0.5em;
+    border-radius: 1.5em;
+    font-size: 2em;
+  }
 }
