@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -6,6 +7,35 @@
 
 html {
   font-size: 2vw;
+}
+
+[data-tooltip] {
+  position: relative;
+  /* Относительное позиционирование */
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  width: 10em;
+  left: 1em;
+  top: 0;
+  background: #F26B6B;
+  border-radius: 0.4em;
+  font-family: circe, sans-serif;
+  font-size: 0.5em;
+  color: #fff;
+  padding: 0.4em;
+  box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: 1s;
+  z-index: 20;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+  left: 2em;
 }
 
 .pageWrapper {
@@ -144,11 +174,11 @@ html {
 .pageWrapper .auth .formWrapper .contentForm ul li:nth-child(2) .forgotPassword .circle {
   position: relative;
   left: 40%;
-  bottom: 85%;
+  bottom: 79%;
   border-radius: 50%;
   display: inline-block;
-  height: 2.7vw;
-  width: 2.7vw;
+  height: 2.3vw;
+  width: 2.3vw;
   background-color: #c4c4c4;
   z-index: 1;
 }
@@ -180,7 +210,7 @@ html {
   z-index: 1;
   top: 25%;
   right: 30%;
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   -webkit-user-select: none;
           user-select: none;
 }

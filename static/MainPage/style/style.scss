@@ -138,7 +138,7 @@ html {
 
                 .accountCard {
                     display: inline-block;
-                    margin: 7% 0 0 15%;
+                    margin: 7% 0 0 44%;
                     padding: 0.1em 1.4em;
                     border-radius: 0.4em;
                     box-shadow: 0px 0.1em 0.8em rgba(0, 0, 0, 0.25);
@@ -146,7 +146,7 @@ html {
                     span {
                         position: relative;
                         bottom: 0.2em;
-                        right: 0.5em;
+                        //                        right: 0.5em;
                         font-family: Circe, sans-serif;
                         font-style: normal;
                         font-weight: bold;
@@ -193,6 +193,21 @@ html {
             //            grid-template-rows: 9em 9em;
             grid-gap: 1em 1em;
 
+            .alert {
+                position: absolute;
+                left: 25vw;
+                top: 20vw;
+                z-index: 2;
+
+                span {
+                    font-family: circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 1em;
+                    color: #9C9C9C;
+                }
+            }
+
             .card {
                 background-color: #FFFFFF;
                 box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
@@ -234,12 +249,16 @@ html {
             }
 
             .diagram {
+                display: none;
 
                 .selectWrapper {
                     position: relative;
                     //                    display: none;
                     width: 100%;
                     z-index: 1;
+                    font-family: circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
 
                     .select {
                         width: 3.5em;
@@ -318,11 +337,12 @@ html {
             }
 
             .infoCard {
+                display: none;
                 grid-column-start: 2;
                 grid-column-end: 3;
                 grid-row-start: 1;
                 grid-row-end: 3;
-                display: flex;
+                //                display: flex;
                 flex-direction: column;
                 justify-content: space-between;
 
@@ -601,6 +621,8 @@ html {
             }
 
             .network {
+                display: none;
+
                 .infoNetwork {
                     display: flex;
                     flex-direction: column;
@@ -621,10 +643,11 @@ html {
                             padding: 0.5em;
 
                             i {
-                                font-size: 0.9em;
+                                font-size: 0.7em;
                             }
 
                             span {
+                                padding-left: 0.5em;
                                 font-size: 0.9em;
                             }
                         }
@@ -698,12 +721,6 @@ html {
 
                         i {
                             transition: 0.3s;
-
-                            &:hover {
-                                cursor: pointer;
-                                color: #F98181;
-                                transition: 0.3s;
-                            }
                         }
 
                         &:nth-child(1) {
@@ -813,6 +830,21 @@ html {
                 display: flex;
                 flex-direction: column;
 
+                .alert {
+                    position: absolute;
+                    left: 10vw;
+                    top: 90vw;
+                    z-index: 2;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 3em;
+                        color: #9C9C9C;
+                    }
+                }
+
                 .card {
                     margin: 2em 0;
                     background-color: #FFFFFF;
@@ -860,13 +892,15 @@ html {
                 }
 
                 .diagram {
+                    display: none;
+                    //                    height: 20vh;
 
                     .selectWrapper {
                         //                        display: none;
                         width: 100%;
 
                         .select {
-                            width: 3.5em;
+                            width: 15em;
                             margin: 0.5em 0.5em;
                             position: relative;
 
@@ -881,10 +915,13 @@ html {
                                 cursor: pointer;
                                 border: 0.03em solid #cccccc;
                                 background-color: #f2f2f2;
-                                border-radius: 0.2em;
+                                border-radius: 0.8em;
 
                                 .select__current {
-                                    font-size: 0.6em;
+                                    font-family: circe, sans-serif;
+                                    font-style: normal;
+                                    font-weight: bold;
+                                    font-size: 1.7em;
                                     line-height: 2em;
                                     padding: 0.1em 0.2em;
                                 }
@@ -907,7 +944,7 @@ html {
                             .select__body {
                                 display: none;
                                 border: 0.03em solid #cccccc;
-                                border-radius: 0.2em;
+                                border-radius: 0.8em;
                                 border-top: 0;
                                 position: absolute;
                                 left: 0;
@@ -915,9 +952,12 @@ html {
                                 top: 100%;
 
                                 .select__item {
+                                    font-family: circe, sans-serif;
+                                    font-style: normal;
+                                    font-weight: bold;
                                     line-height: 1em;
                                     padding: 0.2em;
-                                    font-size: 0.5em;
+                                    font-size: 1.4em;
                                     cursor: pointer;
                                     background-color: #f2f2f2;
 
@@ -943,7 +983,7 @@ html {
 
                 .infoCard {
                     order: -1;
-                    display: flex;
+                    display: none;
                     flex-direction: column;
                     justify-content: space-between;
 
@@ -1141,6 +1181,7 @@ html {
                 }
 
                 .servers {
+                    //                    display: none;
                     order: -2;
                     background-color: #221F1F;
 
@@ -1163,7 +1204,7 @@ html {
                         width: 90%;
 
                         ul {
-                            padding: 0.5em 1em 2em 1em;
+                            padding: 0.5em 1em 4em 1em;
                             list-style-type: none;
 
                             li {
@@ -1233,12 +1274,12 @@ html {
                                 padding: 1.5em;
 
                                 i {
-                                    font-size: 2.5em;
+                                    font-size: 1.5em;
                                 }
 
                                 span {
                                     font-size: 2em;
-                                    margin-left: 1em;
+                                    padding-left: 0.5em;
                                 }
                             }
 
@@ -1421,6 +1462,21 @@ html {
                 display: flex;
                 flex-direction: column;
 
+                .alert {
+                    position: absolute;
+                    left: 10vw;
+                    top: 90vw;
+                    z-index: 2;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 3em;
+                        color: #9C9C9C;
+                    }
+                }
+
                 .card {
                     margin: 2em 0;
                     background-color: #FFFFFF;
@@ -1468,7 +1524,7 @@ html {
                 }
 
                 .diagram {
-
+                    display: none;
                     //                    height: 20vh;
 
                     .selectWrapper {
@@ -1559,7 +1615,7 @@ html {
 
                 .infoCard {
                     order: -1;
-                    display: flex;
+                    display: none;
                     flex-direction: column;
                     justify-content: space-between;
 
@@ -1757,6 +1813,7 @@ html {
                 }
 
                 .servers {
+                    //                    display: none;
                     order: -2;
                     background-color: #221F1F;
 
@@ -1779,7 +1836,7 @@ html {
                         width: 90%;
 
                         ul {
-                            padding: 0.5em 1em 2em 1em;
+                            padding: 0.5em 1em 4em 1em;
                             list-style-type: none;
 
                             li {
@@ -1849,12 +1906,12 @@ html {
                                 padding: 1.5em;
 
                                 i {
-                                    font-size: 2.5em;
+                                    font-size: 1.5em;
                                 }
 
                                 span {
                                     font-size: 2em;
-                                    margin-left: 1em;
+                                    padding-left: 0.5em;
                                 }
                             }
 
@@ -1929,12 +1986,6 @@ html {
 
                         i {
                             transition: 0.3s;
-
-                            &:hover {
-                                cursor: pointer;
-                                color: #F98181;
-                                transition: 0.3s;
-                            }
                         }
 
                         &:nth-child(1) {
@@ -2044,6 +2095,21 @@ html {
                 display: flex;
                 flex-direction: column;
 
+                .alert {
+                    position: absolute;
+                    left: 10vw;
+                    top: 90vw;
+                    z-index: 2;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 3em;
+                        color: #9C9C9C;
+                    }
+                }
+
                 .card {
                     margin: 2em 0;
                     background-color: #FFFFFF;
@@ -2091,15 +2157,15 @@ html {
                 }
 
                 .diagram {
-
+                    display: none;
                     //                    height: 20vh;
 
                     .selectWrapper {
-                        //                        display: block;
+                        //                        display: none;
                         width: 100%;
 
                         .select {
-                            width: 3.5em;
+                            width: 15em;
                             margin: 0.5em 0.5em;
                             position: relative;
 
@@ -2114,10 +2180,13 @@ html {
                                 cursor: pointer;
                                 border: 0.03em solid #cccccc;
                                 background-color: #f2f2f2;
-                                border-radius: 0.2em;
+                                border-radius: 0.8em;
 
                                 .select__current {
-                                    font-size: 0.6em;
+                                    font-family: circe, sans-serif;
+                                    font-style: normal;
+                                    font-weight: bold;
+                                    font-size: 1.7em;
                                     line-height: 2em;
                                     padding: 0.1em 0.2em;
                                 }
@@ -2140,7 +2209,7 @@ html {
                             .select__body {
                                 display: none;
                                 border: 0.03em solid #cccccc;
-                                border-radius: 0.2em;
+                                border-radius: 0.8em;
                                 border-top: 0;
                                 position: absolute;
                                 left: 0;
@@ -2148,9 +2217,12 @@ html {
                                 top: 100%;
 
                                 .select__item {
+                                    font-family: circe, sans-serif;
+                                    font-style: normal;
+                                    font-weight: bold;
                                     line-height: 1em;
                                     padding: 0.2em;
-                                    font-size: 0.5em;
+                                    font-size: 1.4em;
                                     cursor: pointer;
                                     background-color: #f2f2f2;
 
@@ -2176,7 +2248,7 @@ html {
 
                 .infoCard {
                     order: -1;
-                    display: flex;
+                    display: none;
                     flex-direction: column;
                     justify-content: space-between;
 
@@ -2374,6 +2446,7 @@ html {
                 }
 
                 .servers {
+                    //                    display: none;
                     order: -2;
                     background-color: #221F1F;
 
@@ -2396,7 +2469,7 @@ html {
                         width: 90%;
 
                         ul {
-                            padding: 0.5em 1em 2em 1em;
+                            padding: 0.5em 1em 4em 1em;
                             list-style-type: none;
 
                             li {
@@ -2466,12 +2539,12 @@ html {
                                 padding: 1.5em;
 
                                 i {
-                                    font-size: 2.5em;
+                                    font-size: 1.5em;
                                 }
 
                                 span {
                                     font-size: 2em;
-                                    margin-left: 1em;
+                                    padding-left: 0.5em;
                                 }
                             }
 
@@ -2498,14 +2571,8 @@ html {
                     }
                 }
             }
-
-
-
-
         }
-
     }
-
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1380.98px) {}

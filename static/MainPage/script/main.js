@@ -29,7 +29,10 @@ let nonRepeatingDataToCheck; //неповторяющиеся элементы �
 
 let fontSizeOfLabels; //размер шрифта для лейблов
 
+let isCheckedRadio = false; //выбран ли сервер
+
 $(document).ready(function () {
+
 
     $('#home').on('click', function () {
         $(location).attr('href', '/');
@@ -50,7 +53,7 @@ $(document).ready(function () {
             let userName;
 
             if (data.auth == "true") {
-                console.log("Auth is true");
+                //                console.log("Auth is true");
                 $('#userName').text(data.mail);
                 $('html').css('display', 'block');
                 userName = data.mail.split('@');
@@ -67,133 +70,159 @@ $(document).ready(function () {
     });
 
     //getting agents
-    console.log("Getting agents");
+    //    console.log("Getting agents");
+
 
     $.get(
         "/api/getAgentList", {},
         function (data) {
             data = JSON.parse(data);
 
-            let public_key;
-            for (var key in data['agents']) {
-                console.log(data.agents[key].public_key);
+            if (data['agents'].length == 0) {
+                $('.servers').css('display', 'none');
+                $('.alert').css('display', 'block');
+                $('.alertText').text('There is nothing to show. Please go to settings to add your first server');
+            } else {
 
-                public_key = data.agents[key].public_key;
-
-                $('.listOfServers').append(
-                    $('<li>').append(
-                        $('<input>').attr({
-                            type: 'radio',
-                            name: 'servers',
-                            id: public_key,
-                            value: public_key
-                        })
-                    ).append(
-                        $('<label>').attr({
-                            for: public_key
-                        }).text(public_key)
-                    )
-                );
-
-                //generating canvases to each chart
-                //checking if the canvas is created with a specific id
-                if ($(`#${public_key}_CPU`).length == false || $(`#${public_key}_Memory`).length == false || $(`#${public_key}_Disks`).length == false) {
-                    $('.chart').append(`<canvas id="${public_key}_CPU"></canvas>`);
-                    $('.chart').append(`<canvas id="${public_key}_Memory"></canvas>`);
-                    $('.chart').append(`<canvas id="${public_key}_Disk"></canvas>`);
-
-                    $(`#${public_key}_CPU`).css('display', 'none');
-                    $(`#${public_key}_Memory`).css('display', 'none');
-                    $(`#${public_key}_Disk`).css('display', 'none');
+                isChecked();
+                if (isCheckedRadio == false) {
+                    $('.alertText').text('Please choose the server');
                 }
 
-                //pushing name of agents in array
-                agents.push(public_key);
-            }
+                let public_key;
+                for (var key in data['agents']) {
+                    //                    console.log(data.agents[key].public_key);
 
+                    public_key = data.agents[key].public_key;
 
-            //при изменении радиобатонов серверов
+                    $('.listOfServers').append(
+                        $('<li>').append(
+                            $('<input>').attr({
+                                type: 'radio',
+                                name: 'servers',
+                                id: public_key,
+                                value: public_key
+                            })
+                        ).append(
+                            $('<label>').attr({
+                                for: public_key
+                            }).text(public_key)
+                        )
+                    );
 
-            let children = $(".chart").children(); //получаем все канвасы
-            let idOfCanvas = []; //массив где хранятся ид канвасов не разделенные сплитом
+                    //generating canvases to each chart
+                    //checking if the canvas is created with a specific id
+                    if ($(`#${public_key}_CPU`).length == false || $(`#${public_key}_Memory`).length == false || $(`#${public_key}_Disks`).length == false) {
+                        $('.chart').append(`<canvas id="${public_key}_CPU"></canvas>`);
+                        $('.chart').append(`<canvas id="${public_key}_Memory"></canvas>`);
+                        $('.chart').append(`<canvas id="${public_key}_Disk"></canvas>`);
 
-            children.each(function (index) {
-                idOfCanvas.push($(children[index]).attr('id'));
-            });
-
-            //                console.log('id of canvases down');
-            //                console.log(idOfCanvas);
-
-            let splited = []; //двумерный массив из разделенных идшников канвасов, где [0] - паблик кей сервера, [1] - данные что будут отображаться (cpu/memory/disks)
-            idOfCanvas.forEach(function (item, index, array) {
-                splited[index] = item.split('_');
-            });
-
-            //                console.log('splited down');
-            //                console.log(splited);
-
-            let canvasIdOnlyPublicKeysOfServers = []; //ид канвасов, только разделенные сплитом, т.е. хранятся паблик кеи серверов (могут повторятся)
-            for (var i = 0; i < splited.length; i++) {
-                canvasIdOnlyPublicKeysOfServers.push(splited[i][0]);
-            }
-
-            //                console.log('canvasIdOnlyPublicKeysOfServers down');
-            //                console.log(canvasIdOnlyPublicKeysOfServers);
-
-            let dataToCheck = []; //массив для хранения данных которые будут отображаться на графике (ид канваса разделено split (cpu/memory/disks)) (могут повторятся)
-            for (var i = 0; i < splited.length; i++) { //добавляем в массив что чекать будем
-                dataToCheck.push(splited[i][1]);
-            }
-            //                console.log('data to check down');
-            //                console.log(dataToCheck);
-
-            nonRepeatingCanvasPK = canvasIdOnlyPublicKeysOfServers.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива canvasIdOnlyPublicKeysOfServers
-                return canvasIdOnlyPublicKeysOfServers.indexOf(elem) == pos;
-            });
-
-            //                console.log('nonRepeatingCanvasPK down');
-            //                console.log(nonRepeatingCanvasPK);
-
-            nonRepeatingDataToCheck = dataToCheck.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива dataToCheck
-                return dataToCheck.indexOf(elem) == pos;
-            });
-
-            //                console.log('nonRepeatingDataToCheck down');
-            //                console.log(nonRepeatingDataToCheck);
-
-            //getting info from agent
-            let servers;
-            let interval;
-
-            servers = $('input[name=servers]');
-
-            servers.on('change', function () {
-                labelsTime = [];
-                dataSystem = [];
-                dataUser = [];
-                dataMemoryWired = [];
-                dataMemoryFree = [];
-                dataDisksFree = [];
-                dataDisksTotal = [];
-                dataDisksOccupied = [];
-
-                $(`#${checkedRadio}_${currentSelectedDataToCheck}`).css('display', 'none'); //скрываем ту диаграмму которая не выбран
-
-
-                checkedRadio = $(this).val();
-                //                console.log(checkedRadio);
-                agents.forEach(function (item, index, array) {
-
-                    if (checkedRadio == item) {
-                        clearInterval(interval);
-                        getInfoJSONFromAgent(checkedRadio);
-                        interval = setInterval(getInfoJSONFromAgent, 65000, checkedRadio);
+                        $(`#${public_key}_CPU`).css('display', 'none');
+                        $(`#${public_key}_Memory`).css('display', 'none');
+                        $(`#${public_key}_Disk`).css('display', 'none');
                     }
+
+                    //pushing name of agents in array
+                    agents.push(public_key);
+                }
+
+
+                //при изменении радиобатонов серверов
+
+                let children = $(".chart").children(); //получаем все канвасы
+                let idOfCanvas = []; //массив где хранятся ид канвасов не разделенные сплитом
+
+                children.each(function (index) {
+                    idOfCanvas.push($(children[index]).attr('id'));
                 });
 
-                prepareDataToShow();
+                //                console.log('id of canvases down');
+                //                console.log(idOfCanvas);
 
-            });
+                let splited = []; //двумерный массив из разделенных идшников канвасов, где [0] - паблик кей сервера, [1] - данные что будут отображаться (cpu/memory/disks)
+                idOfCanvas.forEach(function (item, index, array) {
+                    splited[index] = item.split('_');
+                });
+
+                //                console.log('splited down');
+                //                console.log(splited);
+
+                let canvasIdOnlyPublicKeysOfServers = []; //ид канвасов, только разделенные сплитом, т.е. хранятся паблик кеи серверов (могут повторятся)
+                for (var i = 0; i < splited.length; i++) {
+                    canvasIdOnlyPublicKeysOfServers.push(splited[i][0]);
+                }
+
+                //                console.log('canvasIdOnlyPublicKeysOfServers down');
+                //                console.log(canvasIdOnlyPublicKeysOfServers);
+
+                let dataToCheck = []; //массив для хранения данных которые будут отображаться на графике (ид канваса разделено split (cpu/memory/disks)) (могут повторятся)
+                for (var i = 0; i < splited.length; i++) { //добавляем в массив что чекать будем
+                    dataToCheck.push(splited[i][1]);
+                }
+                //                console.log('data to check down');
+                //                console.log(dataToCheck);
+
+                nonRepeatingCanvasPK = canvasIdOnlyPublicKeysOfServers.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива canvasIdOnlyPublicKeysOfServers
+                    return canvasIdOnlyPublicKeysOfServers.indexOf(elem) == pos;
+                });
+
+                //                console.log('nonRepeatingCanvasPK down');
+                //                console.log(nonRepeatingCanvasPK);
+
+                nonRepeatingDataToCheck = dataToCheck.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива dataToCheck
+                    return dataToCheck.indexOf(elem) == pos;
+                });
+
+                //                console.log('nonRepeatingDataToCheck down');
+                //                console.log(nonRepeatingDataToCheck);
+
+                //getting info from agent
+                let servers;
+                let interval;
+
+                servers = $('input[name=servers]');
+
+                servers.on('change', function () {
+
+                    $('.listOfServers').css('opacity', '0.1');
+                    servers.prop('disabled', 'true');
+
+                    setTimeout(function () {
+                        $('.listOfServers').css('opacity', '1');
+                        servers.removeAttr('disabled');
+                    }, 800);
+
+                    isChecked();
+
+                    $('.alert').css('display', 'none');
+
+                    labelsTime = [];
+                    dataSystem = [];
+                    dataUser = [];
+                    dataMemoryWired = [];
+                    dataMemoryFree = [];
+                    dataDisksFree = [];
+                    dataDisksTotal = [];
+                    dataDisksOccupied = [];
+
+                    $(`#${checkedRadio}_${currentSelectedDataToCheck}`).css('display', 'none'); //скрываем ту диаграмму которая не выбран
+
+
+                    checkedRadio = $(this).val();
+                    //                console.log(checkedRadio);
+                    agents.forEach(function (item, index, array) {
+
+                        if (checkedRadio == item) {
+                            clearInterval(interval);
+                            getInfoJSONFromAgent(checkedRadio);
+                            interval = setInterval(getInfoJSONFromAgent, 65000, checkedRadio);
+                        }
+                    });
+
+                    prepareDataToShow();
+
+                });
+            }
         }
     );
 
@@ -302,7 +331,7 @@ function drawChart(chartName, ctx, labelsTime, labelDataset_1, labelDataset_2, d
     Chart.defaults.global.defaultFontFamily = 'circe';
     //    Chart.defaults.global.defaultFontSize = fontSizeOfLabels;
 
-    console.log($(window).width());
+    //    console.log($(window).width());
     let data = {
         labels: [],
         datasets: [
@@ -352,9 +381,9 @@ function drawChart(chartName, ctx, labelsTime, labelDataset_1, labelDataset_2, d
 
 }
 
-function findCheckedRadio() {
+function isChecked() {
     $("input:radio:checked").each(function () {
-        checkedRadio = $(this).val();
+        isCheckedRadio = $(this).val();
     });
 }
 
@@ -368,7 +397,7 @@ function getInfoJSONFromAgent(nameOfServer) {
     dataDisksTotal = [];
     dataDisksOccupied = [];
 
-    console.log("Getting from " + nameOfServer);
+    //    console.log("Getting from " + nameOfServer);
 
     $.get(
         "/api/getAgentData", {
@@ -378,38 +407,28 @@ function getInfoJSONFromAgent(nameOfServer) {
         function (data) {
             data = JSON.parse(data);
             //            console.log(data);
-            keysOfData = Object.keys(data.dataset[0].data);
-            //            console.log(keysOfData);
-            keyCpu = keysOfData[3];
-            keyMemory = keysOfData[0];
-            keyDisk = keysOfData[2];
+
+
 
 
             if (data['dataset'].length == 0) {
-                $('.wired').text('no data');
-                $('.total').text('no data');
-                $('.inactive').text('no data');
-                $('.active').text('no data');
-                $('.free').text('no data');
+                $('.alert').css('display', 'block');
+                $('.alertText').text('There is no data on this server :c');
 
-                $('.system').text('no data');
-                $('.idle').text('no data');
-                $('.num').text('no data');
-                $('.user').text('no data');
-
-                $('.1min').text('no data');
-                $('.5min').text('no data');
-                $('.15min').text('no data');
-
-                $('.diskTotal').text('no data');
-                $('.barWrapper').css('display', 'none');
-                $('.load').css('marginBottom', '0.5em');
-
-                $('.positioning').css('opacity', '0');
-
-
+                $('.diagram').css('display', 'none');
+                $('.infoCard').css('display', 'none');
+                $('.network').css('display', 'none');
 
             } else {
+                keysOfData = Object.keys(data.dataset[0].data);
+                keyCpu = keysOfData[3];
+                keyMemory = keysOfData[0];
+                keyDisk = keysOfData[2];
+
+                $('.diagram').css('display', 'block');
+                $('.infoCard').css('display', 'flex');
+                $('.network').css('display', 'block');
+
                 $('.barWrapper').css('display', 'block');
                 $('.load').css('marginBottom', '0');
                 $('.positioning').css('opacity', '1');
@@ -469,7 +488,7 @@ function getInfoJSONFromAgent(nameOfServer) {
                 dataDisksTotal.reverse();
                 dataDisksOccupied.reverse();
 
-                console.log(dataDisksOccupied);
+                //                console.log(dataDisksOccupied);
 
                 dataMemoryWired.reverse();
                 dataMemoryFree.reverse();
@@ -484,6 +503,7 @@ function getInfoJSONFromAgent(nameOfServer) {
 
 //create select element
 let select = function () {
+    $('.select__icon').html('&#9660;');
     let selectHeader = document.querySelectorAll('.select__header');
     let selectItem = document.querySelectorAll('.select__item');
 
@@ -497,6 +517,12 @@ let select = function () {
 
     function selectToggle() {
         this.parentElement.classList.toggle('is-active');
+        if ($('.select').hasClass('is-active')) {
+            $('.select__icon').html('&#9650;');
+        } else {
+            $('.select__icon').html('&#9660;');
+        }
+
     }
 
     function selectChoose() {

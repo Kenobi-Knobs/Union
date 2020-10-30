@@ -114,7 +114,7 @@ html {
 }
 .pageWrapper .main .head .exit .accountCard {
   display: inline-block;
-  margin: 7% 0 0 15%;
+  margin: 7% 0 0 44%;
   padding: 0.1em 1.4em;
   border-radius: 0.4em;
   box-shadow: 0px 0.1em 0.8em rgba(0, 0, 0, 0.25);
@@ -122,7 +122,6 @@ html {
 .pageWrapper .main .head .exit .accountCard span {
   position: relative;
   bottom: 0.2em;
-  right: 0.5em;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -157,6 +156,19 @@ html {
   display: grid;
   grid-template-columns: 14em 14em 14em;
   grid-gap: 1em 1em;
+}
+.pageWrapper .main .allInfo .alert {
+  position: absolute;
+  left: 25vw;
+  top: 20vw;
+  z-index: 2;
+}
+.pageWrapper .main .allInfo .alert span {
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1em;
+  color: #9C9C9C;
 }
 .pageWrapper .main .allInfo .card {
   background-color: #FFFFFF;
@@ -193,10 +205,16 @@ html {
   font-size: 0.5em;
   background-color: #DFDFDF;
 }
+.pageWrapper .main .allInfo .diagram {
+  display: none;
+}
 .pageWrapper .main .allInfo .diagram .selectWrapper {
   position: relative;
   width: 100%;
   z-index: 1;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
 }
 .pageWrapper .main .allInfo .diagram .selectWrapper .select {
   width: 3.5em;
@@ -260,11 +278,11 @@ html {
   width: 100%;
 }
 .pageWrapper .main .allInfo .infoCard {
+  display: none;
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -480,6 +498,9 @@ html {
 .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
   color: #FFFFFF;
 }
+.pageWrapper .main .allInfo .network {
+  display: none;
+}
 .pageWrapper .main .allInfo .network .infoNetwork {
   display: flex;
   flex-direction: column;
@@ -500,9 +521,10 @@ html {
   padding: 0.5em;
 }
 .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-  font-size: 0.9em;
+  font-size: 0.7em;
 }
 .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
+  padding-left: 0.5em;
   font-size: 0.9em;
 }
 .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
@@ -558,11 +580,6 @@ html {
     font-size: 2em;
   }
   .pageWrapper .sidebar .navbar ul li i {
-    transition: 0.3s;
-  }
-  .pageWrapper .sidebar .navbar ul li i:hover {
-    cursor: pointer;
-    color: #F98181;
     transition: 0.3s;
   }
   .pageWrapper .sidebar .navbar ul li:nth-child(1) {
@@ -647,6 +664,19 @@ html {
     display: flex;
     flex-direction: column;
   }
+  .pageWrapper .main .allInfo .alert {
+    position: absolute;
+    left: 10vw;
+    top: 90vw;
+    z-index: 2;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+    color: #9C9C9C;
+  }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
     background-color: #FFFFFF;
@@ -688,11 +718,14 @@ html {
     font-size: 1em;
     background-color: #DFDFDF;
   }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
+  }
   .pageWrapper .main .allInfo .diagram .selectWrapper {
     width: 100%;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select {
-    width: 3.5em;
+    width: 15em;
     margin: 0.5em 0.5em;
     position: relative;
   }
@@ -704,10 +737,13 @@ html {
     cursor: pointer;
     border: 0.03em solid #cccccc;
     background-color: #f2f2f2;
-    border-radius: 0.2em;
+    border-radius: 0.8em;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__current {
-    font-size: 0.6em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7em;
     line-height: 2em;
     padding: 0.1em 0.2em;
   }
@@ -727,7 +763,7 @@ html {
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
     display: none;
     border: 0.03em solid #cccccc;
-    border-radius: 0.2em;
+    border-radius: 0.8em;
     border-top: 0;
     position: absolute;
     left: 0;
@@ -735,9 +771,12 @@ html {
     top: 100%;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
     line-height: 1em;
     padding: 0.2em;
-    font-size: 0.5em;
+    font-size: 1.4em;
     cursor: pointer;
     background-color: #f2f2f2;
   }
@@ -754,7 +793,7 @@ html {
   }
   .pageWrapper .main .allInfo .infoCard {
     order: -1;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -918,7 +957,7 @@ html {
     width: 90%;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
-    padding: 0.5em 1em 2em 1em;
+    padding: 0.5em 1em 4em 1em;
     list-style-type: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
@@ -977,11 +1016,11 @@ html {
     padding: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 2.5em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
     font-size: 2em;
-    margin-left: 1em;
+    padding-left: 0.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
     padding: 0.5em;
@@ -1120,6 +1159,19 @@ html {
     display: flex;
     flex-direction: column;
   }
+  .pageWrapper .main .allInfo .alert {
+    position: absolute;
+    left: 10vw;
+    top: 90vw;
+    z-index: 2;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+    color: #9C9C9C;
+  }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
     background-color: #FFFFFF;
@@ -1160,6 +1212,9 @@ html {
     font-weight: bold;
     font-size: 1em;
     background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper {
     width: 100%;
@@ -1233,7 +1288,7 @@ html {
   }
   .pageWrapper .main .allInfo .infoCard {
     order: -1;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -1397,7 +1452,7 @@ html {
     width: 90%;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
-    padding: 0.5em 1em 2em 1em;
+    padding: 0.5em 1em 4em 1em;
     list-style-type: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
@@ -1456,11 +1511,11 @@ html {
     padding: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 2.5em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
     font-size: 2em;
-    margin-left: 1em;
+    padding-left: 0.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
     padding: 0.5em;
@@ -1515,11 +1570,6 @@ html {
     font-size: 2em;
   }
   .pageWrapper .sidebar .navbar ul li i {
-    transition: 0.3s;
-  }
-  .pageWrapper .sidebar .navbar ul li i:hover {
-    cursor: pointer;
-    color: #F98181;
     transition: 0.3s;
   }
   .pageWrapper .sidebar .navbar ul li:nth-child(1) {
@@ -1604,6 +1654,19 @@ html {
     display: flex;
     flex-direction: column;
   }
+  .pageWrapper .main .allInfo .alert {
+    position: absolute;
+    left: 10vw;
+    top: 90vw;
+    z-index: 2;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+    color: #9C9C9C;
+  }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
     background-color: #FFFFFF;
@@ -1645,11 +1708,14 @@ html {
     font-size: 1em;
     background-color: #DFDFDF;
   }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
+  }
   .pageWrapper .main .allInfo .diagram .selectWrapper {
     width: 100%;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select {
-    width: 3.5em;
+    width: 15em;
     margin: 0.5em 0.5em;
     position: relative;
   }
@@ -1661,10 +1727,13 @@ html {
     cursor: pointer;
     border: 0.03em solid #cccccc;
     background-color: #f2f2f2;
-    border-radius: 0.2em;
+    border-radius: 0.8em;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__current {
-    font-size: 0.6em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7em;
     line-height: 2em;
     padding: 0.1em 0.2em;
   }
@@ -1684,7 +1753,7 @@ html {
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
     display: none;
     border: 0.03em solid #cccccc;
-    border-radius: 0.2em;
+    border-radius: 0.8em;
     border-top: 0;
     position: absolute;
     left: 0;
@@ -1692,9 +1761,12 @@ html {
     top: 100%;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
     line-height: 1em;
     padding: 0.2em;
-    font-size: 0.5em;
+    font-size: 1.4em;
     cursor: pointer;
     background-color: #f2f2f2;
   }
@@ -1711,7 +1783,7 @@ html {
   }
   .pageWrapper .main .allInfo .infoCard {
     order: -1;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -1875,7 +1947,7 @@ html {
     width: 90%;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
-    padding: 0.5em 1em 2em 1em;
+    padding: 0.5em 1em 4em 1em;
     list-style-type: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
@@ -1934,11 +2006,11 @@ html {
     padding: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 2.5em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
     font-size: 2em;
-    margin-left: 1em;
+    padding-left: 0.5em;
   }
   .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
     padding: 0.5em;

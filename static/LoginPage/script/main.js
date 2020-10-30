@@ -13,6 +13,16 @@ $(document).ready(function () {
         }
     );
 
+    $('body').keydown(function (e) {
+        if (e.keyCode === 13) {
+            if ($('.infoWrapper').css('display') == 'block') {
+                understandInfo();
+            } else {
+                submitForm();
+            }
+        }
+    });
+
     //get "confirm" from URL
     let url = window.location.href;
     let isConfirmed = getURLParameter(url, 'info');
@@ -28,26 +38,7 @@ $(document).ready(function () {
     }
 
     $('#submit').on('click', function () {
-        $.get(
-            "/api/auth", {
-                mail: $('#mail').val(),
-                pass: $('#password').val()
-            },
-            function (data) {
-                data = JSON.parse(data);
-                if (data.auth == "true") {
-                    //                    console.log("ok");
-                    $(location).attr('href', '/');
-                } else {
-                    $('.infoWrapper').fadeIn(300);
-                    $('.infoWrapper').css({
-                        'display': 'block'
-                    });
-                    $('#singInInfo').text('Login or password are wrong');
-                    $('#singInInfo').css('paddingLeft', '30%');
-                }
-            }
-        );
+        submitForm();
     });
 
     $('.circle').on('click', function () {
@@ -56,18 +47,21 @@ $(document).ready(function () {
 
 
     $('#understandInfo').on('click', function () {
-        $('.infoWrapper').fadeOut(300);
-        setTimeout(function () {
-            $('.infoWrapper').css({
-                'display': 'none'
-            });
-            //        location.reload();
-        }, 400);
-
+        understandInfo();
     });
 
 });
 
+
+function understandInfo() {
+    $('.infoWrapper').fadeOut(300);
+    setTimeout(function () {
+        $('.infoWrapper').css({
+            'display': 'none'
+        });
+        //        location.reload();
+    }, 400);
+}
 
 function getURLParameter(sUrl, sParam) {
     let sPageURL = sUrl.substring(sUrl.indexOf('?') + 1);
@@ -78,4 +72,27 @@ function getURLParameter(sUrl, sParam) {
             return sParameterName[1];
         }
     }
+}
+
+function submitForm() {
+    $.get(
+        "/api/auth", {
+            mail: $('#mail').val(),
+            pass: $('#password').val()
+        },
+        function (data) {
+            data = JSON.parse(data);
+            if (data.auth == "true") {
+                //                    console.log("ok");
+                $(location).attr('href', '/');
+            } else {
+                $('.infoWrapper').fadeIn(300);
+                $('.infoWrapper').css({
+                    'display': 'block'
+                });
+                $('#singInInfo').text('Login or password are wrong');
+                $('#singInInfo').css('paddingLeft', '30%');
+            }
+        }
+    );
 }

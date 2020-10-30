@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+
+    $('input').keydown(function (e) {
+        if (e.keyCode === 13) {
+            addNewServer();
+        }
+    });
+
+
     $(".quit").on('click', function () {
         $(location).attr('href', '/logout');
     });
@@ -14,6 +22,10 @@ $(document).ready(function () {
 
     //adding servers
     $('#Save').on('click', function () {
+        addNewServer();
+    });
+
+    function addNewServer() {
         let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
         let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
         let host = $('#addHost').val().replace(/\s/gi, '');
@@ -21,9 +33,9 @@ $(document).ready(function () {
 
         if (public_key.length <= 0 || secret_key.length <= 0 || host.length <= 0) {
             //            alert('field must be filled');
-            $('#addPublicKey').val('');
-            $('#addSecretKey').val('');
-            $('#addHost').val('');
+            //            $('#addPublicKey').val('');
+            //            $('#addSecretKey').val('');
+            //            $('#addHost').val('');
             $('#info').text('All fields must be filled');
 
             $('.emptyWrapper').fadeIn(300);
@@ -50,7 +62,7 @@ $(document).ready(function () {
                 }
             );
         }
-    });
+    }
 
     //    checking authorized user or not
     $.get(
@@ -134,7 +146,8 @@ $(document).ready(function () {
 
             //deleting servers
             $('.trashIcon').on('click', function () {
-                let public_keyToDelete = $(this).attr('id').split('_')[0];
+                let public_keyToDelete = undefined;
+                public_keyToDelete = $(this).attr('id').split('_')[0];
 
                 $('.formWrapper').css('display', 'block');
                 $('.form').css('display', 'none');
@@ -164,6 +177,7 @@ $(document).ready(function () {
                         'display': 'block'
                     });
                 }, 400);
+
             });
 
             $('#Cancel').on('click', function () {
