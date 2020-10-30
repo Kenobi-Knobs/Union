@@ -114,24 +114,72 @@ public class Utils {
     }
 
     /**
+     * Method saves and writes the data from an agent to the database
+     * @param ctx Data context from an agent
+     * @param db Connected database
+     */
+    public void saveAgentData(Context ctx, DBController db) {
+        String body = ctx.body();
+        try {
+            if (privateKeyValidation(ctx, db, body)) {
+                AgentData sd = new AgentData(ctx, body);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String query = "SELECT * FROM `Agents` WHERE `public_key` =?";
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, sd.publicKey);
+                ResultSet res = ps.executeQuery();
+                if (res.next()) {
+                    String insertQuery = "INSERT INTO `AgentData`(`public_key`,`boot_time`, `agent_version`, `scan_time`, `data`) VALUES (?,?,?,?,?)";
+                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                    insertPs.setString(1, sd.publicKey);
+                    insertPs.setString(2,sd.bootTime);
+                    insertPs.setString(3,sd.agentVersion);
+                    insertPs.setString(4, dateFormat.format(sd.time));
+                    insertPs.setString(5,sd.jsonData);
+                    insertPs.executeUpdate();
+                    insertPs.close();
+                    ctx.status(200);
+                } else {
+                    ctx.status(400);
+                }
+                ps.close();
+            } else {
+                ctx.status(400);
+                ctx.result("Validation Error: private key is incorrect");
+            }
+        } catch (ParseException e) {
+            ctx.status(500);
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            ctx.status(500);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+            ctx.status(400);
+        }
+    }
+
+    /**
      * Data validation by private key (method checks if any value is null, and checks jsonData)
      * @param ctx Context that contains data
      * @param body body of request
      * @return Returns a response of the validation
      */
-    public Boolean validate(Context ctx, DBController db, String body) {
+    public Boolean privateKeyValidation(Context ctx, DBController db, String body) {
         try {
             JSONObject jsonBody;
             String sign = ctx.header("Sign");
-            try{
+            try {
                 jsonBody = (JSONObject) parser.parse(body);
-            }catch(ClassCastException e){
+            } catch(ClassCastException e) {
                 return false;
             }
             String publicKey = (String) jsonBody.get("public_key");
-            if(publicKey == null){
+            if (publicKey == null) {
                 return false;
             }
+
             String secretKey = "";
             String query = "SELECT secret_key FROM Agents WHERE public_key = ?";
             PreparedStatement ps = db.getConnection().prepareStatement(query);
@@ -156,51 +204,18 @@ public class Utils {
         }
     }
 
-    /**
-     * Method saves and writes the data from an agent to the database
-     * @param ctx Data context from an agent
-     * @param db Connected database
-     */
-    public void saveAgentData(Context ctx, DBController db) {
-        String body = ctx.body();
-        try {
-            if (validate(ctx, db, body)) {
-                AgentData sd = new AgentData(ctx, body);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String query = "SELECT * FROM `Agents` WHERE `public_key` =?";
-                PreparedStatement ps = db.getConnection().prepareStatement(query);
-                ps.setString(1, sd.publicKey);
-                ResultSet res = ps.executeQuery();
-                if (res.next()) {
-                    String insertQuery = "INSERT INTO `AgentData`(`public_key`,`boot_time`, `agent_version`, `scan_time`, `data`) VALUES (?,?,?,?,?)";
-                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
-                    insertPs.setString(1, sd.publicKey);
-                    insertPs.setString(2,sd.bootTime);
-                    insertPs.setString(3,sd.agentVersion);
-                    insertPs.setString(4, dateFormat.format(sd.time));
-                    insertPs.setString(5,sd.jsonData);
-                    insertPs.executeUpdate();
-                    insertPs.close();
-                    ctx.status(200);
-                } else {
-                    ctx.status(400);
-                }
-                ps.close();
-            } else {
-                ctx.status(400);
-                ctx.result("validation error");
-            }
-        } catch (ParseException e) {
-            ctx.status(500);
-            e.printStackTrace();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            ctx.status(500);
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-            ctx.status(400);
-        }
+    public byte[] getSalt() {
+        byte[] salt = new byte[16];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(salt);
+
+        return salt;
+    }
+
+    public byte[] hash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 10000, 256);
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        return keyFactory.generateSecret(keySpec).getEncoded();
     }
 
     /**
@@ -327,7 +342,7 @@ public class Utils {
 
         String key = generateKey();
         try {
-            if (mail != null && pass != null && validation(mail, pass)) {
+            if (mail != null && pass != null && registrationValidation(mail, pass)) {
                 String query = "SELECT * FROM `Users` WHERE mail = ?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setString(1, mail);
@@ -351,14 +366,14 @@ public class Utils {
                     jsonResult.put("info","Confirmation mail sent");
                     jsonResult.put("mail",mail);
                     System.out.println( mail + " register");
-                }else{
+                } else{
                    jsonResult.put("register","false");
                    jsonResult.put("info","User already exist");
                 }
                 ps.close();
-            }else {
+            } else {
                 jsonResult.put("register","false");
-                jsonResult.put("info","Validation error");
+                jsonResult.put("info","Validation Error: registration data is incorrect");
             }
         } catch (SQLException | MessagingException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
             throwables.printStackTrace();
@@ -366,20 +381,6 @@ public class Utils {
             return "Bad request";
         }
         return jsonResult.toString();
-    }
-
-    public byte[] getSalt() {
-        byte[] salt = new byte[16];
-        SecureRandom random = new SecureRandom();
-        random.nextBytes(salt);
-
-        return salt;
-    }
-
-    public byte[] hash(String password, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 10000, 256);
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        return keyFactory.generateSecret(keySpec).getEncoded();
     }
 
     public String generateKey() {
@@ -394,7 +395,7 @@ public class Utils {
     }
 
     //проверка пароля и почты
-    public boolean validation(String mail, String password) {
+    public boolean registrationValidation(String mail, String password) {
         Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher mailMatcher = mailPattern.matcher(mail.toLowerCase());
 
@@ -516,7 +517,7 @@ public class Utils {
                     }
                 }else{
                     ctx.status(400);
-                    return "Interval validation error";
+                    return "Validation Error: Date is incorrect";
                 }
             } else {
                 ctx.status(400);
@@ -574,25 +575,28 @@ public class Utils {
     }
 
     public String addAgent(Context ctx, DBController db) {
-        JSONObject jsonResult = new JSONObject();
-        if(!authCheck(ctx)){
+        if (!authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
-        String publicKey = ctx.formParam("public_key");
-        String privateKey = ctx.formParam("secret_key");
-        String host = ctx.formParam("host");
-        if (publicKey != null && privateKey != null && host != null){
-            if(publicKey.contains("<") && host.contains("<")){
+
+        if (addAgentValidation(ctx)) {
+            JSONObject jsonResult = new JSONObject();
+
+            String publicKey = ctx.formParam("public_key");
+            String privateKey = ctx.formParam("secret_key");
+            String host = ctx.formParam("host");
+
+            if (publicKey.contains("<") && host.contains("<")) {
                 ctx.status(400);
                 return "Bad request (xss detect)";
             }
             try {
                 String insertQuery = "INSERT IGNORE INTO `Agents`(`public_key`, `secret_key`, `host`) VALUES (?,?,?)";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
-                insertPs.setString(1, publicKey);
+                insertPs.setString(1, publicKey.toLowerCase());
                 insertPs.setString(2, privateKey);
-                insertPs.setString(3, host);
+                insertPs.setString(3, host.toLowerCase());
                 insertPs.executeUpdate();
                 insertPs.close();
             } catch (SQLException throwables) {
@@ -604,21 +608,39 @@ public class Utils {
                 String makeLink = "INSERT INTO `User_agents`(`user_id`, `public_key`) VALUES ((SELECT id from Users where mail = ?), ?)";
                 PreparedStatement linkPs = db.getConnection().prepareStatement(makeLink);
                 linkPs.setString(1, ctx.sessionAttribute("mail"));
-                linkPs.setString(2, publicKey);
+                linkPs.setString(2, publicKey.toLowerCase());
                 linkPs.executeUpdate();
                 linkPs.close();
+
                 jsonResult.put("add", "true");
                 jsonResult.put("info", "Added");
+
                 return jsonResult.toJSONString();
-            }catch (SQLException throwables) {
+            } catch (SQLException throwables) {
                 jsonResult.put("add", "false");
                 jsonResult.put("info", "Is exist");
+
                 return jsonResult.toJSONString();
             }
-        }else{
+        } else {
             ctx.status(400);
-            return "Bad request";
+            return "Validation Error: incorrect data";
         }
+    }
+
+    public boolean addAgentValidation(Context ctx) {
+        String publicKey = ctx.formParam("public_key");
+        String secretKey = ctx.formParam("secret_key");
+        String host = ctx.formParam("host");
+
+        Pattern pattern = Pattern.compile("^[a-zA-Z]+[a-zA-Z0-9_-]*$", Pattern.CASE_INSENSITIVE);
+        Matcher pkMatcher = pattern.matcher(publicKey.toLowerCase());
+        pattern = Pattern.compile("^[a-zA-Z0-9]+$", Pattern.CASE_INSENSITIVE);
+        Matcher skMatcher = pattern.matcher(secretKey);
+        pattern = Pattern.compile("^[a-zA-Z.]+.[a-zA-Z]{2,}$", Pattern.CASE_INSENSITIVE);
+        Matcher hostMatcher = pattern.matcher(host.toLowerCase());
+
+        return (pkMatcher.find() && skMatcher.find() && hostMatcher.find());
     }
 
     public String deleteAgent(Context ctx, DBController db) {
@@ -702,7 +724,7 @@ public class Utils {
         Matcher passMatcher = passPattern.matcher(Objects.requireNonNull(newPass));
         if(!passMatcher.find()){
             jsonResult.put("reset", "false");
-            jsonResult.put("info","validation error");
+            jsonResult.put("info","Validation Error: password is incorrect");
             return jsonResult.toJSONString();
         }
         try {
