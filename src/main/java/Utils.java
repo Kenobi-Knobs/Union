@@ -637,10 +637,10 @@ public class Utils {
         Matcher pkMatcher = pattern.matcher(publicKey.toLowerCase());
         pattern = Pattern.compile("^[a-zA-Z0-9]+$", Pattern.CASE_INSENSITIVE);
         Matcher skMatcher = pattern.matcher(secretKey);
-        pattern = Pattern.compile("^[a-zA-Z.]+.[a-zA-Z]{2,}$", Pattern.CASE_INSENSITIVE);
+        pattern = Pattern.compile("^[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
         Matcher hostMatcher = pattern.matcher(host.toLowerCase());
 
-        return (pkMatcher.find() && skMatcher.find() && hostMatcher.find());
+        return (pkMatcher.find() && skMatcher.find() && hostMatcher.find() && !(publicKey.equals(host)));
     }
 
     public String deleteAgent(Context ctx, DBController db) {
