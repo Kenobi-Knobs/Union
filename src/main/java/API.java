@@ -1,0 +1,333 @@
+package main.java;
+
+import io.javalin.http.Context;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Objects;
+
+public class API {
+    /**
+     * Method for check user authorization
+     * @param ctx Data context to check
+     * @return Returns a response with the result of checking
+     */
+    public static String isAuth(Context ctx) {
+        JSONObject jsonResult = new JSONObject();
+        if (authCheck(ctx)) {
+            jsonResult.put("mail", ctx.sessionAttribute("mail"));
+            jsonResult.put("auth", "true");
+        }else{
+            jsonResult.put("auth", "false");
+        }
+
+        return jsonResult.toJSONString();
+    }
+
+    public static boolean authCheck(Context ctx) {
+        return ctx.sessionAttribute("auth") != null && Objects.equals(ctx.sessionAttribute("auth"), "true");
+    }
+
+    /**
+     * Method gets data from an agent
+     * @param ctx Context that contains agent's data
+     * @param db Connected database
+     * @return Returns a data from an agent, or an error 400 (Bad Request) that means operation failure
+     */
+    public static String getAgentData(Context ctx, DBController db) {
+        if (authCheck(ctx)) {
+            if (ctx.queryParam("public_key") != null && Utils.isOwner(ctx, db, ctx.queryParam("public_key"))) {
+                JSONObject jsonResult = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
+                int count = 1;
+                if(ctx.queryParam("count") != null && Objects.requireNonNull(ctx.queryParam("count")).matches("-?\\d+(\\.\\d+)?")){
+                    count = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("count")));
+                    if(count <= 0){
+                        count = 1;
+                    }
+                    if(count > 100){
+                        count = 100;
+                    }
+                }
+                try {
+                    String query = "SELECT * FROM `AgentData` WHERE `public_key` = ? ORDER BY scan_time DESC LIMIT ?";
+                    PreparedStatement ps = db.getConnection().prepareStatement(query);
+                    ps.setString(1, ctx.queryParam("public_key"));
+                    ps.setInt(2,count);
+                    ResultSet res = ps.executeQuery();
+                    while(res.next()) {
+                        JSONObject jsonData = new JSONObject();
+                        jsonData.put("public_key", res.getString("public_key"));
+                        jsonData.put("scan_time", res.getString("scan_time"));
+                        String str = res.getString("data");
+                        JSONObject jsonBody = (JSONObject) Utils.parser.parse(str);
+                        jsonData.put("data", jsonBody);
+                        jsonArray.add(jsonData);
+                    }
+                    ps.close();
+                    jsonResult.put("dataset", jsonArray);
+                    return jsonResult.toJSONString();
+                } catch (SQLException | ParseException throwables) {
+                    throwables.printStackTrace();
+                    ctx.status(400);
+                    return "Bad request";
+                }
+            } else {
+                ctx.status(400);
+                return "Bad request";
+            }
+        } else {
+            ctx.status(400);
+            return "Unauthorized";
+        }
+    }
+
+    public static String getAgentDataByInterval(Context ctx, DBController db) {
+        if (authCheck(ctx)) {
+            if (ctx.queryParam("public_key") != null && Utils.isOwner(ctx, db, ctx.queryParam("public_key") )) {
+                JSONObject jsonResult = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
+                if (Utils.dateValidation(ctx.queryParam("start"), ctx.queryParam("end"))) {
+                    try {
+                        JSONParser parser = new JSONParser();
+                        String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ?";
+                        PreparedStatement ps = db.getConnection().prepareStatement(query);
+                        ps.setString(1, ctx.queryParam("start") + ":05");
+                        ps.setString(2, ctx.queryParam("end") + ":05");
+                        ps.setString(3, ctx.queryParam("public_key"));
+                        ResultSet res = ps.executeQuery();
+                        while (res.next()) {
+                            JSONObject jsonData = new JSONObject();
+                            jsonData.put("public_key", res.getString("public_key"));
+                            jsonData.put("scan_time", res.getString("scan_time"));
+                            String str = res.getString("data");
+                            JSONObject jsonBody = (JSONObject) parser.parse(str);
+                            jsonData.put("data", jsonBody);
+                            jsonArray.add(jsonData);
+                        }
+                        ps.close();
+                        jsonResult.put("dataset", jsonArray);
+                        return jsonResult.toJSONString();
+                    } catch (SQLException | ParseException throwables) {
+                        throwables.printStackTrace();
+                        ctx.status(400);
+                        return "Bad request";
+                    }
+                } else {
+                    ctx.status(400);
+                    return "Validation Error: Date is incorrect";
+                }
+            } else {
+                ctx.status(400);
+                return "Bad request";
+            }
+        } else {
+            ctx.status(400);
+            return "Unauthorized";
+        }
+    }
+
+    /**
+     * Method gets and returns the list of all agents
+     * @param ctx Context that contains header with access to sending requests
+     * @param db Database with agents list
+     * @return Returns a string with result
+     */
+    public static String getAgentList(Context ctx, DBController db) {
+        if (authCheck(ctx)) {
+            JSONObject jsonResult = new JSONObject();
+            JSONArray jsonAgents = new JSONArray();
+            try {
+                String query = "SELECT a.* FROM `Agents` as a, (SELECT ua.public_key FROM `User_agents` as ua, Users as u WHERE ua.`user_id` = u.id and u.mail = ?) as b WHERE a.`public_key` = b.`public_key`";
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, ctx.sessionAttribute("mail"));
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    JSONObject jsonAgent = new JSONObject();
+                    jsonAgent.put("host", res.getString("host"));
+                    jsonAgent.put("public_key", res.getString("public_key"));
+                    jsonAgents.add(jsonAgent);
+                }
+                ps.close();
+                jsonResult.put("agents", jsonAgents);
+
+                return jsonResult.toString();
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Unauthorized";
+        }
+    }
+
+    public static String getUser(Context ctx, DBController db) {
+        if (authCheck(ctx)) {
+            String mail = ctx.sessionAttribute("mail");
+            JSONObject jsonResult = new JSONObject();
+            String query = "SELECT * FROM `Users` WHERE `mail` = ?";
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, mail);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    jsonResult.put("mail", res.getString("mail"));
+                    jsonResult.put("settings", Utils.parser.parse(res.getString("settings")));
+                }
+                ps.close();
+                return jsonResult.toJSONString();
+            } catch (SQLException | ParseException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        } else {
+            return "User unauthorized";
+        }
+    }
+
+    public static String getAgentDataInterval(Context ctx, DBController db) {
+        if (!authCheck(ctx)) {
+            ctx.status(400);
+            return "Unauthorized";
+        }
+        if (ctx.queryParam("public_key") != null && Utils.isOwner(ctx, db, ctx.queryParam("public_key"))) {
+            String publicKey = ctx.queryParam("public_key");
+            JSONObject jsonResult = new JSONObject();
+            String query = "SELECT MAX(`scan_time`) as max, MIN(`scan_time`) as min FROM `AgentData` WHERE `public_key` = ?";
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, publicKey);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    jsonResult.put("public_key", publicKey);
+                    jsonResult.put("min", res.getString("min"));
+                    jsonResult.put("max", res.getString("max"));
+                }
+                ps.close();
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        } else {
+            ctx.status(400);
+            return "Bad request";
+        }
+
+    }
+
+    /**
+     * Method saves and writes the data from an agent to the database
+     * @param ctx Data context from an agent
+     * @param db Connected database
+     */
+    public static void setAgentData(Context ctx, DBController db) {
+        String body = ctx.body();
+        try {
+            if (Utils.privateKeyValidation(ctx, db, body)) {
+                AgentData sd = new AgentData(ctx, body);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String query = "SELECT * FROM `Agents` WHERE `public_key` =?";
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ps.setString(1, sd.publicKey);
+                ResultSet res = ps.executeQuery();
+                if (res.next()) {
+                    String insertQuery = "INSERT INTO `AgentData`(`public_key`,`boot_time`, `agent_version`, `scan_time`, `data`) VALUES (?,?,?,?,?)";
+                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                    insertPs.setString(1, sd.publicKey);
+                    insertPs.setString(2, sd.bootTime);
+                    insertPs.setString(3, sd.agentVersion);
+                    insertPs.setString(4, dateFormat.format(sd.time));
+                    insertPs.setString(5, sd.jsonData);
+                    insertPs.executeUpdate();
+                    insertPs.close();
+                    ctx.status(200);
+                } else {
+                    ctx.status(400);
+                }
+                ps.close();
+            } else {
+                ctx.status(400);
+                ctx.result("Validation Error: private key is incorrect");
+            }
+        } catch (ParseException e) {
+            ctx.status(500);
+            e.printStackTrace();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            ctx.status(500);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+            ctx.status(400);
+        }
+    }
+
+    public static String mailConfirmation(Context ctx, DBController db, String token) {
+        if (token.length() != 20) {
+            ctx.status(400);
+            return "You activation link wrong";
+        }
+        try {
+            String query = "SELECT * FROM `Users` WHERE confirm_code = ?";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, token);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                String mail = res.getString("mail");
+                String insertQuery = "UPDATE `Users` SET `email_confirmed`= 1, `confirm_code`= null WHERE `mail` = ?";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, mail);
+                insertPs.executeUpdate();
+                insertPs.close();
+                ctx.status(200);
+                ctx.redirect("../../login?info=confirmed");
+            } else {
+                ctx.status(400);
+                return "You activation link wrong db";
+            }
+            ps.close();
+            return "confirm";
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            ctx.status(400);
+            return "You activation link wrong";
+        }
+    }
+
+    /**
+     * Method sends an html context to the pages
+     * @param ctx Data context
+     * @param path Page path
+     * @param access Access mode
+     * @param redirect Redirect if auth false
+     * @throws IOException input output exception
+     */
+    public static void sendHtml(Context ctx, String path, String access, String redirect) throws IOException {
+        if (access.equals("auth_only")) {
+            if (authCheck(ctx)) {
+                String contents = new String(Files.readAllBytes(Paths.get(path)));
+                ctx.html(contents);
+            } else {
+                ctx.redirect(redirect);
+            }
+        } else if(access.equals("public")) {
+            String contents = new String(Files.readAllBytes(Paths.get(path)));
+            ctx.html(contents);
+        }
+    }
+}

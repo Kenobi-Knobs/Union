@@ -53,60 +53,59 @@ public class Server {
         Mail mail = new Mail((String) jsonConfig.get("mail"), (String) jsonConfig.get("mail-pass"), (String) jsonConfig.get("from"));
         System.out.println("SMTP connect: [OK]");
 
-        app.error(404, ctx -> utils.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
+        app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
         //app.get("/admin", ctx -> utils.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
         //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
-        app.get("/settings", ctx -> utils.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
-        app.get("/", ctx -> utils.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
+        app.get("/settings", ctx -> API.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
+        app.get("/", ctx -> API.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/new-password/:token", ctx -> {
-            if (ctx.sessionAttribute("auth") != null){
+            if (ctx.sessionAttribute("auth") != null) {
                 ctx.redirect("/");
             }
-            utils.showChangePassword(ctx,db);
+            utils.showChangedPasswordPage(ctx, db);
         });
         app.get("/reset", ctx -> {
             if (ctx.sessionAttribute("auth") != null){
                 ctx.redirect("/");
             }
-            utils.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
+            API.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
         });
         app.get("/sign-in", ctx -> {
             if (ctx.sessionAttribute("auth") != null){
                 ctx.redirect("/");
             }
-            utils.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login");
+            API.sendHtml(ctx, "static/SignInPage/index.html", "public", "/login");
         });
         app.get("/javadoc", ctx -> ctx.redirect("javadoc/index.html"));
-        app.get("/agreements", ctx -> utils.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
+        app.get("/agreements", ctx -> API.sendHtml(ctx, "static/Doc/index.html", "public", "/agreements"));
         app.get("/login", ctx -> {
             if (ctx.sessionAttribute("auth") != null){
                 ctx.redirect("/");
             }
-            utils.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login");
+            API.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login");
         });
         app.get("/logout", ctx -> {
             System.out.println(ctx.sessionAttribute("mail") + " logout");ctx.sessionAttribute("auth", null); ctx.sessionAttribute("mail", null); ctx.redirect("/login");});
 
-        app.post("/api/changePassword", ctx -> {cors(ctx); ctx.result(utils.changePassword(ctx, db));});
-        app.post("/api/resetPasswordMail", ctx -> {cors(ctx); ctx.result(utils.resetPassword(ctx, db, mail));});
-        app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(utils.confirm(ctx, db, ctx.pathParam("token")));});
-        app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(utils.register(ctx, db, mail));});
-        app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(utils.getUser(ctx,db));});
-        app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(utils.isAuth(ctx));});
-        app.get("/api/auth", ctx -> { cors(ctx); ctx.result(utils.auth(ctx, db));});
+        app.post("/api/changePassword", ctx -> {cors(ctx); ctx.result(User.changePassword(ctx, db));});
+        app.post("/api/resetPasswordMail", ctx -> {cors(ctx); ctx.result(User.resetPassword(ctx, db, mail));});
+        app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(API.mailConfirmation(ctx, db, ctx.pathParam("token")));});
+        app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(User.register(ctx, db, mail));});
+        app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(API.getUser(ctx, db));});
+        app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(API.isAuth(ctx));});
+        app.get("/api/auth", ctx -> { cors(ctx); ctx.result(User.authorization(ctx, db));});
 
-        app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(utils.getAgentData(ctx, db)); });
-        app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(utils.getInterval(ctx, db)); });
-        app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(utils.getAgentDataByInterval(ctx, db)); });
+        app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(API.getAgentData(ctx, db)); });
+        app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataInterval(ctx, db)); });
+        app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataByInterval(ctx, db)); });
 
-        app.post("/api/deleteAgent", ctx -> { cors(ctx); ctx.result(utils.deleteAgent(ctx, db)); });
-        app.post("/api/addAgent", ctx -> { cors(ctx); ctx.result(utils.addAgent(ctx, db)); });
-        app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(utils.getAgentList(ctx, db)); });
+        app.post("/api/deleteAgent", ctx -> { cors(ctx); ctx.result(User.deleteAgent(ctx, db)); });
+        app.post("/api/addAgent", ctx -> { cors(ctx); ctx.result(User.addAgent(ctx, db)); });
+        app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(API.getAgentList(ctx, db)); });
 
-        app.post("/api/endpoint", ctx -> utils.saveAgentData(ctx, db));
+        app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }
-
 
     /**
      * Method sets the access to sending the requests to the server

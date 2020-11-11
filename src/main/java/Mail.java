@@ -38,7 +38,6 @@ public class Mail {
         //session.setDebug(true);
     }
 
-
     /**
      * Method to send email with activation link
      * @param token activation token
