@@ -26,6 +26,7 @@ public class API {
         if (authCheck(ctx)) {
             jsonResult.put("mail", ctx.sessionAttribute("mail"));
             jsonResult.put("auth", "true");
+            jsonResult.put("status", ctx.sessionAttribute("status"));
         }else{
             jsonResult.put("auth", "false");
         }
@@ -325,9 +326,98 @@ public class API {
             } else {
                 ctx.redirect(redirect);
             }
-        } else if(access.equals("public")) {
+        }
+        else if (access.equals("admin_only")) {
+            if(authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
+                String contents = new String(Files.readAllBytes(Paths.get(path)));
+                ctx.html(contents);
+            }else{
+                ctx.redirect(redirect);
+            }
+        }
+        else if(access.equals("public")) {
             String contents = new String(Files.readAllBytes(Paths.get(path)));
             ctx.html(contents);
+        }
+    }
+
+    public static String getUsers(Context ctx, DBController db) {
+        if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
+            String query = "SELECT * FROM `Users`";
+            JSONObject jsonResult = new JSONObject();
+            JSONArray jsonUsers = new JSONArray();
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    int id = res.getInt("id");
+
+                    JSONObject jsonUser = new JSONObject();
+                    JSONArray jsonAgents = new JSONArray();
+
+                    String sub = "SELECT public_key from User_agents WHERE user_id = ?";
+                    PreparedStatement subPs = db.getConnection().prepareStatement(sub);
+                    subPs.setInt(1, id);
+                    ResultSet subRes = subPs.executeQuery();
+                    while (subRes.next()) {
+                        JSONObject jsonAgent = new JSONObject();
+                        jsonAgent.put("public_key", subRes.getString("public_key"));
+                        jsonAgents.add(jsonAgent);
+                    }
+                    subRes.close();
+                    jsonUser.put("mail", res.getString("mail"));
+                    jsonUser.put("agents", jsonAgents);
+                    JSONObject jsonSettings = (JSONObject) Utils.parser.parse(res.getString("settings"));
+                    jsonUser.put("settings", jsonSettings);
+                    jsonUsers.add(jsonUser);
+                }
+                ps.close();
+                jsonResult.put("users", jsonUsers);
+                return jsonResult.toString();
+
+            } catch (SQLException | ParseException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+
+        }else{
+            ctx.status(200);
+            return "No access";
+        }
+    }
+
+    public static String deleteUser(Context ctx, DBController db){
+        JSONObject jsonResult = new JSONObject();
+        if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
+            if(ctx.queryParam("mail") != null && ctx.queryParam("mail").equals(ctx.sessionAttribute("mail"))){
+                String mail = ctx.queryParam("mail");
+                String delUserAgent = "DELETE FROM User_agents WHERE user_id = (SELECT id from Users where mail = ?)";
+                String delUser = "DELETE FROM Users WHERE mail = ?";
+                try{
+                    PreparedStatement delUAPs = db.getConnection().prepareStatement(delUserAgent);
+                    delUAPs.setString(1, mail);
+                    delUAPs.executeUpdate();
+                    delUAPs.close();
+                    PreparedStatement delUPs = db.getConnection().prepareStatement(delUser);
+                    delUPs.setString(1, mail);
+                    delUPs.executeUpdate();
+                    delUPs.close();
+                } catch (SQLException throwables) {
+                    jsonResult.put("user_delete", "false");
+                    ctx.status(200);
+                    return jsonResult.toJSONString();
+                }
+                jsonResult.put("user_delete", "true");
+                ctx.status(200);
+                return jsonResult.toJSONString();
+            }else{
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(200);
+            return "No access";
         }
     }
 }

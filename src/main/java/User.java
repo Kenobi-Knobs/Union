@@ -2,6 +2,7 @@ package main.java;
 
 import io.javalin.http.Context;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import javax.mail.MessagingException;
 import java.security.NoSuchAlgorithmException;
@@ -43,13 +44,22 @@ public class User {
                     byte[] expectedHash = hash(pass, salt);
                     String hash = res.getString("pwd");
                     String expectedHashString = encoder.encodeToString(expectedHash);
-
+                    String settings = res.getString("settings");
+                    JSONObject jsonSettings;
+                    try {
+                        jsonSettings = (JSONObject) parser.parse(settings);
+                    } catch(ClassCastException | ParseException e) {
+                        ctx.status(400);
+                        return "bad request";
+                    }
                     if (hash.equals(expectedHashString)) {
                         if(res.getInt("email_confirmed") == 1) {
                             jsonResult.put("auth", "true");
                             jsonResult.put("info", "user is authorized");
                             ctx.sessionAttribute("auth", "true");
                             ctx.sessionAttribute("mail", mail);
+                            ctx.sessionAttribute("status", jsonSettings.get("status"));
+                            ctx.sessionAttribute("lang", jsonSettings.get("lang"));
                             System.out.println( mail + " auth");
                         }else{
                             jsonResult.put("auth", "false");
@@ -104,7 +114,7 @@ public class User {
                     insertPs.setString(2, encoder.encodeToString(salt));
                     insertPs.setString(3, encoder.encodeToString(hash));
                     insertPs.setString(4, key);
-                    insertPs.setString(5, "{}");
+                    insertPs.setString(5, "{\"status\" : \"user\", \"lang\" : \"en\"}");
                     insertPs.executeUpdate();
                     insertPs.close();
                     jsonResult.put("register","true");

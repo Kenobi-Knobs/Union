@@ -41,8 +41,8 @@ public class Server {
         app.config.addStaticFiles( "/login","static/LoginPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/settings","static/SettingsPage/", Location.EXTERNAL);
-        //app.config.addStaticFiles( "/statistic","static/StatisticPage/", Location.EXTERNAL);
-        //app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/statistic","static/StatisticPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/404","static/NotFoundPage", Location.EXTERNAL);
         app.config.addStaticFiles( "/api/404","static/NotFoundPage", Location.EXTERNAL);
@@ -55,8 +55,8 @@ public class Server {
 
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
-        //app.get("/admin", ctx -> utils.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
-        //app.get("/statistic", ctx -> utils.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
+        app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/")); // admin_only
+        app.get("/statistic", ctx -> API.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         app.get("/settings", ctx -> API.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> API.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/new-password/:token", ctx -> {
@@ -103,6 +103,9 @@ public class Server {
         app.post("/api/deleteAgent", ctx -> { cors(ctx); ctx.result(User.deleteAgent(ctx, db)); });
         app.post("/api/addAgent", ctx -> { cors(ctx); ctx.result(User.addAgent(ctx, db)); });
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(API.getAgentList(ctx, db)); });
+
+        app.get("/api/getUsers", ctx -> {cors(ctx); ctx.result(API.getUsers(ctx, db));});
+        app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
 
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }
