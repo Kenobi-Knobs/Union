@@ -172,4 +172,29 @@ public class Utils {
             ctx.status(404);
         }
     }
+
+    public static Boolean changeSetting(String mail, DBController db, String property, String new_property){
+        try{
+            String getSettings = "SELECT `settings` FROM `Users` WHERE `mail` = ?";
+            PreparedStatement getPs = db.getConnection().prepareStatement(getSettings);
+            getPs.setString(1, mail);
+            ResultSet getRes = getPs.executeQuery();
+            getRes.next();
+            JSONObject jsonSettings = (JSONObject) Utils.parser.parse(getRes.getString("settings"));
+
+            jsonSettings.put(property, new_property);
+
+            String setSettings = "UPDATE `Users` SET `settings`= ? WHERE `mail` = ?";
+            PreparedStatement setPs = db.getConnection().prepareStatement(setSettings);
+            setPs.setString(1,jsonSettings.toJSONString());
+            setPs.setString(2,mail);
+            setPs.executeUpdate();
+            getPs.close();
+            setPs.close();
+            return true;
+        }catch (SQLException | ParseException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
 }

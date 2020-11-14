@@ -319,25 +319,27 @@ public class API {
      * @throws IOException input output exception
      */
     public static void sendHtml(Context ctx, String path, String access, String redirect) throws IOException {
-        if (access.equals("auth_only")) {
-            if (authCheck(ctx)) {
+        switch (access) {
+            case "auth_only":
+                if (authCheck(ctx)) {
+                    String contents = new String(Files.readAllBytes(Paths.get(path)));
+                    ctx.html(contents);
+                } else {
+                    ctx.redirect(redirect);
+                }
+                break;
+            case "admin_only":
+                if (authCheck(ctx) && ctx.sessionAttribute("status").equals("admin")) {
+                    String contents = new String(Files.readAllBytes(Paths.get(path)));
+                    ctx.html(contents);
+                } else {
+                    ctx.redirect(redirect);
+                }
+                break;
+            case "public":
                 String contents = new String(Files.readAllBytes(Paths.get(path)));
                 ctx.html(contents);
-            } else {
-                ctx.redirect(redirect);
-            }
-        }
-        else if (access.equals("admin_only")) {
-            if(authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
-                String contents = new String(Files.readAllBytes(Paths.get(path)));
-                ctx.html(contents);
-            }else{
-                ctx.redirect(redirect);
-            }
-        }
-        else if(access.equals("public")) {
-            String contents = new String(Files.readAllBytes(Paths.get(path)));
-            ctx.html(contents);
+                break;
         }
     }
 
@@ -415,6 +417,23 @@ public class API {
                 ctx.status(400);
                 return "Bad request";
             }
+        }else{
+            ctx.status(200);
+            return "No access";
+        }
+    }
+
+    public static String upgradeUser(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        if(authCheck(ctx) && ctx.sessionAttribute("status").equals("admin") && ctx.queryParam("mail") != null){
+            boolean res = Utils.changeSetting(ctx.queryParam("mail"), db, "status", "premium_user");
+            if(res){
+                jsonResult.put("user_upgrade", "true");
+            }else{
+                jsonResult.put("user_upgrade", "false");
+            }
+            ctx.status(200);
+            return jsonResult.toJSONString();
         }else{
             ctx.status(200);
             return "No access";

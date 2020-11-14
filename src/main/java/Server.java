@@ -106,6 +106,7 @@ public class Server {
 
         app.get("/api/getUsers", ctx -> {cors(ctx); ctx.result(API.getUsers(ctx, db));});
         app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
+        app.get("/api/upgradeUser", ctx -> {cors(ctx); ctx.result(API.upgradeUser(ctx, db));});
 
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }
