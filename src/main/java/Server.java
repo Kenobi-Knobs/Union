@@ -31,7 +31,6 @@ public class Server {
         JSONObject jsonConfig = (JSONObject) parser.parse(config);
 
         Javalin app = Javalin.create().start(8080);
-        Utils utils = new Utils();
 
         app.config.addStaticFiles( "/new-password","static/NewPasswordPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/reset","static/ResetPasswordPage/", Location.EXTERNAL);
@@ -63,7 +62,7 @@ public class Server {
             if (ctx.sessionAttribute("auth") != null) {
                 ctx.redirect("/");
             }
-            utils.showChangedPasswordPage(ctx, db);
+            Utils.showChangedPasswordPage(ctx, db);
         });
         app.get("/reset", ctx -> {
             if (ctx.sessionAttribute("auth") != null){

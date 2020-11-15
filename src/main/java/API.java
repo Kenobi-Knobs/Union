@@ -105,7 +105,7 @@ public class API {
                     Date endDate = new Date(endUnix);
                     SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     JSONParser parser = new JSONParser();
-                    String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ?";
+                    String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ? and `scan_time` like '%-%-% %:00:%'";
                     PreparedStatement ps = db.getConnection().prepareStatement(query);
                     ps.setString(1, sdf.format(startDate));
                     ps.setString(2, sdf.format(endDate));
