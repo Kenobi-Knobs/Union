@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class API {
@@ -97,35 +98,35 @@ public class API {
             if (ctx.queryParam("public_key") != null && Utils.isOwner(ctx, db, ctx.queryParam("public_key") )) {
                 JSONObject jsonResult = new JSONObject();
                 JSONArray jsonArray = new JSONArray();
-                if (Utils.dateValidation(ctx.queryParam("start"), ctx.queryParam("end"))) {
-                    try {
-                        JSONParser parser = new JSONParser();
-                        String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ?";
-                        PreparedStatement ps = db.getConnection().prepareStatement(query);
-                        ps.setString(1, ctx.queryParam("start") + ":05");
-                        ps.setString(2, ctx.queryParam("end") + ":05");
-                        ps.setString(3, ctx.queryParam("public_key"));
-                        ResultSet res = ps.executeQuery();
-                        while (res.next()) {
-                            JSONObject jsonData = new JSONObject();
-                            jsonData.put("public_key", res.getString("public_key"));
-                            jsonData.put("scan_time", res.getString("scan_time"));
-                            String str = res.getString("data");
-                            JSONObject jsonBody = (JSONObject) parser.parse(str);
-                            jsonData.put("data", jsonBody);
-                            jsonArray.add(jsonData);
-                        }
-                        ps.close();
-                        jsonResult.put("dataset", jsonArray);
-                        return jsonResult.toJSONString();
-                    } catch (SQLException | ParseException throwables) {
-                        throwables.printStackTrace();
-                        ctx.status(400);
-                        return "Bad request";
+                try {
+                    long startUnix = Long.parseLong(ctx.queryParam("start")) * 1000L;
+                    long endUnix = Long.parseLong(ctx.queryParam("end")) * 1000L;
+                    Date startDate = new Date(startUnix);
+                    Date endDate = new Date(endUnix);
+                    SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    JSONParser parser = new JSONParser();
+                    String query = "select * from AgentData WHERE (scan_time BETWEEN ? and ? ) and public_key = ?";
+                    PreparedStatement ps = db.getConnection().prepareStatement(query);
+                    ps.setString(1, sdf.format(startDate));
+                    ps.setString(2, sdf.format(endDate));
+                    ps.setString(3, ctx.queryParam("public_key"));
+                    ResultSet res = ps.executeQuery();
+                    while (res.next()) {
+                        JSONObject jsonData = new JSONObject();
+                        jsonData.put("public_key", res.getString("public_key"));
+                        jsonData.put("scan_time", res.getString("scan_time"));
+                        String str = res.getString("data");
+                        JSONObject jsonBody = (JSONObject) parser.parse(str);
+                        jsonData.put("data", jsonBody);
+                        jsonArray.add(jsonData);
                     }
-                } else {
+                    ps.close();
+                    jsonResult.put("dataset", jsonArray);
+                    return jsonResult.toJSONString();
+                } catch (SQLException | ParseException | NumberFormatException throwables) {
+                    //throwables.printStackTrace();
                     ctx.status(400);
-                    return "Validation Error: Date is incorrect";
+                    return "Bad request";
                 }
             } else {
                 ctx.status(400);
@@ -214,12 +215,15 @@ public class API {
                 ResultSet res = ps.executeQuery();
                 while (res.next()) {
                     jsonResult.put("public_key", publicKey);
-                    jsonResult.put("min", res.getString("min"));
-                    jsonResult.put("max", res.getString("max"));
+                    SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date mind = dateParser.parse(res.getString("min"));
+                    Date maxd = dateParser.parse(res.getString("max"));
+                    jsonResult.put("min", mind.getTime() / 1000L);
+                    jsonResult.put("max", maxd.getTime() / 1000L);
                 }
                 ps.close();
                 return jsonResult.toJSONString();
-            } catch (SQLException throwables) {
+            } catch (SQLException | java.text.ParseException throwables) {
                 throwables.printStackTrace();
                 ctx.status(400);
                 return "Bad request";
