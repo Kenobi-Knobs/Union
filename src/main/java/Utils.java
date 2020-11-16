@@ -127,15 +127,6 @@ public class Utils {
         return sb.toString();
     }
 
-    public static boolean dateValidation(String start, String end) {
-        String regex = "[0-9]{4}-(0[0-9]|1[012])-([012][0-9]|3[01]) ([01][0-9]|2[0-3])(:[0-5][0-9])";
-        if (start != null && end != null) {
-            return start.matches(regex) && end.matches(regex);
-        } else {
-            return false;
-        }
-    }
-
     public static boolean addAgentValidation(Context ctx) {
         String publicKey = ctx.formParam("public_key");
         String secretKey = ctx.formParam("secret_key");

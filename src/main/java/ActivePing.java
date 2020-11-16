@@ -50,10 +50,10 @@ public class ActivePing {
 
             boolean error = !(code >= 200 && code <= 399);
             boolean down = (currentDown != 0);
-            System.out.println(address + " " + code);
+            // System.out.println(address + " " + code);
             // ошибка есть текущего падения нет
             if (error && !down){
-                System.out.println("падение началось");
+                // System.out.println("падение началось");
                 try {
                     int confirm = 0;
                     if(downTiming == pingInterval){
@@ -80,7 +80,7 @@ public class ActivePing {
             }
             // ошибка есть текущее падение есть
             else if (error && down){
-                System.out.println("падение продолжается");
+                // System.out.println("падение продолжается");
                 try {
                     int downTime = 1;
                     String query = "SELECT `down_time` FROM `DownList` WHERE id = (SELECT current_down from PingList where id = ?)";
@@ -110,7 +110,7 @@ public class ActivePing {
             }
             // ошибки нет текущее падение есть
             else if (!error && down){
-                System.out.println("падение закончилось");
+                // System.out.println("падение закончилось");
                 try{
                     String query0 = "UPDATE `DownList` SET `end` = ? WHERE id = (SELECT current_down from PingList where id = ?)";
                     PreparedStatement ps0 = db.getConnection().prepareStatement(query0);

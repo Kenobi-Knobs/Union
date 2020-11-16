@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Timer;
 
 
@@ -23,7 +22,6 @@ import java.util.Timer;
  */
 public class Server {
     private static final boolean enableCors = true;
-
     /**
      * Method starts the server, mail and database,
      * distributes the pages of the application,
@@ -64,7 +62,7 @@ public class Server {
 
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
-        app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/")); // admin_only
+        app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
         app.get("/statistic", ctx -> API.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         app.get("/settings", ctx -> API.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> API.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
