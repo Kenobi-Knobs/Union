@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Timer;
+
 
 /**
  * Project's server side class<br>
@@ -51,6 +54,13 @@ public class Server {
 
         Mail mail = new Mail((String) jsonConfig.get("mail"), (String) jsonConfig.get("mail-pass"), (String) jsonConfig.get("from"));
         System.out.println("SMTP connect: [OK]");
+
+        ActivePing ap = new ActivePing();
+        Timer timer = new Timer();
+
+        timer.scheduleAtFixedRate(new MyTimerTask(ap,db), 0, 60*1000);
+        System.out.println("Active check schedule: [OK]");
+
 
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
@@ -106,6 +116,9 @@ public class Server {
         app.get("/api/getUsers", ctx -> {cors(ctx); ctx.result(API.getUsers(ctx, db));});
         app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
         app.get("/api/upgradeUser", ctx -> {cors(ctx); ctx.result(API.upgradeUser(ctx, db));});
+
+        app.post("/api/addActivePing", ctx -> { cors(ctx); ctx.result(User.addActivePing(ctx, db)); });
+        app.post("/api/deleteActivePing", ctx -> { cors(ctx); ctx.result(User.deleteActivePing(ctx, db)); });
 
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }

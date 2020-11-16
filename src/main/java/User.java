@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -178,7 +179,7 @@ public class User {
 
                 jsonResult.put("add", "true");
                 jsonResult.put("info", "Added");
-
+                System.out.println(ctx.sessionAttribute("mail") + " add agent  " + publicKey.toLowerCase());
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
                 jsonResult.put("add", "false");
@@ -209,6 +210,7 @@ public class User {
                 insertPs.close();
                 jsonResult.put("delete", "true");
                 jsonResult.put("info", publicKey + " deleted");
+                System.out.println(ctx.sessionAttribute("mail") + " delete " +  publicKey);
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -239,6 +241,7 @@ public class User {
                     insertPs.setString(2, mail);
                     insertPs.executeUpdate();
                     insertPs.close();
+                    System.out.println(mail + " reset password ");
                     jsonResult.put("reset", "true");
                     jsonResult.put("info", "Confirmation mail sent");
                     jsonResult.put("mail", mail);
@@ -294,5 +297,93 @@ public class User {
             jsonResult.put("info","token no found");
         }
         return jsonResult.toJSONString();
+    }
+
+    public static String addActivePing(Context ctx, DBController db){
+        JSONObject jsonResult = new JSONObject();
+        if (!API.authCheck(ctx)) {
+            ctx.status(401);
+            return "Unauthorized";
+        }
+        try {
+            String address = ctx.formParam("address");
+            int pingInterval = Integer.parseInt(ctx.formParam("ping_interval"));
+            int downTiming = Integer.parseInt(ctx.formParam("down_timing"));
+            if(address.contains("<")){
+                ctx.status(400);
+                return "bad request";
+            }
+            if (pingInterval <= 0 || downTiming <= 0 || pingInterval > 60 || downTiming > 60){
+                ctx.status(400);
+                return "bad request";
+            }
+            Date date = new Date(System.currentTimeMillis());
+            long currentTime = date.getTime() / 1000L;
+
+            try {
+                String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?)";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, ctx.sessionAttribute("mail"));
+                insertPs.setString(2, address);
+                insertPs.setInt(3, pingInterval);
+                insertPs.setLong(4, currentTime);
+                insertPs.setInt(5,downTiming);
+                int col = insertPs.executeUpdate();
+                insertPs.close();
+                if (col <= 0){
+                    jsonResult.put("add_ping", "false");
+                    jsonResult.put("info", "is exist");
+                    return jsonResult.toJSONString();
+                }
+                ctx.status(200);
+                jsonResult.put("add_ping", "true");
+                jsonResult.put("info", "Added");
+                System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing");
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            ctx.status(400);
+            return "bad request";
+        }
+    }
+
+    public static String deleteActivePing(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        if(!API.authCheck(ctx)){
+            ctx.status(401);
+            return "Unauthorized";
+        }
+        String address =  ctx.formParam("address");
+        if (address != null){
+            try {
+                String insertQuery = "DELETE FROM `PingList` WHERE `address` = ? and `user_id` = (SELECT id FROM Users WHERE mail = ?)";
+                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                insertPs.setString(1, address);
+                insertPs.setString(2, ctx.sessionAttribute("mail"));
+                int col = insertPs.executeUpdate();
+                insertPs.close();
+                if(col > 0){
+                    jsonResult.put("delete", "true");
+                    jsonResult.put("info", ctx.sessionAttribute("mail") + " delete " + address);
+                    System.out.println(ctx.sessionAttribute("mail") + " delete " + address + " from activePing");
+                }else{
+                    ctx.status(400);
+                    return "Bad request";
+                }
+                return jsonResult.toJSONString();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Bad request";
+        }
     }
 }
