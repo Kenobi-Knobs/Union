@@ -117,6 +117,7 @@ public class Server {
 
         app.post("/api/addActivePing", ctx -> { cors(ctx); ctx.result(User.addActivePing(ctx, db)); });
         app.post("/api/deleteActivePing", ctx -> { cors(ctx); ctx.result(User.deleteActivePing(ctx, db)); });
+        app.get("/api/getActivePingData", ctx -> { cors(ctx); ctx.result(API.getActivePingData(ctx, db)); });
 
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }

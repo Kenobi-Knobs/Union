@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -441,6 +442,59 @@ public class API {
         }else{
             ctx.status(200);
             return "No access";
+        }
+    }
+
+    public static String getActivePingData(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        JSONArray jsonPings = new JSONArray();
+        JSONObject jsonPing = new JSONObject();
+        JSONArray jsonDowns = new JSONArray();
+        JSONObject jsonDown = new JSONObject();
+        if(authCheck(ctx)){
+            String mail = ctx.sessionAttribute("mail");
+            String getPingList = "SELECT * FROM PingList WHERE user_id = (SELECT id FROM Users WHERE mail = ?);";
+            String getDown = "SELECT * FROM DownList WHERE ping_id = ? and down_confirm = 1 and end = 1";
+            ArrayList<Integer> pingIds = new ArrayList();
+            try {
+                PreparedStatement ps = db.getConnection().prepareStatement(getPingList);
+                ps.setString(1,mail);
+                ResultSet res = ps.executeQuery();
+                while (res.next()) {
+                    jsonPing.put("address", res.getString("address"));
+                    jsonPing.put("ping_interval", res.getInt("ping_interval"));
+                    jsonPing.put("down_timing", res.getInt("down_timing"));
+                    jsonPing.put("last_ping_time", res.getInt("last_ping_time"));
+                    jsonPing.put("last_code", res.getInt("last_code"));
+                    if(res.getInt("current_down") != 0){
+                        jsonPing.put("current_down", "true");
+                    }else{
+                        jsonPing.put("current_down", "false");
+                    }
+
+                    PreparedStatement ps1 = db.getConnection().prepareStatement(getDown);
+                    ps1.setInt(1,res.getInt("id"));
+                    ResultSet res1 = ps1.executeQuery();
+                    while (res1.next()) {
+                        jsonDown.put("start_time", res1.getInt("time"));
+                        jsonDown.put("down_duration", res1.getInt("down_time"));
+                        jsonDown.put("code", res1.getInt("code"));
+                        jsonDowns.add(jsonDown);
+                    }
+                    jsonPing.put("downs", jsonDowns);
+                    jsonPings.add(jsonPing);
+                }
+                jsonResult.put("pings",jsonPings);
+                ctx.status(200);
+                return jsonResult.toJSONString().replaceAll("\\\\","");
+
+            } catch (SQLException throwables) {
+                ctx.status(400);
+                return "Bad request";
+            }
+        }else{
+            ctx.status(400);
+            return "Unauthorized";
         }
     }
 }

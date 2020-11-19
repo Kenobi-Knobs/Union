@@ -23,7 +23,7 @@ public class ActivePing {
             int id = res.getInt("id");
             String address = res.getString("address");
             int pingInterval = res.getInt("ping_interval");
-            long lastPing = res.getLong("last_ping_time");
+            int lastPing = res.getInt("last_ping_time");
             int currentDown = res.getInt("current_down");
             int downTiming = res.getInt("down_timing");
 
@@ -31,6 +31,7 @@ public class ActivePing {
                 pingList.add(id + "|" + address + "|" + currentDown + "|" + downTiming + "|" + pingInterval);
             }
         }
+
         return pingList;
     }
 
