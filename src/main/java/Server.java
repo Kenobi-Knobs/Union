@@ -59,7 +59,6 @@ public class Server {
         timer.scheduleAtFixedRate(new MyTimerTask(ap,db), 0, 60*1000);
         System.out.println("Active check schedule: [OK]");
 
-
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
         app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
@@ -102,6 +101,7 @@ public class Server {
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(API.getUser(ctx, db));});
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(API.isAuth(ctx));});
         app.get("/api/auth", ctx -> { cors(ctx); ctx.result(User.authorization(ctx, db));});
+        app.get("/api/changeSetting", ctx -> { cors(ctx); ctx.result(User.changeSetting(ctx, db));});
 
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(API.getAgentData(ctx, db)); });
         app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataInterval(ctx, db)); });
@@ -115,9 +115,11 @@ public class Server {
         app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
         app.get("/api/upgradeUser", ctx -> {cors(ctx); ctx.result(API.upgradeUser(ctx, db));});
 
-        app.post("/api/addActivePing", ctx -> { cors(ctx); ctx.result(User.addActivePing(ctx, db)); });
+        app.post("/api/addActivePing", ctx -> { cors(ctx); ctx.result(User.addActivePing(ctx, db)); }); // need validation
         app.post("/api/deleteActivePing", ctx -> { cors(ctx); ctx.result(User.deleteActivePing(ctx, db)); });
         app.get("/api/getActivePingData", ctx -> { cors(ctx); ctx.result(API.getActivePingData(ctx, db)); });
+
+        app.get("/api/ping", ctx -> {cors(ctx); ctx.result(API.checkService(ctx, db)); });
 
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }

@@ -188,4 +188,30 @@ public class Utils {
             return false;
         }
     }
+
+    public static int getAgentCount(Context ctx, DBController db) throws SQLException {
+        String mail = ctx.sessionAttribute("mail");
+        String query = "SELECT * FROM `User_agents` WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?)";
+        PreparedStatement ps = db.getConnection().prepareStatement(query);
+        ps.setString(1, mail);
+        ResultSet res = ps.executeQuery();
+        int counter = 0;
+        while (res.next()){
+          counter++;
+        }
+        return counter;
+    }
+
+    public static int getPingCount(Context ctx, DBController db) throws SQLException {
+        String mail = ctx.sessionAttribute("mail");
+        String query = "SELECT * FROM `PingList` WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?)";
+        PreparedStatement ps = db.getConnection().prepareStatement(query);
+        ps.setString(1, mail);
+        ResultSet res = ps.executeQuery();
+        int counter = 0;
+        while (res.next()){
+            counter++;
+        }
+        return counter;
+    }
 }

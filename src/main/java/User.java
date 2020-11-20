@@ -10,9 +10,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -140,14 +138,13 @@ public class User {
     }
 
     public static String addAgent(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
         if (!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
 
         if (addAgentValidation(ctx)) {
-            JSONObject jsonResult = new JSONObject();
-
             String publicKey = ctx.formParam("public_key");
             String privateKey = ctx.formParam("secret_key");
             String host = ctx.formParam("host");
@@ -157,12 +154,22 @@ public class User {
                 return "Bad request (xss detect)";
             }
             try {
+                if(ctx.sessionAttribute("status").equals("user") && Utils.getAgentCount(ctx, db) >= 3){
+                    jsonResult.put("add", "false");
+                    jsonResult.put("info", "no premium");
+                    return jsonResult.toJSONString();
+                }
                 String insertQuery = "INSERT IGNORE INTO `Agents`(`public_key`, `secret_key`, `host`) VALUES (?,?,?)";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                 insertPs.setString(1, publicKey.toLowerCase());
                 insertPs.setString(2, privateKey);
                 insertPs.setString(3, host.toLowerCase());
-                insertPs.executeUpdate();
+                int count = insertPs.executeUpdate();
+                if(count <= 0){
+                    jsonResult.put("add", "false");
+                    jsonResult.put("info", "Is exist");
+                    return jsonResult.toJSONString();
+                }
                 insertPs.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -184,7 +191,6 @@ public class User {
             } catch (SQLException throwables) {
                 jsonResult.put("add", "false");
                 jsonResult.put("info", "Is exist");
-
                 return jsonResult.toJSONString();
             }
         } else {
@@ -306,6 +312,11 @@ public class User {
             return "Unauthorized";
         }
         try {
+            if(ctx.sessionAttribute("status").equals("user") && Utils.getPingCount(ctx, db) >= 5){
+                jsonResult.put("add", "false");
+                jsonResult.put("info", "no premium");
+                return jsonResult.toJSONString();
+            }
             String address = ctx.formParam("address");
             int pingInterval = Integer.parseInt(ctx.formParam("ping_interval"));
             int downTiming = Integer.parseInt(ctx.formParam("down_timing"));
@@ -361,6 +372,12 @@ public class User {
         String address =  ctx.formParam("address");
         if (address != null){
             try {
+                String update = "UPDATE `PingList` SET current_down = NULL WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?) and `address` = ?";
+                PreparedStatement updatePs = db.getConnection().prepareStatement(update);
+                updatePs.setString(1, ctx.sessionAttribute("mail"));
+                updatePs.setString(2, address);
+                updatePs.executeUpdate();
+                updatePs.close();
                 String insertQuery = "DELETE FROM `PingList` WHERE `address` = ? and `user_id` = (SELECT id FROM Users WHERE mail = ?)";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                 insertPs.setString(1, address);
@@ -385,5 +402,21 @@ public class User {
             ctx.status(400);
             return "Bad request";
         }
+    }
+
+    // not testing, need review
+    public static String changeSetting(Context ctx, DBController db) {
+        if(!API.authCheck(ctx)){
+            ctx.status(401);
+            return "Unauthorized";
+        }
+        String[] propertys = {"lang"};
+        String property = ctx.queryParam("property");
+        String value = ctx.queryParam("value");
+        if(property != null && value != null && Arrays.asList(propertys).contains(property)){
+            Utils.changeSetting(ctx.sessionAttribute("mail"), db, property, value);
+            return "true";
+        }
+        return "false";
     }
 }
