@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
 
-    $('input').keydown(function (e) {
-        if (e.keyCode === 13) {
-            addNewServer();
-        }
-    });
+    //    $('input').keydown(function (e) {
+    //        if (e.keyCode === 13) {
+    //            addNewServer();
+    //        }
+    //    });
 
 
     $(".quit").on('click', function () {
@@ -20,49 +20,84 @@ $(document).ready(function () {
         $(location).attr('href', '/settings');
     });
 
-    //adding servers
-    $('#Save').on('click', function () {
-        addNewServer();
+    $('#average').on('click', function () {
+        $(location).attr('href', '/statistic');
     });
 
-    function addNewServer() {
-        let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
-        let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
-        let host = $('#addHost').val().replace(/\s/gi, '');
+    //смотрим статус юзера, является ли он админом
+    $.get('api/getUser', {}, function (data) {
+        data = JSON.parse(data);
+        console.log(data.settings.status);
 
-
-        if (public_key.length <= 0 || secret_key.length <= 0 || host.length <= 0) {
-            //            alert('field must be filled');
-            //            $('#addPublicKey').val('');
-            //            $('#addSecretKey').val('');
-            //            $('#addHost').val('');
-            $('#info').text('All fields must be filled');
-
-            $('.emptyWrapper').fadeIn(300);
-
-        } else {
-            $.post(
-                "/api/addAgent", {
-                    public_key: public_key,
-                    secret_key: secret_key,
-                    host: host
-                },
-                function (data) {
-                    data = JSON.parse(data);
-                    //                    console.log(data);
-
-                    if (data.add == 'true' && data.info == 'Added') {
-                        location.reload();
-                        $('.emptyWrapper').css('display', 'none');
-                    }
-                    if (data.add == 'false' && data.info == 'Is exist') {
-                        $('#info').text('This server is already exist');
-                        $('.emptyWrapper').fadeIn(300);
-                    }
-                }
-            );
+        if (data.settings.status == 'admin') {
+            $('#settingsList').append(
+                $('<li>').append(
+                    $('<div>').attr({
+                        class: 'option'
+                    }).append(
+                        $('<span>').attr({
+                            class: 'titleOption'
+                        }).text('Admin')
+                    ).append(
+                        $('<span>').html(`Go to <a href='/admin'> admin page</a>`)
+                    )
+                )
+            )
         }
-    }
+    });
+
+
+
+    //validate adding servers
+    $('#formAddServer').validate({
+        rules: {
+            public: {
+                required: true,
+                validPublic: true
+            },
+            secret: {
+                required: true,
+                validSecret: true
+            },
+            host: {
+                required: true,
+                validHost: true
+            }
+        },
+        messages: {
+            public: {
+                required: "This field must be filled",
+                validPublic: "First character must be letter. Without spaces"
+            },
+            secret: {
+                required: "This field must be filled",
+                validSecret: "Without spaces"
+            },
+            host: {
+                required: "This field must be filled",
+                validHost: "At least 1 letter then dot then at least 2 letters"
+            }
+        },
+        submitHandler: function () {
+            addNewServer();
+        }
+    });
+
+    $.validator.addMethod("validPublic", function (value, element) {
+        return this.optional(element) || /^[a-zA-Z]+[a-zA-Z0-9_-]*$/gi.test(value);
+    });
+    $.validator.addMethod("validSecret", function (value, element) {
+        return this.optional(element) || /^[a-zA-Z0-9]+$/gi.test(value);
+    });
+    $.validator.addMethod("validHost", function (value, element) {
+        return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
+    });
+
+
+    //adding servers
+    //    $('#Save').on('click', function () {
+    //        addNewServer();
+    //    });
 
     //    checking authorized user or not
     $.get(
@@ -194,3 +229,30 @@ $(document).ready(function () {
     );
 
 });
+
+
+function addNewServer() {
+    let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
+    let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
+    let host = $('#addHost').val().replace(/\s/gi, '');
+    $.post(
+        "/api/addAgent", {
+            public_key: public_key,
+            secret_key: secret_key,
+            host: host
+        },
+        function (data) {
+            data = JSON.parse(data);
+            //                    console.log(data);
+
+            if (data.add == 'true' && data.info == 'Added') {
+                location.reload();
+                $('.emptyWrapper').css('display', 'none');
+            }
+            if (data.add == 'false' && data.info == 'Is exist') {
+                $('#info').text('This server is already exist');
+                $('.emptyWrapper').fadeIn(300);
+            }
+        }
+    );
+}

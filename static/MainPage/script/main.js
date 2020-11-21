@@ -42,6 +42,10 @@ $(document).ready(function () {
         $(location).attr('href', '/settings');
     });
 
+    $('#statistic').on('click', function () {
+        $(location).attr('href', '/statistic');
+    });
+
     select();
 
     //    checking authorized user or not
@@ -90,10 +94,12 @@ $(document).ready(function () {
                 }
 
                 let public_key;
+                let host;
                 for (var key in data['agents']) {
-                    //                    console.log(data.agents[key].public_key);
+                    console.log(data);
 
                     public_key = data.agents[key].public_key;
+                    host = data.agents[key].host;
 
                     $('.listOfServers').append(
                         $('<li>').append(
@@ -106,7 +112,12 @@ $(document).ready(function () {
                         ).append(
                             $('<label>').attr({
                                 for: public_key
-                            }).text(public_key)
+                            }).append(
+                                $('<span>').text(public_key),
+                                $('<span>').attr({
+                                    class: 'host'
+                                }).text(host)
+                            )
                         )
                     );
 
@@ -356,6 +367,15 @@ function drawChart(chartName, ctx, labelsTime, labelDataset_1, labelDataset_2, d
         legend: {
             display: true,
             position: 'bottom'
+        },
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                    //                    suggestedMax: 100
+                }
+            }]
         }
     }
 
@@ -412,6 +432,7 @@ function getInfoJSONFromAgent(nameOfServer) {
 
 
             if (data['dataset'].length == 0) {
+                $('.realtime').css('opacity', '0');
                 $('.alert').css('display', 'block');
                 $('.alertText').text('There is no data on this server :c');
 
@@ -425,6 +446,7 @@ function getInfoJSONFromAgent(nameOfServer) {
                 keyMemory = keysOfData[0];
                 keyDisk = keysOfData[2];
 
+                $('.realtime').css('opacity', '1');
                 $('.diagram').css('display', 'block');
                 $('.infoCard').css('display', 'flex');
                 $('.network').css('display', 'block');
@@ -531,5 +553,6 @@ let select = function () {
         let currentText = select.querySelector('.select__current');
         currentText.innerText = text;
         select.classList.remove('is-active');
+        $('.select__icon').html('&#9660;');
     }
 };

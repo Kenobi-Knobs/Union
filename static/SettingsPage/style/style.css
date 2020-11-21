@@ -45,7 +45,7 @@ html {
 .pageWrapper .infoWrapper .card .emptyWrapper {
   display: none;
   position: absolute;
-  left: 3em;
+  left: 2.5em;
   bottom: 15.5em;
 }
 .pageWrapper .infoWrapper .card .emptyWrapper .empty {
@@ -96,6 +96,13 @@ html {
   list-style: none;
   font-family: circe, sans-serif;
   font-size: 0.5em;
+}
+.pageWrapper .infoWrapper .card .formWrapper ul .error ~ label {
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1em;
+  color: #FF3838;
 }
 .pageWrapper .infoWrapper .card .formWrapper ul li {
   margin: 5% 5%;
@@ -275,7 +282,7 @@ html {
 }
 .pageWrapper .main .head .exit .accountCard {
   display: inline-block;
-  margin: 7% 0 0 15%;
+  margin: 7% 0 0 44%;
   padding: 0.1em 1.4em;
   border-radius: 0.4em;
   box-shadow: 0px 0.1em 0.8em rgba(0, 0, 0, 0.25);

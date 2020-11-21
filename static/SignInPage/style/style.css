@@ -115,16 +115,20 @@ html {
 }
 .pageWrapper .signin .formWrapper .contentForm ul li {
   text-align: center;
-  margin: 10% 2%;
+  margin: 7% 2%;
 }
-.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
-  height: 4vw;
+.pageWrapper .signin .formWrapper .contentForm ul li .error ~ label {
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.5em;
+  color: #FF3838;
 }
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
   height: 100%;
   width: 100%;
   border-radius: 0.4em;
-  padding: 1em;
+  padding: 0.8em;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -134,14 +138,13 @@ html {
   border: none;
 }
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
-  height: 4vw;
   margin-bottom: 5%;
 }
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
   height: 100%;
   width: 100%;
   border-radius: 0.4em;
-  padding: 1em;
+  padding: 0.8em;
   font-family: Circe, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -220,12 +223,12 @@ html {
   color: #ADADAD;
 }
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
-  margin-top: 5%;
-  height: 5vw;
+  margin: 3% 0;
   clear: both;
 }
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
   width: 50%;
+  padding: 1%;
   height: 60%;
   outline: none;
   border: none;
@@ -243,10 +246,29 @@ html {
 .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit:not(:hover) {
   transition: 0.3s;
 }
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) {
+  margin-top: 0%;
+  padding-bottom: 0;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) span {
+  color: #616161;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.5em;
+}
+.pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) a {
+  margin-left: 1%;
+  color: #616161;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.5em;
+}
 
 @media screen and (max-width: 575.98px) {
   .pageWrapper .infoWrapper .info {
-    top: 25%;
+    top: 35%;
     left: 10%;
     padding: 3%;
     width: 80vw;
@@ -285,19 +307,18 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li {
     margin: 10% 2%;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
-    height: 9vw;
+  .pageWrapper .signin .formWrapper .contentForm ul li .error ~ label {
+    font-size: 0.8em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
-    padding: 1.3em;
+    padding: 0.7em;
     font-size: 2em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
-    height: 9vw;
     margin-bottom: 8%;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
-    padding: 1.3em;
+    padding: 0.7em;
     padding-right: 3em;
     font-size: 2em;
   }
@@ -309,11 +330,17 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
     font-size: 1.7em;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
-    height: 13vw;
-  }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
     font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) {
+    margin-top: 0%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) a {
+    font-size: 1.4em;
   }
 }
 @media screen and (min-width: 576px) and (max-width: 991.98px) {
@@ -357,19 +384,18 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li {
     margin: 10% 2%;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
-    height: 9vw;
+  .pageWrapper .signin .formWrapper .contentForm ul li .error ~ label {
+    font-size: 0.8em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
-    padding: 1.3em;
+    padding: 0.7em;
     font-size: 2em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
-    height: 9vw;
     margin-bottom: 8%;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
-    padding: 1.3em;
+    padding: 0.7em;
     padding-right: 3em;
     font-size: 2em;
   }
@@ -381,11 +407,17 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
     font-size: 1.7em;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
-    height: 13vw;
-  }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
     font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) {
+    margin-top: 0%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) a {
+    font-size: 1.4em;
   }
 }
 @media screen and (min-width: 992px) and (max-width: 1199.98px) {
@@ -429,19 +461,18 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li {
     margin: 10% 2%;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) {
-    height: 9vw;
+  .pageWrapper .signin .formWrapper .contentForm ul li .error ~ label {
+    font-size: 0.8em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(1) input[name=mail] {
-    padding: 1.3em;
+    padding: 0.7em;
     font-size: 2em;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) {
-    height: 9vw;
     margin-bottom: 8%;
   }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(2) input[name=password] {
-    padding: 1.3em;
+    padding: 0.7em;
     padding-right: 3em;
     font-size: 2em;
   }
@@ -453,10 +484,16 @@ html {
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(3) {
     font-size: 1.7em;
   }
-  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) {
-    height: 13vw;
-  }
   .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(4) #submit {
     font-size: 2em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) {
+    margin-top: 0%;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) span {
+    font-size: 1.4em;
+  }
+  .pageWrapper .signin .formWrapper .contentForm ul li:nth-child(5) a {
+    font-size: 1.4em;
   }
 }

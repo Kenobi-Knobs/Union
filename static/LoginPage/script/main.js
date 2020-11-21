@@ -13,6 +13,7 @@ $(document).ready(function () {
         }
     );
 
+    //sending form by clicking Enter
     $('body').keydown(function (e) {
         if (e.keyCode === 13) {
             if ($('.infoWrapper').css('display') == 'block') {
@@ -75,7 +76,7 @@ function getURLParameter(sUrl, sParam) {
 }
 
 function submitForm() {
-    $.get(
+    $.post(
         "/api/auth", {
             mail: $('#mail').val(),
             pass: $('#password').val()

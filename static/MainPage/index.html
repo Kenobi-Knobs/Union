@@ -22,7 +22,7 @@
                 <ul>
                     <li><i id="home" class="fas fa-home"></i></li>
                     <li hidden><i class="fas fa-crosshairs"></i></li>
-                    <li hidden><i class="fas fa-chart-pie"></i></li>
+                    <li><i id="statistic" class="fas fa-chart-pie"></i></li>
                     <li><i id="settings" class="fas fa-cog"></i></li>
                 </ul>
             </div>
@@ -51,7 +51,6 @@
                 </div>
             </div>
             <div class="allInfo">
-                <div class="alert"><span class='alertText'></span></div>
                 <div class="card diagram">
                     <div class="rect"><span class="titleCard">Data diagram</span></div>
                     <div class="selectWrapper">
@@ -131,6 +130,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="alert"><span class='alertText'></span></div>
                 <div class="card servers">
                     <div class="rect">
                         <span class="titleCard">Servers</span>
@@ -140,19 +140,31 @@
                             <!--
                             <li>
                                 <input type="radio" name="servers" id="gor-tss" value="gor-tss">
-                                <label for="gor-tss">gor-tss</label>
+                                <label for="gor-tss">
+                                    <span>gor-tss</span>
+                                    <span class="host">example.com</span>
+                                </label>
                             </li>
                             <li>
                                 <input type="radio" name="servers" id="t1-tss" value="t1-tss">
-                                <label for="t1-tss">t1-tss</label>
+                                <label for="t1-tss">
+                                    <span>t1-tss</span>
+                                    <span class="host">blabla.com</span>
+                                </label>
                             </li>
                             <li>
                                 <input type="radio" name="servers" id="t2-tss" value="t2-tss">
-                                <label for="t2-tss">t2-tss</label>
+                                <label for="t2-tss">
+                                    <span>t2-tss</span>
+                                    <span class="host">example.com</span>
+                                </label>
                             </li>
                             <li>
                                 <input type="radio" name="servers" id="t3-tss" value="t3-tss">
-                                <label for="t3-tss">t3-tss</label>
+                                <label for="t3-tss">
+                                    <span>t3-tss</span>
+                                    <span class="host">lolka.com</span>
+                                </label>
                             </li>
 -->
                         </ul>

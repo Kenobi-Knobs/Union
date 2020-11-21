@@ -1,4 +1,17 @@
-@import "variables";
+@keyframes pulse {
+
+    0% {
+        box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+    }
+
+    20% {
+        box-shadow: 0px 0px 0.2em 0.08em #FF0101; //третий параметр это блюр
+    }
+
+    40% {
+        box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+    }
+}
 
 * {
     margin: 0;
@@ -105,6 +118,7 @@ html {
                 .realtime {
                     padding-top: 2%;
                     padding-left: 2%;
+                    opacity: 0;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
@@ -114,8 +128,9 @@ html {
                         height: 0.4em;
                         width: 0.4em;
                         border-radius: 50%;
-                        background-color: #D01515;
-                        box-shadow: 0px 0px 0.1em 0.05em #FF0101; //третий параметр это блюр
+                        background-color: #FF3838;
+                        animation: pulse 3s infinite;
+                        box-shadow: 0px 0px 0.1em 0.05em #FF0101;
                     }
 
                     .text {
@@ -192,21 +207,6 @@ html {
             grid-template-columns: 14em 14em 14em;
             //            grid-template-rows: 9em 9em;
             grid-gap: 1em 1em;
-
-            .alert {
-                position: absolute;
-                left: 25vw;
-                top: 20vw;
-                z-index: 2;
-
-                span {
-                    font-family: circe, sans-serif;
-                    font-style: normal;
-                    font-weight: bold;
-                    font-size: 1em;
-                    color: #9C9C9C;
-                }
-            }
 
             .card {
                 background-color: #FFFFFF;
@@ -553,6 +553,22 @@ html {
                 }
             }
 
+            .alert {
+                display: block;
+                position: absolute;
+                left: 25vw;
+                top: 20vw;
+                z-index: 2;
+
+                span {
+                    font-family: circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 1em;
+                    color: #9C9C9C;
+                }
+            }
+
             .servers {
                 grid-column-start: 3;
                 grid-column-end: 4;
@@ -591,6 +607,8 @@ html {
                             border-bottom: 0.05em solid #e1e1e1;
 
                             label {
+                                display: flex;
+                                flex-direction: column;
                                 padding-left: 0.4em;
                                 color: #676464;
 
@@ -603,6 +621,10 @@ html {
                                 &:not(:hover) {
                                     color: #676464;
                                     transition: 0.3s;
+                                }
+
+                                .host {
+                                    font-size: 0.5em;
                                 }
                             }
 
@@ -1177,6 +1199,25 @@ html {
 
                             }
                         }
+                    }
+                }
+
+                .alert {
+                    display: block;
+                    width: 100%;
+                    position: absolute;
+                    left: 0vw;
+                    padding: 2em 4em;
+                    top: 22vw;
+                    z-index: 2;
+                    text-align: center;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 2.5em;
+                        color: #9C9C9C;
                     }
                 }
 
@@ -1812,6 +1853,44 @@ html {
                     }
                 }
 
+                .alert {
+                    display: block;
+                    width: 100%;
+                    position: absolute;
+                    left: 0vw;
+                    padding: 2em 4em;
+                    top: 22vw;
+                    z-index: 2;
+                    text-align: center;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 2.5em;
+                        color: #9C9C9C;
+                    }
+                }
+
+                .alert {
+                    display: block;
+                    width: 100%;
+                    position: absolute;
+                    left: 0vw;
+                    padding: 2em 4em;
+                    top: 22vw;
+                    z-index: 2;
+                    text-align: center;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 2.5em;
+                        color: #9C9C9C;
+                    }
+                }
+
                 .servers {
                     //                    display: none;
                     order: -2;
@@ -2442,6 +2521,25 @@ html {
 
                             }
                         }
+                    }
+                }
+
+                .alert {
+                    display: block;
+                    width: 100%;
+                    position: absolute;
+                    left: 0vw;
+                    padding: 2em 4em;
+                    top: 22vw;
+                    z-index: 2;
+                    text-align: center;
+
+                    span {
+                        font-family: circe, sans-serif;
+                        font-style: normal;
+                        font-weight: bold;
+                        font-size: 2.5em;
+                        color: #9C9C9C;
                     }
                 }
 

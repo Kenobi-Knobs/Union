@@ -135,6 +135,7 @@ html {
             }
 
             .contentForm {
+
                 ul {
                     //                    width: 90%;
                     //                    height: 100%;
@@ -145,17 +146,24 @@ html {
                     li {
                         text-align: center;
                         //                        height: 10%;
-                        margin: 10% 2%;
+                        margin: 7% 2%;
 
+                        .error ~ label {
+                            font-family: Circe, sans-serif;
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 0.5em;
+                            color: #FF3838;
+                        }
 
                         &:nth-child(1) {
-                            height: 4vw;
+                            //                            height: 4vw;
 
                             input[name="mail"] {
                                 height: 100%;
                                 width: 100%;
                                 border-radius: 0.4em;
-                                padding: 1em;
+                                padding: 0.8em;
                                 font-family: Circe, sans-serif;
                                 font-style: normal;
                                 font-weight: normal;
@@ -167,14 +175,14 @@ html {
                         }
 
                         &:nth-child(2) {
-                            height: 4vw;
+                            //                            height: 4vw;
                             margin-bottom: 5%;
 
                             input[name="password"] {
                                 height: 100%;
                                 width: 100%;
                                 border-radius: 0.4em;
-                                padding: 1em;
+                                padding: 0.8em;
                                 font-family: Circe, sans-serif;
                                 font-style: normal;
                                 font-weight: normal;
@@ -271,14 +279,13 @@ html {
                         }
 
                         &:nth-child(4) {
-                            margin-top: 5%;
+                            margin: 3% 0;
                             //                            padding-bottom: 5%;
-                            height: 5vw;
                             clear: both;
 
                             #submit {
                                 width: 50%;
-                                //                                padding: 0px;
+                                padding: 1%;
                                 height: 60%;
                                 outline: none;
                                 border: none;
@@ -302,6 +309,28 @@ html {
 
                             }
                         }
+
+                        &:nth-child(5) {
+                            margin-top: 0%;
+                            padding-bottom: 0;
+
+                            span {
+                                color: #616161;
+                                font-family: Circe, sans-serif;
+                                font-style: normal;
+                                font-weight: bold;
+                                font-size: 0.5em;
+                            }
+
+                            a {
+                                margin-left: 1%;
+                                color: #616161;
+                                font-family: Circe, sans-serif;
+                                font-style: normal;
+                                font-weight: bold;
+                                font-size: 0.5em;
+                            }
+                        }
                     }
                 }
             }
@@ -315,7 +344,7 @@ html {
 
         .infoWrapper {
             .info {
-                top: 25%;
+                top: 35%;
                 left: 10%;
                 padding: 3%;
                 width: 80vw;
@@ -374,23 +403,27 @@ html {
                         li {
                             margin: 10% 2%;
 
+                            .error ~ label {
+                                font-size: 0.8em;
+                            }
+
 
                             &:nth-child(1) {
-                                height: 9vw;
+                                //                                height: 9vw;
 
                                 input[name="mail"] {
                                     //                                    border-radius: 0.9em;
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     font-size: 2em;
                                 }
                             }
 
                             &:nth-child(2) {
-                                height: 9vw;
+                                //                                height: 9vw;
                                 margin-bottom: 8%;
 
                                 input[name="password"] {
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     padding-right: 3em;
                                     font-size: 2em;
                                 }
@@ -409,10 +442,20 @@ html {
                             }
 
                             &:nth-child(4) {
-                                height: 13vw;
-
                                 #submit {
                                     font-size: 2em;
+                                }
+                            }
+
+                            &:nth-child(5) {
+                                margin-top: 0%;
+
+                                span {
+                                    font-size: 1.4em;
+                                }
+
+                                a {
+                                    font-size: 1.4em;
                                 }
                             }
 
@@ -489,23 +532,27 @@ html {
                         li {
                             margin: 10% 2%;
 
+                            .error ~ label {
+                                font-size: 0.8em;
+                            }
+
 
                             &:nth-child(1) {
-                                height: 9vw;
+                                //                                height: 9vw;
 
                                 input[name="mail"] {
                                     //                                    border-radius: 0.9em;
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     font-size: 2em;
                                 }
                             }
 
                             &:nth-child(2) {
-                                height: 9vw;
+                                //                                height: 9vw;
                                 margin-bottom: 8%;
 
                                 input[name="password"] {
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     padding-right: 3em;
                                     font-size: 2em;
                                 }
@@ -524,10 +571,20 @@ html {
                             }
 
                             &:nth-child(4) {
-                                height: 13vw;
-
                                 #submit {
                                     font-size: 2em;
+                                }
+                            }
+
+                            &:nth-child(5) {
+                                margin-top: 0%;
+
+                                span {
+                                    font-size: 1.4em;
+                                }
+
+                                a {
+                                    font-size: 1.4em;
                                 }
                             }
 
@@ -604,23 +661,27 @@ html {
                         li {
                             margin: 10% 2%;
 
+                            .error ~ label {
+                                font-size: 0.8em;
+                            }
+
 
                             &:nth-child(1) {
-                                height: 9vw;
+                                //                                height: 9vw;
 
                                 input[name="mail"] {
                                     //                                    border-radius: 0.9em;
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     font-size: 2em;
                                 }
                             }
 
                             &:nth-child(2) {
-                                height: 9vw;
+                                //                                height: 9vw;
                                 margin-bottom: 8%;
 
                                 input[name="password"] {
-                                    padding: 1.3em;
+                                    padding: 0.7em;
                                     padding-right: 3em;
                                     font-size: 2em;
                                 }
@@ -639,10 +700,20 @@ html {
                             }
 
                             &:nth-child(4) {
-                                height: 13vw;
-
                                 #submit {
                                     font-size: 2em;
+                                }
+                            }
+
+                            &:nth-child(5) {
+                                margin-top: 0%;
+
+                                span {
+                                    font-size: 1.4em;
+                                }
+
+                                a {
+                                    font-size: 1.4em;
                                 }
                             }
 

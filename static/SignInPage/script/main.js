@@ -34,13 +34,47 @@ $(document).ready(function () {
     });
 
 
-    $('#submit').on('click', function () {
-        submitForm();
-    });
-
     $('#understandInfo').on('click', function () {
         understandInfo();
     });
+
+    //form validate
+    $('#formSignIn').validate({
+        rules: {
+            mail: {
+                required: true,
+                validMail: true,
+
+            },
+            password: {
+                required: true,
+                minlength: 8,
+                validPass: true
+            }
+        },
+        messages: {
+            mail: {
+                required: "This field must be filled",
+                validMail: "Enter valid mail like example@something.com"
+            },
+            password: {
+                required: "This field must be filled",
+                minlength: "At least 8 characters long",
+                validPass: "Enter at least 1 capital letter and 1 number"
+            }
+        },
+        submitHandler: function () {
+            submitForm();
+        }
+    });
+
+    $.validator.addMethod("validMail", function (value, element) {
+        return this.optional(element) || /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/gi.test(value);
+    })
+    $.validator.addMethod("validPass", function (value, element) {
+        return this.optional(element) || /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/gi.test(value);
+    })
+
 });
 
 
@@ -56,43 +90,31 @@ function understandInfo() {
 
 
 function submitForm() {
-    let regMail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/gi;
-    let regPass = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/gi;
     let mail = $('#mail').val();
     let pass = $('#password').val();
 
-    if (regMail.test(mail) && regPass.test(pass)) {
-        $.post(
-            "/api/registerNewUser", {
-                mail: mail,
-                pass: pass
-            },
-            function (data) {
-                data = JSON.parse(data);
-                //                    console.log(data);
-                if (data.register == 'false') {
-                    $('.infoWrapper').fadeIn(300);
-                    $('.infoWrapper').css({
-                        'display': 'block'
-                    });
-                    $('#singInInfo').html('Validation error: <br> - mail must contain @ <br> - the password must be at least 8 characters long. Must have one number and one capital letter <br> - or confirmation letter already sent')
-                }
-                if (data.register == 'true') {
-                    $('#singInInfo').text(`Thanks for the registration. Please check ${data.mail} to verify your account`);
-                    $('.infoWrapper').css({
-                        'display': 'block'
-                    });
-                    $('.infoWrapper').fadeIn(300);
-                }
+    $.post(
+        "/api/registerNewUser", {
+            mail: mail,
+            pass: pass
+        },
+        function (data) {
+            data = JSON.parse(data);
+            console.log(data);
+            if (data.register == 'false' && data.info == 'User already exist') {
+                $('.infoWrapper').fadeIn(300);
+                $('.infoWrapper').css({
+                    'display': 'block'
+                });
+                $('#singInInfo').html('This user already registered')
             }
-        );
-
-    } else {
-
-        $('.infoWrapper').fadeIn(300);
-        $('.infoWrapper').css({
-            'display': 'block'
-        });
-        $('#singInInfo').html('Validation error: <br> - mail must contain @ <br> - the password must be at least 8 characters long. Must have one number and one capital letter <br> - or confirmation letter already sent');
-    }
+            if (data.register == 'true') {
+                $('#singInInfo').text(`Thanks for the registration. Please check ${data.mail} to verify your account`);
+                $('.infoWrapper').css({
+                    'display': 'block'
+                });
+                $('.infoWrapper').fadeIn(300);
+            }
+        }
+    );
 }
