@@ -93,16 +93,17 @@ public class User {
         JSONObject jsonResult = new JSONObject();
         String mail = ctx.formParam("mail");
         String pass = ctx.formParam("pass");
+        String lang = ctx.formParam("lang");
 
         String key = generateKey();
         try {
-            if (mail != null && pass != null && registrationValidation(mail, pass)) {
+            if (mail != null && pass != null && registrationValidation(mail, pass) && (lang.equals("ua") || lang.equals("en"))) {
                 String query = "SELECT * FROM `Users` WHERE mail = ?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
                 if (!res.next()) {
-                    mailService.sendActivationLink(key, mail);
+                    mailService.sendActivationLink(key, mail, lang);
                     String insertQuery = "INSERT INTO `Users`(`mail`, `salt`, `pwd`, `confirm_code`, `settings`) VALUES (?, ?, ?, ?, ?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
 
@@ -232,6 +233,13 @@ public class User {
     public static String resetPassword(Context ctx, DBController db, Mail mailService) {
         JSONObject jsonResult = new JSONObject();
         String mail = ctx.formParam("mail");
+        String lang = ctx.formParam("lang");
+
+        if(mail == null || lang == null || !(lang.equals("ua") || lang.equals("en"))){
+            ctx.status(400);
+            return "Bad Request";
+        }
+
         String query = "SELECT * FROM `Users` WHERE `mail` = ?";
         try {
             PreparedStatement ps = db.getConnection().prepareStatement(query);
@@ -240,7 +248,7 @@ public class User {
             if (res.next()) {
                 if (res.getInt("email_confirmed") == 1) {
                     String key = generateKey();
-                    mailService.sendResetLink(key, mail);
+                    mailService.sendResetLink(key, mail, lang);
                     String insertQuery = "UPDATE `Users` SET `reset_code`= ? WHERE `mail` = ?";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                     insertPs.setString(1, key);

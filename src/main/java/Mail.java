@@ -43,26 +43,41 @@ public class Mail {
      * @param token activation token
      * @param mailTo user email
      */
-    public void sendActivationLink(String token, String mailTo) throws MessagingException {
+    public void sendActivationLink(String token, String mailTo, String lang) throws MessagingException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
-        message.setSubject("Union: Welcome to the club buddy");
-        message.setText(
-                "Hello friend, it seems that you have successfully registered your Union," +
-                        "what do you have to do by click the link : https://t5.tss2020.site/api/confirm/" + token  +
-                        " (if you did not register then just ignore this message)");
+        if(lang.equals("ua")){
+            message.setSubject("Union: Вітаємо з приєднанням!");
+            message.setText(
+                    "Ви успішно зареєструвалися на платформі моніторингу Union," +
+                            "щоб продовжити тицніть сюди : https://t5.tss2020.site/api/confirm/" + token  +
+                            " (Якщо ви не реєструвалися проігноруйте це повідомлення)");
+        }else{
+            message.setSubject("Union: Welcome to the club buddy");
+            message.setText(
+                    "Hello friend, it seems that you have successfully registered your Union," +
+                            "what do you have to do by click the link : https://t5.tss2020.site/api/confirm/" + token  +
+                            " (if you did not register then just ignore this message)");
+        }
         Transport.send(message);
     }
 
-    public void sendResetLink(String token, String mailTo) throws MessagingException {
+    public void sendResetLink(String token, String mailTo, String lang) throws MessagingException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
-        message.setSubject("Union: Reset password");
-        message.setText(
-                "Hello you reset link ,  https://t5.tss2020.site/new-password/" + token  +
-                        " (if you did not reset you password then just ignore this message)");
+        if(lang.equals("ua")){
+            message.setSubject("Union: Відновлення паролю");
+            message.setText(
+                    "Ваше посилання для відновлення паролю,  https://t5.tss2020.site/new-password/" + token  +
+                            " (Якщо ви не надсилали запит проігноруйте це повідомлення)");
+        }else{
+            message.setSubject("Union: Reset password");
+            message.setText(
+                    "Hello you reset link ,  https://t5.tss2020.site/new-password/" + token  +
+                            " (if you did not reset you password then just ignore this message)");
+        }
         Transport.send(message);
     }
 }
