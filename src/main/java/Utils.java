@@ -214,4 +214,11 @@ public class Utils {
         }
         return counter;
     }
+
+    public static boolean pingValidation(String address) {
+        Pattern pattern = Pattern.compile("^((http[s]?|ftp):\\/)\\/[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(address.toLowerCase());
+
+        return matcher.find();
+    }
 }

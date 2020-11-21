@@ -59,6 +59,8 @@ public class User {
                             ctx.sessionAttribute("mail", mail);
                             ctx.sessionAttribute("status", jsonSettings.get("status"));
                             ctx.sessionAttribute("lang", jsonSettings.get("lang"));
+                            API.createCSRF(ctx);
+
                             System.out.println( mail + " auth");
                         }else{
                             jsonResult.put("auth", "false");
@@ -88,52 +90,55 @@ public class User {
         return jsonResult.toJSONString();
     }
 
-    public static String register(Context ctx, DBController db, Mail mailService) {
+    public static String registration(Context ctx, DBController db, Mail mailService) {
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         JSONObject jsonResult = new JSONObject();
         String mail = ctx.formParam("mail");
         String pass = ctx.formParam("pass");
         String lang = ctx.formParam("lang");
 
-        String key = generateKey();
-        try {
-            if (mail != null && pass != null && registrationValidation(mail, pass) && (lang.equals("ua") || lang.equals("en"))) {
-                String query = "SELECT * FROM `Users` WHERE mail = ?";
-                PreparedStatement ps = db.getConnection().prepareStatement(query);
-                ps.setString(1, mail);
-                ResultSet res = ps.executeQuery();
-                if (!res.next()) {
-                    mailService.sendActivationLink(key, mail, lang);
-                    String insertQuery = "INSERT INTO `Users`(`mail`, `salt`, `pwd`, `confirm_code`, `settings`) VALUES (?, ?, ?, ?, ?)";
-                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+        if (mail != null && pass != null /*&& lang != null*/) {
+            String key = generateKey();
+            if (registrationValidation(mail, pass) /*&& (lang.equals("ua") || lang.equals("en"))*/) {
+                try {
+                    String query = "SELECT * FROM `Users` WHERE mail = ?";
+                    PreparedStatement ps = db.getConnection().prepareStatement(query);
+                    ps.setString(1, mail);
+                    ResultSet res = ps.executeQuery();
+                    if (!res.next()) {
+                        mailService.sendActivationLink(key, mail/*, lang*/);
+                        String insertQuery = "INSERT INTO `Users`(`mail`, `salt`, `pwd`, `confirm_code`, `settings`) VALUES (?, ?, ?, ?, ?)";
+                        PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
 
-                    byte[] salt = getSalt();
-                    byte[] hash = hash(pass, salt);
+                        byte[] salt = getSalt();
+                        byte[] hash = hash(pass, salt);
 
-                    insertPs.setString(1, mail.toLowerCase());
-                    insertPs.setString(2, encoder.encodeToString(salt));
-                    insertPs.setString(3, encoder.encodeToString(hash));
-                    insertPs.setString(4, key);
-                    insertPs.setString(5, "{\"status\" : \"user\", \"lang\" : \"en\"}");
-                    insertPs.executeUpdate();
-                    insertPs.close();
-                    jsonResult.put("register","true");
-                    jsonResult.put("info","Confirmation mail sent");
-                    jsonResult.put("mail",mail);
-                    System.out.println( mail + " register");
-                } else{
-                    jsonResult.put("register","false");
-                    jsonResult.put("info","User already exist");
+                        insertPs.setString(1, mail.toLowerCase());
+                        insertPs.setString(2, encoder.encodeToString(salt));
+                        insertPs.setString(3, encoder.encodeToString(hash));
+                        insertPs.setString(4, key);
+                        insertPs.setString(5, "{\"status\" : \"user\", \"lang\" : \"en\"}");
+                        insertPs.executeUpdate();
+                        insertPs.close();
+                        jsonResult.put("register","true");
+                        jsonResult.put("info","Confirmation mail sent");
+                        jsonResult.put("mail",mail);
+                        System.out.println( mail + " register");
+                    } else{
+                        jsonResult.put("register","false");
+                        jsonResult.put("info","User already exist");
+                    }
+                    ps.close();
+
+                } catch (SQLException | MessagingException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
+                throwables.printStackTrace();
+                ctx.status(400);
+                return "Bad request";
                 }
-                ps.close();
             } else {
-                jsonResult.put("register","false");
-                jsonResult.put("info","Validation Error: registration data is incorrect");
+                    jsonResult.put("register","false");
+                    jsonResult.put("info","Validation Error: registration data is incorrect");
             }
-        } catch (SQLException | MessagingException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
-            throwables.printStackTrace();
-            ctx.status(400);
-            return "Bad request";
         }
         return jsonResult.toString();
     }
@@ -313,61 +318,73 @@ public class User {
         return jsonResult.toJSONString();
     }
 
-    public static String addActivePing(Context ctx, DBController db){
+    public static String addActivePing(Context ctx, DBController db) {
         JSONObject jsonResult = new JSONObject();
+
         if (!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
-        try {
-            if(ctx.sessionAttribute("status").equals("user") && Utils.getPingCount(ctx, db) >= 5){
-                jsonResult.put("add", "false");
-                jsonResult.put("info", "no premium");
-                return jsonResult.toJSONString();
-            }
-            String address = ctx.formParam("address");
-            int pingInterval = Integer.parseInt(ctx.formParam("ping_interval"));
-            int downTiming = Integer.parseInt(ctx.formParam("down_timing"));
-            if(address.contains("<")){
-                ctx.status(400);
-                return "bad request";
-            }
-            if (pingInterval <= 0 || downTiming <= 0 || pingInterval > 60 || downTiming > 60){
-                ctx.status(400);
-                return "bad request";
-            }
-            Date date = new Date(System.currentTimeMillis());
-            long currentTime = date.getTime() / 1000L;
 
+        String address = "";
+        if (ctx.formParam("address") != null)
+            address = ctx.formParam("address");
+        if (Utils.pingValidation(address)) {
             try {
-                String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?)";
-                PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
-                insertPs.setString(1, ctx.sessionAttribute("mail"));
-                insertPs.setString(2, address);
-                insertPs.setInt(3, pingInterval);
-                insertPs.setLong(4, currentTime);
-                insertPs.setInt(5,downTiming);
-                int col = insertPs.executeUpdate();
-                insertPs.close();
-                if (col <= 0){
-                    jsonResult.put("add_ping", "false");
-                    jsonResult.put("info", "is exist");
+                int pingInterval = Integer.parseInt(Objects.requireNonNull(ctx.formParam("ping_interval")));
+                int downTiming = Integer.parseInt(Objects.requireNonNull(ctx.formParam("down_timing")));
+
+                if ((ctx.sessionAttribute("status").equals("user")) && (pingInterval < 5 || pingInterval > 60 || Utils.getPingCount(ctx, db) >= 5)) {
+                    jsonResult.put("add", "false");
+                    jsonResult.put("info", "user has no premium status, invalid data requested");
+                    ctx.status(400);
                     return jsonResult.toJSONString();
                 }
-                ctx.status(200);
-                jsonResult.put("add_ping", "true");
-                jsonResult.put("info", "Added");
-                System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing");
-                return jsonResult.toJSONString();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                if (downTiming < pingInterval || downTiming <= 0 || downTiming > 60) {
+                    ctx.status(400);
+                    return "bad request";
+                }
+
+                if (address.contains("<")) {
+                    ctx.status(400);
+                    return "bad request";
+                }
+                Date date = new Date(System.currentTimeMillis());
+                long currentTime = date.getTime() / 1000L;
+
+                try {
+                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?)";
+                    PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
+                    insertPs.setString(1, ctx.sessionAttribute("mail"));
+                    insertPs.setString(2, address);
+                    insertPs.setInt(3, pingInterval);
+                    insertPs.setLong(4, currentTime);
+                    insertPs.setInt(5, downTiming);
+                    int col = insertPs.executeUpdate();
+                    insertPs.close();
+                    if (col <= 0) {
+                        jsonResult.put("add_ping", "false");
+                        jsonResult.put("info", "is exist");
+                        return jsonResult.toJSONString();
+                    }
+                    ctx.status(200);
+                    jsonResult.put("add_ping", "true");
+                    jsonResult.put("info", "Added");
+                    System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing");
+                    return jsonResult.toJSONString();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    ctx.status(400);
+                    return "bad request";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
                 ctx.status(400);
-                return "Bad request";
+                return "bad request";
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        } else {
             ctx.status(400);
-            return "bad request";
+            return "incorrect address; validation failed";
         }
     }
 

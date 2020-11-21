@@ -9,11 +9,13 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
 
@@ -516,6 +518,24 @@ public class API {
             result.put("DB", "error");
             ctx.status(500);
             return result.toJSONString();
+        }
+    }
+
+    public static boolean checkCSRF(Context ctx) {
+        return Objects.equals(ctx.header("csrf"), ctx.cookieStore("csrf_token"));
+    }
+
+    public static void createCSRF(Context ctx) {
+        if (ctx.cookieStore("csrf_token") != null) {
+            try {
+                String secret_key = Utils.generateKey();
+                byte[] salt = Utils.getSalt();
+                Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+                String token = encoder.encodeToString(Utils.hash(secret_key, salt));
+                ctx.cookieStore("csrf_token", token);
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

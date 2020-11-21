@@ -143,7 +143,7 @@ public class ActivePing {
         }
     }
 
-    public static int ping(String address){
+    public static int ping(String address) {
         int code = 0;
         try {
             URL url = new URL(address);
@@ -161,5 +161,4 @@ public class ActivePing {
         }
         return code;
     }
-
 }

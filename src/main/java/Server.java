@@ -94,29 +94,57 @@ public class Server {
         app.get("/logout", ctx -> {
             System.out.println(ctx.sessionAttribute("mail") + " logout");ctx.sessionAttribute("auth", null); ctx.sessionAttribute("mail", null); ctx.redirect("/login");});
 
-        app.post("/api/changePassword", ctx -> {cors(ctx); ctx.result(User.changePassword(ctx, db));});
-        app.post("/api/resetPasswordMail", ctx -> {cors(ctx); ctx.result(User.resetPassword(ctx, db, mail));});
+        app.post("/api/changePassword", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.changePassword(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
+        app.post("/api/resetPasswordMail", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.resetPassword(ctx, db, mail));
+            else ctx.result("CSRF invalid");
+        });
         app.get("/api/confirm/:token", ctx -> {cors(ctx); ctx.result(API.mailConfirmation(ctx, db, ctx.pathParam("token")));});
-        app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(User.register(ctx, db, mail));});
+        app.post("/api/registerNewUser", ctx -> { cors(ctx); ctx.result(User.registration(ctx, db, mail)); });
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(API.getUser(ctx, db));});
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(API.isAuth(ctx));});
-        app.post("/api/auth", ctx -> { cors(ctx); ctx.result(User.authorization(ctx, db));});
+        app.post("/api/auth", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.authorization(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
         app.get("/api/changeLang", ctx -> { cors(ctx); ctx.result(User.changeLang(ctx, db));});
 
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(API.getAgentData(ctx, db)); });
         app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataInterval(ctx, db)); });
         app.get("/api/getAgentDataByInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataByInterval(ctx, db)); });
 
-        app.post("/api/deleteAgent", ctx -> { cors(ctx); ctx.result(User.deleteAgent(ctx, db)); });
-        app.post("/api/addAgent", ctx -> { cors(ctx); ctx.result(User.addAgent(ctx, db)); });
+        app.post("/api/deleteAgent", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.deleteAgent(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
+        app.post("/api/addAgent", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.addAgent(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(API.getAgentList(ctx, db)); });
 
         app.get("/api/getUsers", ctx -> {cors(ctx); ctx.result(API.getUsers(ctx, db));});
         app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
         app.get("/api/upgradeUser", ctx -> {cors(ctx); ctx.result(API.upgradeUser(ctx, db));});
 
-        app.post("/api/addActivePing", ctx -> { cors(ctx); ctx.result(User.addActivePing(ctx, db)); }); // need validation
-        app.post("/api/deleteActivePing", ctx -> { cors(ctx); ctx.result(User.deleteActivePing(ctx, db)); });
+        app.post("/api/addActivePing", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.addActivePing(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
+        app.post("/api/deleteActivePing", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.deleteActivePing(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
         app.get("/api/getActivePingData", ctx -> { cors(ctx); ctx.result(API.getActivePingData(ctx, db)); });
 
         app.get("/api/ping", ctx -> {cors(ctx); ctx.result(API.checkService(ctx, db)); });
