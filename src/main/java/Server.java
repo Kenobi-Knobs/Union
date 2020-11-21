@@ -100,8 +100,8 @@ public class Server {
         app.post("/api/registerNewUser", ctx -> {cors(ctx); ctx.result(User.register(ctx, db, mail));});
         app.get("/api/getUser", ctx -> {cors(ctx); ctx.result(API.getUser(ctx, db));});
         app.get("/api/isAuth", ctx -> { cors(ctx); ctx.result(API.isAuth(ctx));});
-        app.get("/api/auth", ctx -> { cors(ctx); ctx.result(User.authorization(ctx, db));});
-        app.get("/api/changeSetting", ctx -> { cors(ctx); ctx.result(User.changeSetting(ctx, db));});
+        app.post("/api/auth", ctx -> { cors(ctx); ctx.result(User.authorization(ctx, db));});
+        app.get("/api/changeLang", ctx -> { cors(ctx); ctx.result(User.changeLang(ctx, db));});
 
         app.get("/api/getAgentData", ctx -> { cors(ctx); ctx.result(API.getAgentData(ctx, db)); });
         app.get("/api/getDataTimeInterval", ctx -> { cors(ctx); ctx.result(API.getAgentDataInterval(ctx, db)); });

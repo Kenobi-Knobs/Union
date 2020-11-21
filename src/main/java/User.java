@@ -25,8 +25,8 @@ public class User {
      * @return Returns a response with the result of checking
      */
     public static String authorization(Context ctx, DBController db) {
-        String mail = ctx.queryParam("mail");
-        String pass = ctx.queryParam("pass");
+        String mail = ctx.formParam("mail");
+        String pass = ctx.formParam("pass");
         JSONObject jsonResult = new JSONObject();
         if(mail != null && pass != null) {
             mail = mail.trim();
@@ -404,19 +404,26 @@ public class User {
         }
     }
 
-    // not testing, need review
-    public static String changeSetting(Context ctx, DBController db) {
+    public static String changeLang(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
         if(!API.authCheck(ctx)){
             ctx.status(401);
             return "Unauthorized";
         }
-        String[] propertys = {"lang"};
-        String property = ctx.queryParam("property");
-        String value = ctx.queryParam("value");
-        if(property != null && value != null && Arrays.asList(propertys).contains(property)){
-            Utils.changeSetting(ctx.sessionAttribute("mail"), db, property, value);
-            return "true";
+        String lang = ctx.queryParam("lang");
+        if(lang != null && (lang.equals("ua") || lang.equals("en"))){
+            if(Utils.changeSetting(ctx.sessionAttribute("mail"), db, "lang", lang)){
+                ctx.status(200);
+                jsonResult.put("change", "true");
+
+                return jsonResult.toJSONString();
+            }else{
+                ctx.status(400);
+                return "Bad Request";
+            }
+        }else{
+            ctx.status(400);
+            return "Bad Request";
         }
-        return "false";
     }
 }
