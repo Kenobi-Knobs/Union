@@ -77,6 +77,10 @@ $(document).ready(function () {
         $(location).attr('href', '/statistic');
     });
 
+    $('#monitoring').on('click', function () {
+        $(location).attr('href', '/url-monitor');
+    });
+
     select();
 
     //    checking authorized user or not

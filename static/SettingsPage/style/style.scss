@@ -37,7 +37,7 @@ html {
         }
 
         .card {
-            position: relative;
+            position: fixed;
             top: 15%;
             left: 35%;
             width: 30vw;
@@ -107,6 +107,92 @@ html {
             .formWrapper {
                 display: none;
                 clear: both;
+
+                #formAddURL {
+                    .form {
+                        li {
+                            &:nth-child(1) {
+                                input {
+                                    padding-left: 6em;
+                                }
+
+                                .selectWrapper {
+                                    position: absolute;
+                                    //                    display: none;
+                                    top: 6.1em;
+                                    //                                    width: 100%;
+                                    z-index: 1;
+                                    font-family: circe, sans-serif;
+                                    font-style: normal;
+                                    font-weight: bold;
+
+                                    .select {
+                                        width: 5em;
+                                        margin: 0.5em 0.5em;
+                                        position: relative;
+
+                                        &.is-active {
+                                            .select__body {
+                                                display: block;
+                                            }
+                                        }
+
+                                        .select__header {
+                                            display: flex;
+                                            cursor: pointer;
+                                            //                                            border: 0.03em solid #cccccc;
+                                            background-color: #D8D8D8;
+                                            border-radius: 0.2em;
+
+                                            .select__current {
+                                                font-size: 1em;
+                                                line-height: 2em;
+                                                padding: 0.1em 0.2em;
+                                            }
+
+                                            .select__icon {
+                                                margin-left: auto;
+                                                margin-top: 1.4em;
+                                                margin-right: 0.5em;
+                                                align-items: center;
+                                                display: flex;
+                                                flex-shrink: 0;
+                                                justify-content: center;
+                                                height: 1em;
+                                                text-align: center;
+                                                width: 1em;
+                                                font-size: 0.6em;
+                                            }
+                                        }
+
+                                        .select__body {
+                                            display: none;
+                                            //                                            border: 0.03em solid #cccccc;
+                                            border-radius: 0.2em;
+                                            border-top: 0;
+                                            position: absolute;
+                                            left: 0;
+                                            right: 0;
+                                            top: 100%;
+
+                                            .select__item {
+                                                line-height: 1em;
+                                                padding: 0.2em;
+                                                font-size: 0.8em;
+                                                cursor: pointer;
+                                                background-color: #f2f2f2;
+
+                                                &:hover {
+                                                    background-color: #D2D2D2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 ul {
                     list-style: none;
@@ -435,6 +521,8 @@ html {
             .addServerWrapper {
                 grid-column-start: 3;
                 grid-column-end: 4;
+                grid-row-start: 1;
+                grid-row-end: 2;
 
                 .addserver {
                     width: 100%;
@@ -499,7 +587,7 @@ html {
                         //                    height: 200px;
                         text-align: center;
 
-                        #addNew {
+                        #addNewServer {
                             margin-bottom: 1em;
                             width: 50%;
                             padding: 0.2em 0.5em;
@@ -528,6 +616,112 @@ html {
                     }
                 }
             }
+
+
+            .addURLWrapper {
+                grid-column-start: 3;
+                grid-column-end: 4;
+                grid-row-start: 2;
+                grid-row-end: 3;
+
+                .addURL {
+                    width: 100%;
+                    background-color: #221F1F;
+                    border-radius: 0.4em;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    font-family: circe, sans-serif;
+                    color: #FFFFFF;
+
+                    .titleAddURL {
+                        padding-top: 0.5em;
+                        text-align: center;
+
+                        span {
+                            font-size: 1.3em;
+                        }
+                    }
+
+                    .URL {
+                        list-style: none;
+
+                        ul {
+                            padding: 0.5em 1em 1em 1em;
+                            list-style-type: none;
+
+                            li {
+                                width: 100%;
+                                padding: 1em 0.7em 0.2em 0;
+                                font-size: 0.8em;
+                                font-family: circe, sans-serif;
+                                border-bottom: 0.05em solid #e1e1e1;
+
+                                .nameURL {
+                                    padding-left: 0.4em;
+                                    color: #FFFFFF;
+                                    user-select: none;
+                                    font-size: 0.8em;
+                                    outline: none;
+                                    border: 0;
+                                    background-color: rgba(0, 0, 0, 0);
+                                }
+
+                                .trashIcon_URL {
+                                    float: right;
+                                    color: #A7A7A7;
+
+                                    &:hover {
+                                        color: #FFFFFF;
+                                        cursor: pointer;
+                                        transition: 0.3s;
+                                    }
+
+                                    &:not(:hover) {
+                                        color: #A7A7A7;
+                                        transition: 0.3s;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                    .addURLButtonWrapper {
+                        //                    height: 200px;
+                        text-align: center;
+
+                        #addNewURL {
+                            margin-bottom: 1em;
+                            width: 50%;
+                            padding: 0.2em 0.5em;
+                            height: 100%;
+                            outline: none;
+                            border: none;
+                            border-radius: 0.4em;
+                            background-color: #4A4A4A;
+                            color: #ffffff;
+                            font-family: Circe, sans-serif;
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 0.85em;
+                            //                                padding: 1% 0;
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #636363;
+                                transition: 0.3s;
+                            }
+
+                            &:not(:hover) {
+                                transition: 0.3s;
+                            }
+                        }
+                    }
+                }
+            }
+
+
         }
     }
 }

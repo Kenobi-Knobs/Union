@@ -13,8 +13,13 @@ $(document).ready(function () {
     $('#settings').on('click', function () {
         $(location).attr('href', '/settings');
     });
+
     $('#average').on('click', function () {
         $(location).attr('href', '/statistic');
+    });
+
+    $('#monitoring').on('click', function () {
+        $(location).attr('href', '/url-monitor');
     });
 
 
@@ -245,11 +250,19 @@ function getUsers() {
                         )
                     );
                 }
-                if (data.users[i].settings.status == 'admin' || data.users[i].settings.status == 'premium_user') {
+                if (data.users[i].settings.status == 'premium_user') {
                     $(`.status_${i}`).css('backgroundColor', '#ACACAC');
                     $(`.status_${i}`).css('cursor', 'auto');
                     $(`.status_${i} > span`).text('Premium plan');
                 }
+
+                if (data.users[i].settings.status == 'admin') {
+                    $(`.status_${i}`).css('backgroundColor', '#ACACAC');
+                    $(`.status_${i}`).css('cursor', 'auto');
+                    $(`.status_${i} > span`).text('Admin');
+                    $(`.remove_${i}`).css('display', 'none');
+                }
+
                 if (data.users[i].settings.status == 'user') { //ЗАМЕНИТЬ НА ЮЗЕР!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     document.querySelectorAll(`.status_${i}`).forEach(item => { //изменить статус на премиум 
                         item.addEventListener('click', function () {
@@ -269,6 +282,7 @@ function getUsers() {
                             deleteUser(mailToDelete);
                             $('.popupWrapper').fadeIn(500);
                             $('#popupInfo').text(mailToDelete + ' was successfully deleted');
+                            $(`#list_${i}`).slideUp();
                             $(`#list_${i}`).remove();
                         }
                     });
@@ -287,7 +301,6 @@ function getUsers() {
             let select = function () {
                 $('.select__icon').html('&#9660;');
                 let selectHeader = document.querySelectorAll('.select__header');
-
                 selectHeader.forEach(item => {
                     item.addEventListener('click', selectToggle);
                 });
