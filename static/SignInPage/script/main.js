@@ -96,7 +96,8 @@ function submitForm() {
     $.post(
         "/api/registerNewUser", {
             mail: mail,
-            pass: pass
+            pass: pass,
+            lang: 'en'
         },
         function (data) {
             data = JSON.parse(data);

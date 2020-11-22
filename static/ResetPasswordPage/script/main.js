@@ -39,7 +39,8 @@ function submitForm() {
     if (regMail.test(mail)) {
         $.post(
             "/api/resetPasswordMail", {
-                mail: mail
+                mail: mail,
+                lang: 'en'
             },
             function (data) {
                 data = JSON.parse(data);
