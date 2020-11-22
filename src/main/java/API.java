@@ -404,7 +404,7 @@ public class API {
     public static String deleteUser(Context ctx, DBController db){
         JSONObject jsonResult = new JSONObject();
         if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
-            if(ctx.queryParam("mail") != null && ctx.queryParam("mail").equals(ctx.sessionAttribute("mail"))){
+            if(ctx.queryParam("mail") != null && !(ctx.queryParam("mail").equals(ctx.sessionAttribute("mail")))){
                 String mail = ctx.queryParam("mail");
                 String delUserAgent = "DELETE FROM User_agents WHERE user_id = (SELECT id from Users where mail = ?)";
                 String delUser = "DELETE FROM Users WHERE mail = ?";
@@ -435,7 +435,6 @@ public class API {
         }
     }
 
-    // исправить удаление прав админа
     public static String upgradeUser(Context ctx, DBController db) {
         JSONObject jsonResult = new JSONObject();
         if(authCheck(ctx) && ctx.sessionAttribute("status").equals("admin") && ctx.queryParam("mail") != null){

@@ -42,6 +42,7 @@ public class Server {
         app.config.addStaticFiles( "/main","static/MainPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/settings","static/SettingsPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/statistic","static/StatisticPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/url-monitor","static/URLMonitorPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/admin","static/AdminPage/", Location.EXTERNAL);
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/404","static/NotFoundPage", Location.EXTERNAL);
@@ -61,6 +62,7 @@ public class Server {
 
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
+        app.get("/url-monitor", ctx -> API.sendHtml(ctx, "static/URLMonitorPage/index.html", "auth_only", "/login"));
         app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
         app.get("/statistic", ctx -> API.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
         app.get("/settings", ctx -> API.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
