@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     //checking authorized use or not
     $.get(
         "api/isAuth", {},
@@ -35,7 +34,6 @@ $(document).ready(function () {
             'display': 'block',
         });
         $('#singInInfo').text('Mail was confirmed');
-        $('#singInInfo').css('paddingLeft', '35%');
     }
 
     $('#submit').on('click', function () {

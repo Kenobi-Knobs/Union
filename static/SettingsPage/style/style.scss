@@ -1,3 +1,77 @@
+@keyframes loader {
+    0% {
+        transform: rotate(-45deg)
+    }
+
+    50% {
+        transform: rotate(-135deg)
+    }
+
+    100% {
+        transform: rotate(-225deg)
+    }
+}
+
+@keyframes span-1 {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(-3.5em, 0);
+        border-color: #EE4D68
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes span-2 {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(3.5em, 0);
+        border-color: #875678
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes span-3 {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(0, -3.5em);
+        border-color: #FF9900
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+@keyframes span-4 {
+    0% {
+        transform: translate(0);
+    }
+
+    50% {
+        transform: translate(0, 3.5em);
+        border-color: #00E4F6
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,11 +85,83 @@ html {
     overflow-x: hidden;
 }
 
+.loaderWrapper {
+    display: none;
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+
+    &::before {
+        content: '';
+        background: #FFFFFF;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        z-index: 5;
+    }
+
+    .loader {
+        width: 3.5em;
+        height: 3.5em;
+        position: fixed;
+        left: 45%;
+        top: 40%;
+        animation: loader 2s infinite ease-in-out;
+        z-index: 6;
+    }
+
+    .wait {
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        //            left: 33%;
+        top: 70%;
+        z-index: 7;
+
+        span {
+            font-family: circe, sans-serif;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+    }
+
+    .loader span {
+        width: 3.5em;
+        height: 3.5em;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 0.2em solid #0B1B48;
+        border-radius: 0.2em;
+    }
+
+    .loader span:nth-child(1) {
+        animation: span-1 2s ease-in-out infinite;
+    }
+
+    .loader span:nth-child(2) {
+        animation: span-2 2s ease-in-out infinite;
+    }
+
+    .loader span:nth-child(3) {
+        animation: span-3 2s ease-in-out infinite;
+    }
+
+    .loader span:nth-child(4) {
+        animation: span-4 2s ease-in-out infinite;
+    }
+}
+
 .pageWrapper {
     height: 100%;
-    display: flex;
+    display: none;
     flex-direction: row;
     //    padding: 2%;
+
 
     .infoWrapper {
         display: none;
@@ -38,7 +184,7 @@ html {
 
         .card {
             position: fixed;
-            top: 15%;
+            top: 21%;
             left: 35%;
             width: 30vw;
             border-radius: 0.4em;
@@ -50,14 +196,18 @@ html {
             .emptyWrapper {
                 display: none;
                 position: absolute;
-                left: 2.5em;
+                width: 100%;
+                text-align: center;
+                //                left: 2.5em;
                 bottom: 15.5em;
 
                 .empty {
+                    width: 100%;
+                    text-align: center;
                     padding: 0.3em 1em;
                     border-radius: 0.4em;
                     border: 0.01em solid #FF3B45;
-                    display: inline;
+                    //                    display: inline;
                     background-color: #FFFFFF;
 
                     span {
@@ -217,15 +367,14 @@ html {
 
                         &:nth-child(4) {
                             text-align: center;
-                            height: 5vw;
-                            padding-bottom: 8%;
+                            //                            height: 5vw;
                         }
                     }
                 }
 
                 #Save {
                     width: 30%;
-                    //                                padding: 0px;
+                    padding: 0.25em;
                     height: 100%;
                     outline: none;
                     border: none;
@@ -494,6 +643,49 @@ html {
                         list-style: none;
                         border-bottom: 0.01em solid #D0D0D0;
                         font-family: circe, sans-serif;
+
+                        .changeLanguage {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            align-content: center;
+                            align-items: center;
+
+                            .chooseLang {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: center;
+                                align-content: center;
+                                align-items: center;
+                                font-family: circe, sans-serif;
+                                font-size: 1.2em;
+                                //                                border: 0.01em solid #ABABAB;
+                                padding: 0.2em 0.5em;
+                                border-radius: 1em;
+                                user-select: none;
+                                color: #B4B4B4;
+
+                                .translate {
+                                    label {
+                                        cursor: pointer;
+                                    }
+
+                                    input {
+                                        appearance: none;
+                                        position: absolute;
+
+                                        &:checked + label {
+                                            color: #000000;
+                                        }
+                                    }
+                                }
+
+                                .langSeparate {
+                                    color: #000000;
+                                    padding: 0 0.2em;
+                                }
+                            }
+                        }
 
 
                         .titleOption {

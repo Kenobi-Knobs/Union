@@ -188,7 +188,7 @@ html {
                     margin-bottom: 0.3em;
 
                     span {
-                        padding: 0.1em;
+                        padding: 0.2em 0.4em;
                         border-radius: 0.4em;
                         display: inline;
                         margin-left: 2em;
@@ -275,26 +275,30 @@ html {
                                 font-family: circe, sans-serif;
                                 border-bottom: 0.05em solid #e1e1e1;
 
-                                .titleTime,
-                                .titleDuring {
+                                .listOfDownPosition {
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-between;
+                                    align-content: center;
+                                    align-items: center;
+
+                                    .statusWrapper,
+                                    .timeWrapper,
+                                    .duringWrapper,
+                                    .titleTimeWrapper,
+                                    .titleStatusWrapper,
+                                    .titleDuringWrapper {
+                                        text-align: center;
+                                        width: 100%;
+                                    }
+
+                                    .titleTime,
+                                    .titleStatus,
+                                    .titleDuring {
+                                        color: #A7A7A7;
+                                    }
+
                                     font-size: 1.2em;
-                                }
-
-                                .titleTime,
-                                .time {
-                                    padding-left: 0.4em;
-                                    color: #A7A7A7;
-                                }
-
-                                .titleDuring,
-                                .during {
-                                    float: right;
-                                    color: #A7A7A7;
-                                }
-
-                                .time,
-                                .during {
-                                    color: #000000
                                 }
                             }
                         }

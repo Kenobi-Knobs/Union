@@ -156,7 +156,7 @@ html {
   margin-bottom: 0.3em;
 }
 .pageWrapper .main .allInfo .card .infoTitle span {
-  padding: 0.1em;
+  padding: 0.2em 0.4em;
   border-radius: 0.4em;
   display: inline;
   margin-left: 2em;
@@ -228,23 +228,27 @@ html {
   font-family: circe, sans-serif;
   border-bottom: 0.05em solid #e1e1e1;
 }
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .titleTime,
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .titleDuring {
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
   font-size: 1.2em;
 }
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .titleTime,
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .time {
-  padding-left: 0.4em;
-  color: #A7A7A7;
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .statusWrapper,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .timeWrapper,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .duringWrapper,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleTimeWrapper,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleStatusWrapper,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleDuringWrapper {
+  text-align: center;
+  width: 100%;
 }
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .titleDuring,
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .during {
-  float: right;
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleTime,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleStatus,
+.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .listOfDownPosition .titleDuring {
   color: #A7A7A7;
-}
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .time,
-.pageWrapper .main .allInfo .infoCard .down .downInfo ul li .during {
-  color: #000000;
 }
 .pageWrapper .main .allInfo .infoCard .config {
   margin-bottom: 1em;

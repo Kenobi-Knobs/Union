@@ -52,17 +52,6 @@ $(document).ready(function () {
                 validPass: true
             }
         },
-        messages: {
-            mail: {
-                required: "This field must be filled",
-                validMail: "Enter valid mail like example@something.com"
-            },
-            password: {
-                required: "This field must be filled",
-                minlength: "At least 8 characters long",
-                validPass: "Enter at least 1 capital letter and 1 number"
-            }
-        },
         submitHandler: function () {
             submitForm();
         }
@@ -74,6 +63,7 @@ $(document).ready(function () {
     $.validator.addMethod("validPass", function (value, element) {
         return this.optional(element) || /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/gi.test(value);
     })
+    //    ^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$
 
 });
 
@@ -92,12 +82,30 @@ function understandInfo() {
 function submitForm() {
     let mail = $('#mail').val();
     let pass = $('#password').val();
+    let userLang; //язык который выбран
+    //получаем язык, который сохранен в local storage
+    let langs;
+    if (localStorage.getItem('langs') === null) {
+        langs = [];
+    } else {
+        langs = JSON.parse(localStorage.getItem('langs'));
+    }
+    langs.forEach(function (language) {
+        let lang = langs[langs.length - 1];
+        if (lang == 'ua') {
+            userLang = 'ua';
+        }
+        if (lang == 'en') {
+            $('#changeEN').prop('checked', 'true');
+            userLang = 'en';
+        }
+    })
 
     $.post(
         "/api/registerNewUser", {
             mail: mail,
             pass: pass,
-            lang: 'en'
+            lang: userLang
         },
         function (data) {
             data = JSON.parse(data);
@@ -107,10 +115,22 @@ function submitForm() {
                 $('.infoWrapper').css({
                     'display': 'block'
                 });
-                $('#singInInfo').html('This user already registered')
+                if (userLang == 'en') {
+                    $('#singInInfo').html('This user already registered');
+                }
+                if (userLang == 'ua') {
+                    $('#singInInfo').html('Такий користувач вже існує');
+                }
+
             }
             if (data.register == 'true') {
-                $('#singInInfo').text(`Thanks for the registration. Please check ${data.mail} to verify your account`);
+                if (userLang == 'en') {
+                    $('#singInInfo').text(`Thanks for the registration. Please check ${data.mail} to verify your account`);
+                }
+                if (userLang == 'ua') {
+                    $('#singInInfo').text(`Дякуємо за реєстрацію. Будь ласка перевірте пошту: ${data.mail} щоб підтвердити реєстрацію`);
+                }
+
                 $('.infoWrapper').css({
                     'display': 'block'
                 });

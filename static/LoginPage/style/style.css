@@ -46,6 +46,40 @@ html {
   align-items: center;
   flex-direction: column;
 }
+.pageWrapper .chooseLang {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  font-family: circe, sans-serif;
+  font-size: 0.7em;
+  top: 2em;
+  right: 3em;
+  border: 0.01em solid #ABABAB;
+  padding: 0.2em 0.5em;
+  border-radius: 1em;
+  -webkit-user-select: none;
+          user-select: none;
+  color: #B4B4B4;
+}
+.pageWrapper .chooseLang .translate label {
+  cursor: pointer;
+}
+.pageWrapper .chooseLang .translate input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: absolute;
+}
+.pageWrapper .chooseLang .translate input:checked + label {
+  color: #000000;
+}
+.pageWrapper .chooseLang .langSeparate {
+  color: #000000;
+  padding: 0 0.2em;
+}
 .pageWrapper .infoWrapper {
   display: none;
   position: absolute;
@@ -74,14 +108,19 @@ html {
   background-color: #f26b6b;
   z-index: 5;
 }
-.pageWrapper .infoWrapper .info span {
+.pageWrapper .infoWrapper .info .infoContentWrapper {
+  width: 100%;
+  text-align: center;
+}
+.pageWrapper .infoWrapper .info .infoContentWrapper span {
+  width: 100%;
   color: #FFFFFF;
   font-family: circe, sans-serif;
   font-size: 0.5em;
   font-weight: bold;
 }
-.pageWrapper .infoWrapper .info input[type=button] {
-  margin: 10% 0 0 30%;
+.pageWrapper .infoWrapper .info .infoContentWrapper input[type=button] {
+  margin: 10% 0 0 0;
   padding: 1% 3%;
   width: 40%;
   border-radius: 0.4em;
@@ -90,11 +129,11 @@ html {
   border: none;
   outline: none;
 }
-.pageWrapper .infoWrapper .info input[type=button]:active, .pageWrapper .infoWrapper .info input[type=button]:focus, .pageWrapper .infoWrapper .info input[type=button]:hover {
+.pageWrapper .infoWrapper .info .infoContentWrapper input[type=button]:active, .pageWrapper .infoWrapper .info .infoContentWrapper input[type=button]:focus, .pageWrapper .infoWrapper .info .infoContentWrapper input[type=button]:hover {
   border: none;
   outline: none;
 }
-.pageWrapper .infoWrapper .info input[type=button]:hover {
+.pageWrapper .infoWrapper .info .infoContentWrapper input[type=button]:hover {
   cursor: pointer;
   background-color: #E5E5E5;
 }

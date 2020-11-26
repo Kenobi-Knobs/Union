@@ -16,6 +16,44 @@ html {
     align-items: center;
     flex-direction: column;
 
+    .chooseLang {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        font-family: circe, sans-serif;
+        font-size: 0.7em;
+        top: 2em;
+        right: 3em;
+        border: 0.01em solid #ABABAB;
+        padding: 0.2em 0.5em;
+        border-radius: 1em;
+        user-select: none;
+        color: #B4B4B4;
+
+        .translate {
+            label {
+                cursor: pointer;
+            }
+
+            input {
+                appearance: none;
+                position: absolute;
+
+                &:checked + label {
+                    color: #000000;
+                }
+            }
+        }
+
+        .langSeparate {
+            color: #000000;
+            padding: 0 0.2em;
+        }
+    }
+
     .infoWrapper {
         display: none;
         position: absolute;
@@ -284,8 +322,8 @@ html {
                             clear: both;
 
                             #submit {
-                                width: 50%;
-                                padding: 1%;
+                                width: 56%;
+                                padding: 2%;
                                 height: 60%;
                                 outline: none;
                                 border: none;
@@ -312,7 +350,7 @@ html {
 
                         &:nth-child(5) {
                             margin-top: 0%;
-                            padding-bottom: 0;
+                            padding-bottom: 0.3em;
 
                             span {
                                 color: #616161;

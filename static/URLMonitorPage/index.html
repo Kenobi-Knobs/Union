@@ -34,7 +34,7 @@
         <div class="main">
             <div class="head">
                 <div class="title">
-                    <span>Uptimes</span>
+                    <span class='langText' key='titleUptime'>Uptimes</span>
                 </div>
                 <div class="exit">
                     <div class="accountCard">
@@ -49,11 +49,11 @@
             <div class="allInfo">
                 <div class="card infoCard">
                     <div class="rect">
-                        <span class="titleCard">Information</span>
+                        <span class="titleCard langText" key='titleInformation'>Information</span>
                     </div>
                     <div class="statusWrapper">
                         <div class="infoTitle">
-                            <span>Status</span>
+                            <span class='langText' key='status'>Status</span>
                         </div>
                         <div class="status">
                             <div class="indicator"></div>
@@ -61,10 +61,22 @@
                         </div>
                     </div>
                     <div class="down">
-                        <div class="infoTitle"><span>Down</span></div>
+                        <div class="infoTitle"><span class='langText' key='down'>Down</span></div>
                         <div class="downInfo">
                             <ul class='listOfDown'>
-                                <li><span class="titleTime">Down time</span><span class="titleDuring">During</span></li>
+                                <li>
+                                    <div class="listOfDownPosition">
+                                        <div class="titleTimeWrapper">
+                                            <span class="titleTime langText" key='timeDown'>Down time</span>
+                                        </div>
+                                        <div class="titleStatusWrapper">
+                                            <span class="titleStatus langText" key='code'>Code</span>
+                                        </div>
+                                        <div class="titleDuringWrapper">
+                                            <span class="titleDuring langText" key='during'>During</span>
+                                        </div>
+                                    </div>
+                                </li>
                                 <!--
                                 <li><span class="time time_1">01.03.2020 22:30</span><span class="during during_1">10 min</span></li>
                                 <li><span class="time time_2">01.03.2020 22:30</span><span class="during during_2">10 min</span></li>
@@ -75,19 +87,19 @@
                         </div>
                     </div>
                     <div class="config">
-                        <div class="infoTitle"><span>Monitoring config</span></div>
+                        <div class="infoTitle"><span class='langText' key='monitoringConfig'>Monitoring config</span></div>
                         <div class="monitoringInfoWrapper">
 
 
                             <div class="monitoringInfo">
                                 <div><span class="interval"></span></div>
                                 <div><span class="downTimeout"></span></div>
-                                <div><span class="sumOfDuration"></span></div>
+                                <div><span class="currentStatusCode"></span></div>
                             </div>
                             <div class="titleMonitoringInfo">
-                                <div><span class="titmeInterval">Interval</span></div>
-                                <div><span class="titleDownTimeout">Down timeout</span></div>
-                                <div><span class="titleTotalDuring">Total time offline</span></div>
+                                <div><span class="titmeInterval langText" key='interval'>Interval</span></div>
+                                <div><span class="titleDownTimeout langText" key='downTimeout'>Down timeout</span></div>
+                                <div><span class="titleCurrentStatusCode langText" key='currentCode'>Current code status</span></div>
                             </div>
 
 

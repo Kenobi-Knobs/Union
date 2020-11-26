@@ -1,6 +1,37 @@
+    let arrLang = {
+        'en': {
+            'titleUptime': 'Uptimes',
+            'titleInformation': 'Information',
+            'status': 'Status',
+            'down': 'Down',
+            'timeDown': 'Down time',
+            'code': 'Code',
+            'during': 'During',
+            'monitoringConfig': 'Monitoring config',
+            'interval': 'Interval',
+            'downTimeout': 'Down timeout',
+            'currentCode': 'Current code'
+        },
+        'ua': {
+            'titleUptime': 'Моніторинг',
+            'titleInformation': 'Інформація',
+            'status': 'Статус',
+            'down': 'Падіння',
+            'timeDown': 'Час падіння',
+            'code': 'Код',
+            'during': 'Час офлайн',
+            'monitoringConfig': 'Конфігурація моніторингу',
+            'interval': 'Інтервал перевірок',
+            'downTimeout': 'Час за який URL вважаеться недоступним',
+            'currentCode': 'Поточний код відповіді'
+        }
+    };
+
+    let currentLang; //язык, который выбран    
+
     let isCheckedRadio = false; //выбранный сайт
     $(document).ready(function () {
-
+        getLocalLang();
         $('#home').on('click', function () {
             $(location).attr('href', '/');
         });
@@ -69,7 +100,13 @@
                 }
 
                 if (isCheckedRadio == false) {
-                    $('.alertText').text('Please choose the URL');
+                    if (currentLang == 'en') {
+                        $('.alertText').text('Please choose the URL');
+                    }
+                    if (currentLang == 'ua') {
+                        $('.alertText').text('Будь ласка оберіть URL');
+                    }
+
                 }
 
                 let urls = $('input[name=urls]')
@@ -101,15 +138,23 @@
                                 $('.indicator').css('boxShadow', '0px 0px 0.1em 0.1em rgba(255,41,80,0.73)');
                             }
 
-                            $('.interval').text(data.pings[key].ping_interval + ' min');
-                            $('.downTimeout').text(data.pings[key].down_timing + ' min');
+                            if (currentLang == 'en') {
+                                $('.interval').text(data.pings[key].ping_interval + ' min');
+                                $('.downTimeout').text(data.pings[key].down_timing + ' min');
+                            }
+                            if (currentLang == 'ua') {
+                                $('.interval').text(data.pings[key].ping_interval + ' хв');
+                                $('.downTimeout').text(data.pings[key].down_timing + ' хв');
+                            }
 
-                            let sumOfDuring = 0;
+
+
+                            $('.currentStatusCode').text(data.pings[key].last_code);
+
                             if (data.pings[key].downs.length > 0) {
                                 $('.down').slideDown(300);
                                 $('.down').css('display', 'flex');
                                 for (let i = 0; i < data.pings[key].downs.length; i++) {
-                                    sumOfDuring += data.pings[key].downs[i].down_duration;
 
                                     let date = new Date(data.pings[key].downs[i].start_time * 1000);
                                     let year = date.getFullYear();
@@ -122,20 +167,39 @@
                                         $('<li>').attr({
                                             class: 'list'
                                         }).append(
-                                            $('<span>').attr({
-                                                class: `time`
-                                            }).text(day + '.' + month + '.' + year + ' ' + hour + ':' + minutes)
-                                        ).append(
-                                            $('<span>').attr({
-                                                class: `during`
-                                            }).text(data.pings[key].downs[i].down_duration + ' min')
+                                            $('<div>').attr({
+                                                class: 'listOfDownPosition'
+                                            }).append(
+                                                $('<div>').attr({
+                                                    class: 'timeWrapper'
+                                                }).append(
+                                                    $('<span>').attr({
+                                                        class: `time`
+                                                    }).text(day + '.' + month + '.' + year + ' ' + hour + ':' + minutes)
+                                                )
+                                            ).append(
+                                                $('<div>').attr({
+                                                    class: 'statusWrapper'
+                                                }).append(
+                                                    $('<span>').attr({
+                                                        class: `statusList`
+                                                    }).text(data.pings[key].downs[i].code)
+                                                )
+                                            ).append(
+                                                $('<div>').attr({
+                                                    class: 'duringWrapper'
+                                                }).append(
+                                                    $('<span>').attr({
+                                                        class: `during`
+                                                    }).text(data.pings[key].downs[i].down_duration + ' min')
+                                                )
+                                            )
                                         )
+
                                     );
                                 }
-                                $('.sumOfDuration').text(sumOfDuring + ' min');
 
                             } else {
-                                $('.sumOfDuration').text(sumOfDuring + ' min');
                                 $('.down').slideUp(300);
                             }
                         }
@@ -152,4 +216,35 @@
         $("input[name='urls']:checked").each(function () {
             isCheckedRadio = $(this).val();
         });
+    }
+
+
+    function getLocalLang() {
+        let langs;
+        if (localStorage.getItem('langs') === null) {
+            langs = [];
+
+        } else {
+            langs = JSON.parse(localStorage.getItem('langs'));
+        }
+        langs.forEach(function (language) {
+            let lang = langs[langs.length - 1];
+            currentLang = lang;
+            setTimeout(() => {
+
+                $('.langText').each(function (index, item) {
+                    $(this).text(arrLang[lang][$(this).attr('key')]);
+                });
+                $('.langBtn').each(function (index, item) {
+                    $(this).val(arrLang[lang][$(this).attr('key')]);
+                });
+                $('.langPlaceholder').each(function (index, item) {
+                    $(this).attr('placeholder', arrLang[lang][$(this).attr('key')]);
+                });
+                $('.langHtml').each(function (index, item) {
+                    $(this).html(arrLang[lang][$(this).attr('key')]);
+                });
+
+            }, 0);
+        })
     }
