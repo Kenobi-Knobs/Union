@@ -516,59 +516,6 @@ html {
                         //                        border-bottom: 0.01em solid #D0D0D0;
                         font-family: circe, sans-serif;
 
-                        .select__options {
-                            padding-top: 0.7em;
-                            position: absolute;
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            //                            top: 36%;
-                            left: 70%;
-                            z-index: 3;
-
-                            .select__status {
-                                margin-right: 1em;
-                                border-radius: 0.5em;
-                                background-color: #F26B6B;
-                                cursor: pointer;
-                                transition: 0.3s;
-
-                                &:hover {
-                                    transition: 0.3s;
-                                    background-color: #F22F2F;
-                                }
-
-                                span {
-                                    padding: 0 1em;
-                                    font-family: circe, sans-serif;
-                                    font-size: 0.8em;
-                                    color: #ffffff;
-                                    user-select: none;
-                                }
-                            }
-
-                            .select__remove {
-                                margin-right: 0.5em;
-                                border-radius: 0.5em;
-                                background-color: #ACACAC;
-                                cursor: pointer;
-                                transition: 0.3s;
-
-                                &:hover {
-                                    transition: 0.3s;
-                                    background-color: #838383;
-                                }
-
-                                span {
-                                    padding: 0 1em;
-                                    font-family: circe, sans-serif;
-                                    font-size: 0.8em;
-                                    color: #ffffff;
-                                    user-select: none;
-                                }
-                            }
-                        }
-
 
                         .selectWrapper {
                             position: relative;
@@ -589,6 +536,8 @@ html {
                                         display: block;
                                     }
                                 }
+
+                                //                                .select__headerWrapper {
 
                                 .select__header {
                                     padding: 0.5em 0;
@@ -628,7 +577,64 @@ html {
                                         }
                                     }
 
+
+                                    .select__options {
+                                        //                                        padding-top: 0.7em;
+                                        position: relative;
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: center;
+                                        //                                        margin-top: 10%;
+                                        //                            top: 36%;
+                                        //                                        left: 70%;
+                                        z-index: 3;
+
+                                        .select__status {
+                                            margin-right: 1em;
+                                            border-radius: 0.5em;
+                                            background-color: #F26B6B;
+                                            cursor: pointer;
+                                            transition: 0.3s;
+
+                                            &:hover {
+                                                transition: 0.3s;
+                                                background-color: #F22F2F;
+                                            }
+
+                                            span {
+                                                padding: 0 1em;
+                                                font-family: circe, sans-serif;
+                                                font-size: 0.8em;
+                                                color: #ffffff;
+                                                user-select: none;
+                                            }
+                                        }
+
+                                        .select__remove {
+                                            margin-right: 0.5em;
+                                            border-radius: 0.5em;
+                                            background-color: #ACACAC;
+                                            cursor: pointer;
+                                            transition: 0.3s;
+
+                                            &:hover {
+                                                transition: 0.3s;
+                                                background-color: #838383;
+                                            }
+
+                                            span {
+                                                padding: 0 1em;
+                                                font-family: circe, sans-serif;
+                                                font-size: 0.8em;
+                                                color: #ffffff;
+                                                user-select: none;
+                                            }
+                                        }
+                                    }
+
                                 }
+
+                                //                                }
 
                                 .select__body {
                                     display: none;

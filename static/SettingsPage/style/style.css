@@ -573,6 +573,15 @@ html {
 .pageWrapper .main .settigsBlock .settings ul li span a:active, .pageWrapper .main .settigsBlock .settings ul li span a:visited {
   color: #182CEF;
 }
+.pageWrapper .main .settigsBlock .settings ul li .bugReport {
+  font-family: circe, sans-serif;
+}
+.pageWrapper .main .settigsBlock .settings ul li .bugReport .bugQuestion {
+  font-size: 0.8em;
+}
+.pageWrapper .main .settigsBlock .settings ul li .bugReport .bugMail {
+  font-size: 0.5em;
+}
 .pageWrapper .main .settigsBlock .addServerWrapper {
   grid-column-start: 3;
   grid-column-end: 4;

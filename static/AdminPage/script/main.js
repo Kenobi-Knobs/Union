@@ -6,6 +6,8 @@
             'agents': 'Agents:',
             'remove': 'Remove',
             'ok': 'Ok'
+            //            ,
+            //            'upgradePlan': 'Upgrade plan'
 
         },
         'ua': {
@@ -15,6 +17,8 @@
             'agents': 'Агенти:',
             'remove': 'Видалити',
             'ok': 'Ок'
+            //            ,
+            //            'upgradePlan': 'Надати преміум'
 
         }
     };
@@ -119,25 +123,6 @@
                                 id: `list_${i}`
                             }).append(
                                 $('<div>').attr({
-                                    class: `select__options option_${i}`
-                                }).append(
-                                    $('<div>').attr({
-                                        class: `select__status status_${i} status_${usersList[i].mail}`
-                                    }).append(
-                                        $('<span>').text('Upgrade plan')
-                                    )
-                                ).append(
-                                    $('<div>').attr({
-                                        class: `select__remove remove_${i} remove_${usersList[i].mail}`
-                                    }).append(
-                                        $('<span>').attr({
-                                            class: 'langText',
-                                            key: 'remove'
-                                        })
-                                    )
-                                )
-                            ).append(
-                                $('<div>').attr({
                                     class: `selectWrapper wrapper_${i}`
                                 }).append(
                                     $('<div>').attr({
@@ -153,12 +138,29 @@
                                                     class: `select__current current_${i}`
                                                 }).text(data.users[i].mail)
                                             )
+                                        ).append(
+                                            $('<div>').attr({
+                                                class: `select__options option_${i}`
+                                            }).append(
+                                                $('<div>').attr({
+                                                    class: `select__status status_${i} status_${data.users[i].mail}`
+                                                }).append(
+                                                    $('<span>')
+                                                )
+                                            ).append(
+                                                $('<div>').attr({
+                                                    class: `select__remove remove_${i} remove_${data.users[i].mail}`
+                                                }).append(
+                                                    $('<span>').attr({
+                                                        class: 'langText',
+                                                        key: 'remove'
+                                                    })
+                                                ))
                                         )
                                     )
                                 )
                             )
                         );
-
 
                         if (usersList[i].agents.length > 0) {
                             $(`.mail_${i}`).append(
@@ -196,25 +198,6 @@
                                 id: `list_${i}`
                             }).append(
                                 $('<div>').attr({
-                                    class: `select__options option_${i}`
-                                }).append(
-                                    $('<div>').attr({
-                                        class: `select__status status_${i} status_${usersList[i].mail}`
-                                    }).append(
-                                        $('<span>').text('Upgrade plan')
-                                    )
-                                ).append(
-                                    $('<div>').attr({
-                                        class: `select__remove remove_${i} remove_${usersList[i].mail}`
-                                    }).append(
-                                        $('<span>').attr({
-                                            class: 'langText',
-                                            key: 'remove'
-                                        })
-                                    )
-                                )
-                            ).append(
-                                $('<div>').attr({
                                     class: `selectWrapper wrapper_${i}`
                                 }).append(
                                     $('<div>').attr({
@@ -230,6 +213,24 @@
                                                     class: `select__current current_${i}`
                                                 }).text(data.users[i].mail)
                                             )
+                                        ).append(
+                                            $('<div>').attr({
+                                                class: `select__options option_${i}`
+                                            }).append(
+                                                $('<div>').attr({
+                                                    class: `select__status status_${i} status_${data.users[i].mail}`
+                                                }).append(
+                                                    $('<span>')
+                                                )
+                                            ).append(
+                                                $('<div>').attr({
+                                                    class: `select__remove remove_${i} remove_${data.users[i].mail}`
+                                                }).append(
+                                                    $('<span>').attr({
+                                                        class: 'langText',
+                                                        key: 'remove'
+                                                    })
+                                                ))
                                         )
                                     )
                                 )
@@ -292,6 +293,16 @@
                         }
 
                     }
+                    if (data.users[i].settings.status == 'user') {
+
+                        if (currentLang == 'en') {
+                            $(`.status_${i} > span`).text('Premium');
+                        }
+                        if (currentLang == 'ua') {
+                            $(`.status_${i} > span`).text('Надати преміум');
+                        }
+
+                    }
 
                     if (data.users[i].settings.status == 'admin') {
                         $(`.status_${i}`).css('backgroundColor', '#ACACAC');
@@ -308,8 +319,10 @@
                     }
 
                     if (data.users[i].settings.status == 'user') { //ЗАМЕНИТЬ НА ЮЗЕР!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        //заменил уже чего орать то? -.-
                         document.querySelectorAll(`.status_${i}`).forEach(item => { //изменить статус на премиум 
                             item.addEventListener('click', function () {
+                                //                                console.log(item.className.split(/\s+/)[2].split('_')[1]);
                                 let mailToUpgrade = item.className.split(/\s+/)[2].split('_')[1];
                                 upgradeUser(mailToUpgrade, i);
                             });
@@ -424,7 +437,7 @@
                 });
                 $('.langBtn').each(function (index, item) {
                     $(this).val(arrLang[lang][$(this).attr('key')]);
-                    });
+                });
             }, 0);
         })
     }

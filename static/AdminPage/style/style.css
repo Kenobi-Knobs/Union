@@ -431,53 +431,6 @@ html {
   list-style: none;
   font-family: circe, sans-serif;
 }
-.pageWrapper .main .settigsBlock .users #usersList li .select__options {
-  padding-top: 0.7em;
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  left: 70%;
-  z-index: 3;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__status {
-  margin-right: 1em;
-  border-radius: 0.5em;
-  background-color: #F26B6B;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__status:hover {
-  transition: 0.3s;
-  background-color: #F22F2F;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__status span {
-  padding: 0 1em;
-  font-family: circe, sans-serif;
-  font-size: 0.8em;
-  color: #ffffff;
-  -webkit-user-select: none;
-          user-select: none;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__remove {
-  margin-right: 0.5em;
-  border-radius: 0.5em;
-  background-color: #ACACAC;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__remove:hover {
-  transition: 0.3s;
-  background-color: #838383;
-}
-.pageWrapper .main .settigsBlock .users #usersList li .select__options .select__remove span {
-  padding: 0 1em;
-  font-family: circe, sans-serif;
-  font-size: 0.8em;
-  color: #ffffff;
-  -webkit-user-select: none;
-          user-select: none;
-}
 .pageWrapper .main .settigsBlock .users #usersList li .selectWrapper {
   position: relative;
   width: 100%;
@@ -525,6 +478,51 @@ html {
   text-align: center;
   width: 1em;
   font-size: 0.5em;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 3;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__status {
+  margin-right: 1em;
+  border-radius: 0.5em;
+  background-color: #F26B6B;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__status:hover {
+  transition: 0.3s;
+  background-color: #F22F2F;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__status span {
+  padding: 0 1em;
+  font-family: circe, sans-serif;
+  font-size: 0.8em;
+  color: #ffffff;
+  -webkit-user-select: none;
+          user-select: none;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__remove {
+  margin-right: 0.5em;
+  border-radius: 0.5em;
+  background-color: #ACACAC;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__remove:hover {
+  transition: 0.3s;
+  background-color: #838383;
+}
+.pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__header .select__options .select__remove span {
+  padding: 0 1em;
+  font-family: circe, sans-serif;
+  font-size: 0.8em;
+  color: #ffffff;
+  -webkit-user-select: none;
+          user-select: none;
 }
 .pageWrapper .main .settigsBlock .users #usersList li .selectWrapper .select .select__body {
   display: none;

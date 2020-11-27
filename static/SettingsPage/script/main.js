@@ -16,7 +16,9 @@
             'save': 'Save',
             'public': 'Public key',
             'secret': 'Secret key',
-            'host': 'Host'
+            'host': 'Host',
+            'bugReportQuestion': `Did you find bugs and didn't even tell us?`,
+            'bugReportMail': `Write here faster t5@tss2020.repositoryhosting.com`
 
         },
         'ua': {
@@ -36,7 +38,9 @@
             'save': 'Зберегти',
             'public': 'Публічний ключ',
             'secret': 'Секретний ключ',
-            'host': 'Хост'
+            'host': 'Хост',
+            'bugReportQuestion': `Ви знайшли баги та не повідомили нас?`,
+            'bugReportMail': `Швидше пишіть сюди t5@tss2020.repositoryhosting.com`
 
         }
     };
@@ -195,7 +199,7 @@
 
 
             $.validator.addMethod("validAddress", function (value, element) {
-                return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
+                return this.optional(element) || /^[\w0-9.]+\.\w{2,}((\/\w+)*\/)(.*)?(#[\w\-]+)?$/gm.test(value);
             });
 
             //            $.validatorUrl.addMethod("validSecret", function (value, element) {
@@ -263,7 +267,7 @@
             return this.optional(element) || /^[a-zA-Z]+[a-zA-Z0-9_-]*$/gi.test(value);
         });
         $.validator.addMethod("validSecret", function (value, element) {
-            return this.optional(element) || /^[a-zA-Z0-9]+$/gi.test(value);
+            return this.optional(element) || /^[a-zA-Z0-9\-]+$/gm.test(value);
         });
         $.validator.addMethod("validHost", function (value, element) {
             return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
@@ -558,7 +562,7 @@
 
                     //servers
                     $.validator.messages.validPublic = "Перша повинна бути літера. Пробіли не допускаються";
-                    $.validator.messages.validSecret = "Не допускаються пробіли та спец символи";
+                    $.validator.messages.validSecret = "Не допускаються пробіли та спец символи окрім '-' ";
                     $.validator.messages.validHost = "Мінімум одна літера, потім крапка та мінімум 2 літери";
 
 
@@ -580,7 +584,7 @@
 
                     //servers
                     $.validator.messages.validPublic = "First character must be letter. Without spaces";
-                    $.validator.messages.validSecret = "Without spaces and special characters";
+                    $.validator.messages.validSecret = "Without spaces and special characters except '-'";
                     $.validator.messages.validHost = "At least 1 letter then dot then at least 2 letters";
 
                 }
@@ -678,11 +682,6 @@
 
     }
 
-
-
-
-
-
     //create select element
     let select = function () {
         $('.select__icon').html('&#9660;');
@@ -772,7 +771,7 @@
 
                     //servers
                     $.validator.messages.validPublic = "Перша повинна бути літера. Пробіли не допускаються";
-                    $.validator.messages.validSecret = "Не допускаються пробіли та спецсимволи";
+                    $.validator.messages.validSecret = "Не допускаються пробіли та спец символи окрім '-' ";
                     $.validator.messages.validHost = "Мінімум одна літера/цифра, потім крапка та мінімум 2 літери/цифри";
 
 
@@ -794,7 +793,7 @@
 
                     //servers
                     $.validator.messages.validPublic = "First character must be letter. Without spaces";
-                    $.validator.messages.validSecret = "Without spaces and special characters";
+                    $.validator.messages.validSecret = "Without spaces and special characters except '-'";
                     $.validator.messages.validHost = "At least 1 letter/number then dot then at least 2 letters/numbers";
 
                 }

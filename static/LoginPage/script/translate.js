@@ -26,7 +26,9 @@
     };
 
     $(function () {
-        saveLocalLang('en');
+        if (localStorage.getItem('langs') === null) {
+            saveLocalLang('en');
+        }
         $('.translate').click(function () {
 
             let lang = $(this).attr('id');
