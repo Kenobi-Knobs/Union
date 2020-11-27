@@ -235,7 +235,7 @@ public class User {
         String mail = ctx.formParam("mail");
         String lang = ctx.formParam("lang");
 
-        if(mail == null || lang == null || !(lang.equals("ua") || lang.equals("en"))){
+        if (mail == null || lang == null || !(lang.equals("ua") || lang.equals("en"))) {
             ctx.status(400);
             return "Bad Request";
         }
@@ -281,16 +281,20 @@ public class User {
 
     }
 
-    public static String changePassword(Context ctx, DBController db){
+    public static String changePassword(Context ctx, DBController db) {
         Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
         JSONObject jsonResult = new JSONObject();
         String token = ctx.formParam("token");
         String newPass = ctx.formParam("new_pass");
-        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{8,}$");
-        Matcher passMatcher = passPattern.matcher(Objects.requireNonNull(newPass));
-        if(!passMatcher.find()){
+
+        if (token == null || newPass == null) {
             jsonResult.put("reset", "false");
-            jsonResult.put("info","Validation Error: password is incorrect");
+            jsonResult.put("info", "An error occurred: null values");
+            return jsonResult.toJSONString();
+        }
+        if (!Utils.passwordValidation(newPass)) {
+            jsonResult.put("reset", "false");
+            jsonResult.put("info", "An error occurred: validation not passed");
             return jsonResult.toJSONString();
         }
         try {

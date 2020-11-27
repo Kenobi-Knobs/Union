@@ -96,10 +96,41 @@ public class Utils {
         Pattern mailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher mailMatcher = mailPattern.matcher(mail.toLowerCase());
 
+        return mailMatcher.find() && passwordValidation(password);
+    }
+
+    public static boolean passwordValidation(String password) {
         Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
-        return mailMatcher.find() && passMatcher.find();
+        return passMatcher.find();
+    }
+
+    public static boolean addAgentValidation(Context ctx) {
+        String publicKey = ctx.formParam("public_key");
+        String secretKey = ctx.formParam("secret_key");
+        String host = ctx.formParam("host");
+
+        // public key
+        Pattern pattern = Pattern.compile("^[a-zA-Z]+[a-zA-Z0-9_-]*$", Pattern.CASE_INSENSITIVE);
+        Matcher pkMatcher = pattern.matcher(publicKey.toLowerCase());
+
+        // secret key
+        pattern = Pattern.compile("^[a-zA-Z0-9\\-]+$", Pattern.CASE_INSENSITIVE);
+        Matcher skMatcher = pattern.matcher(secretKey);
+
+        // host
+        pattern = Pattern.compile("^[a-zA-Z.]+\\.[a-zA-Z]{2,}$", Pattern.CASE_INSENSITIVE);
+        Matcher hostMatcher = pattern.matcher(host.toLowerCase());
+
+        return (pkMatcher.find() && skMatcher.find() && hostMatcher.find() && !(publicKey.equals(host)));
+    }
+
+    public static boolean pingValidation(String address) {
+        Pattern pattern = Pattern.compile("^((http[s]?|ftp):\\/)\\/[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(address.toLowerCase());
+
+        return matcher.find();
     }
 
     public static byte[] getSalt() {
@@ -125,21 +156,6 @@ public class Utils {
             sb.append(c);
         }
         return sb.toString();
-    }
-
-    public static boolean addAgentValidation(Context ctx) {
-        String publicKey = ctx.formParam("public_key");
-        String secretKey = ctx.formParam("secret_key");
-        String host = ctx.formParam("host");
-
-        Pattern pattern = Pattern.compile("^[a-zA-Z]+[a-zA-Z0-9_-]*$", Pattern.CASE_INSENSITIVE);
-        Matcher pkMatcher = pattern.matcher(publicKey.toLowerCase());
-        pattern = Pattern.compile("^[a-zA-Z0-9]+$", Pattern.CASE_INSENSITIVE);
-        Matcher skMatcher = pattern.matcher(secretKey);
-        pattern = Pattern.compile("^[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
-        Matcher hostMatcher = pattern.matcher(host.toLowerCase());
-
-        return (pkMatcher.find() && skMatcher.find() && hostMatcher.find() && !(publicKey.equals(host)));
     }
 
     public static void showChangedPasswordPage(Context ctx, DBController db) {
@@ -213,12 +229,5 @@ public class Utils {
             counter++;
         }
         return counter;
-    }
-
-    public static boolean pingValidation(String address) {
-        Pattern pattern = Pattern.compile("^((http[s]?|ftp):\\/)\\/[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(address.toLowerCase());
-
-        return matcher.find();
     }
 }
