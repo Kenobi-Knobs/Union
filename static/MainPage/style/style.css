@@ -18,6 +18,7 @@
 html {
   width: 100%;
   font-size: 2vw;
+  display: none;
   overflow-x: hidden;
 }
 
@@ -46,6 +47,9 @@ html {
 }
 .pageWrapper .sidebar .navbar {
   text-align: center;
+}
+.pageWrapper .sidebar .navbar ul {
+  list-style: none;
 }
 .pageWrapper .sidebar .navbar ul li {
   padding: 60% 0;
@@ -444,11 +448,13 @@ html {
 .pageWrapper .main .allInfo .alert {
   display: block;
   position: absolute;
-  left: 25vw;
+  width: 100%;
+  text-align: left;
   top: 20vw;
   z-index: 2;
 }
 .pageWrapper .main .allInfo .alert span {
+  padding-left: 2em;
   font-family: circe, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -461,6 +467,7 @@ html {
   grid-row-start: 1;
   grid-row-end: 3;
   background-color: #221F1F;
+  z-index: 10;
 }
 .pageWrapper .main .allInfo .servers .rect {
   background-color: #221F1F;
@@ -480,7 +487,7 @@ html {
 }
 .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
   padding: 1.5em 1em 2em 1em;
-  list-style-type: none;
+  list-style: none;
 }
 .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
   position: relative;
@@ -994,7 +1001,7 @@ html {
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
     padding: 0.5em 1em 4em 1em;
-    list-style-type: none;
+    list-style: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
     position: relative;
@@ -1523,7 +1530,7 @@ html {
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
     padding: 0.5em 1em 4em 1em;
-    list-style-type: none;
+    list-style: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
     position: relative;
@@ -2035,7 +2042,7 @@ html {
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
     padding: 0.5em 1em 4em 1em;
-    list-style-type: none;
+    list-style: none;
   }
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
     position: relative;

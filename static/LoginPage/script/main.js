@@ -90,7 +90,7 @@ function submitForm() {
                     'display': 'block'
                 });
                 $('#singInInfo').text('Login or password are wrong');
-                $('#singInInfo').css('paddingLeft', '30%');
+                //                $('#singInInfo').css('paddingLeft', '30%');
             }
         }
     );

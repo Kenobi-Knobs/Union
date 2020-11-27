@@ -23,7 +23,7 @@ html {
     //    height: 100%;
     width: 100%;
     font-size: 2vw;
-    //    display: none;
+    display: none;
     overflow-x: hidden;
 }
 
@@ -57,6 +57,8 @@ html {
             text-align: center;
 
             ul {
+                list-style: none;
+
                 li {
                     padding: 60% 0;
                     font-size: 0.7em;
@@ -556,11 +558,14 @@ html {
             .alert {
                 display: block;
                 position: absolute;
-                left: 25vw;
+                width: 100%;
+                text-align: left;
+                //                left: 25vw;
                 top: 20vw;
                 z-index: 2;
 
                 span {
+                    padding-left: 2em;
                     font-family: circe, sans-serif;
                     font-style: normal;
                     font-weight: bold;
@@ -575,6 +580,7 @@ html {
                 grid-row-start: 1;
                 grid-row-end: 3;
                 background-color: #221F1F;
+                z-index: 10;
 
                 .rect {
                     background-color: #221F1F;
@@ -596,7 +602,7 @@ html {
 
                     ul {
                         padding: 1.5em 1em 2em 1em;
-                        list-style-type: none;
+                        list-style: none;
 
                         li {
                             position: relative;
@@ -1246,7 +1252,7 @@ html {
 
                         ul {
                             padding: 0.5em 1em 4em 1em;
-                            list-style-type: none;
+                            list-style: none;
 
                             li {
                                 position: relative;
@@ -1916,7 +1922,7 @@ html {
 
                         ul {
                             padding: 0.5em 1em 4em 1em;
-                            list-style-type: none;
+                            list-style: none;
 
                             li {
                                 position: relative;
@@ -2568,7 +2574,7 @@ html {
 
                         ul {
                             padding: 0.5em 1em 4em 1em;
-                            list-style-type: none;
+                            list-style: none;
 
                             li {
                                 position: relative;

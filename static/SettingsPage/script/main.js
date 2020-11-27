@@ -51,7 +51,7 @@
         let pingIntervalStart; //начало диапазона для ping interval
         let pingIntervalEnd; //конец диапазона для ping interval
         let maxDownTiming; //максимальный dowmtiming
-        $('html').css('overflowY', 'hidden');
+        //        $('html').css('overflowY', 'hidden');
         $('.loaderWrapper').css('display', 'block');
         getLocalLang();
 
@@ -155,7 +155,7 @@
 
 
             //валидация добавление URL
-            let validatorUrl = $('#formAddURL').validate({
+            $('#formAddURL').validate({
                 rules: {
                     address: {
                         required: true,
@@ -171,22 +171,17 @@
                         max: maxDownTiming
                     }
                 },
-                //                messages: {
-                //                    address: {
-                //                        required: "This field must be filled"
-                //                        //                validPublic: "First character must be letter. Without spaces"
-                //                    },
-                //                    pingInterval: {
-                //                        required: "This field must be filled"
-                //                        //                    range: [pingIntervalStart, pingIntervalEnd]
-                //                        //                validSecret: "Without spaces"
-                //                    },
-                //                    downTiming: {
-                //                        required: "This field must be filled",
-                //                        //                        greaterThan: 'dsdasds'
-                //                        //                validHost: "At least 1 letter then dot then at least 2 letters"
-                //                    }
-                //                },
+                messages: {
+                    address: {
+
+                    },
+                    pingInterval: {
+
+                    },
+                    downTiming: {
+
+                    }
+                },
                 submitHandler: function () {
                     addNewURL();
                 }
@@ -233,7 +228,7 @@
 
 
         //валидация добавление агентов
-        let validatorServer = $('#formAddServer').validate({
+        $('#formAddServer').validate({
             rules: {
                 public: {
                     required: true,
@@ -250,16 +245,13 @@
             },
             messages: {
                 public: {
-                    required: "This field must be filled",
-                    validPublic: "First character must be letter. Without spaces"
+
                 },
                 secret: {
-                    required: "This field must be filled",
-                    validSecret: "Without spaces"
+
                 },
                 host: {
-                    required: "This field must be filled",
-                    validHost: "At least 1 letter then dot then at least 2 letters"
+
                 }
             },
             submitHandler: function () {
@@ -276,17 +268,6 @@
         $.validator.addMethod("validHost", function (value, element) {
             return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
         });
-
-
-
-
-
-        //adding servers
-        //    $('#Save').on('click', function () {
-        //        addNewServer();
-        //    });
-
-
 
         //получаем список агентов
         $.get(
@@ -454,7 +435,7 @@
                     });
                 }
                 setTimeout(function () {
-                    $('html').css('overflowY', 'auto');
+                    //                    $('html').css('overflowY', 'auto');
                     $('.loaderWrapper').fadeOut(300);
                 }, 2000);
             });
@@ -577,8 +558,8 @@
 
                     //servers
                     $.validator.messages.validPublic = "Перша повинна бути літера. Пробіли не допускаються";
-                    $.validator.messages.validSecret = "Пробіли не допускаються";
-                    $.validator.messages.validHost = "Мінімум одна літера, потом крапка та мінімум 2 літери";
+                    $.validator.messages.validSecret = "Не допускаються пробіли та спец символи";
+                    $.validator.messages.validHost = "Мінімум одна літера, потім крапка та мінімум 2 літери";
 
 
 
@@ -599,7 +580,7 @@
 
                     //servers
                     $.validator.messages.validPublic = "First character must be letter. Without spaces";
-                    $.validator.messages.validSecret = "Without spaces";
+                    $.validator.messages.validSecret = "Without spaces and special characters";
                     $.validator.messages.validHost = "At least 1 letter then dot then at least 2 letters";
 
                 }
@@ -609,6 +590,48 @@
 
     });
 
+
+    function addNewServer() {
+        getLocalLang();
+        let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
+        let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
+        let host = $('#addHost').val().replace(/\s/gi, '');
+        $.post(
+            "api/addAgent", {
+                public_key: public_key,
+                secret_key: secret_key,
+                host: host
+            },
+            function (data) {
+                data = JSON.parse(data);
+                console.log(data);
+
+                if (data.add == 'true' && data.info == 'Added') {
+                    location.reload();
+                    $('.emptyWrapper').css('display', 'none');
+                }
+                if (data.add == 'false' && data.info == 'Is exist') {
+                    if (currentLang == 'en') {
+                        $('#info').text('This server is already exist');
+                    }
+                    if (currentLang == 'ua') {
+                        $('#info').text('Такий сервер вже існує');
+                    }
+
+                    $('.emptyWrapper').fadeIn(300);
+                }
+                if (data.add == 'false' && data.info == 'no premium') {
+                    if (currentLang == 'en') {
+                        $('#info').text('You need premium to add more');
+                    }
+                    if (currentLang == 'ua') {
+                        $('#info').text('Аби додати більше серверів потрібен преміум');
+                    }
+                    $('.emptyWrapper').fadeIn(300);
+                }
+            }
+        );
+    }
 
     function addNewURL() {
         let address = `${$('.select__current').text()}${$('#addAddress').val()}`;
@@ -629,6 +652,26 @@
                     setTimeout(function () {
                         location.reload();
                     }, 350);
+                }
+                if (data.add_ping == 'false' && data.info == 'is exist') {
+                    if (currentLang == 'en') {
+                        $('#info').text('This URL is already exist');
+                    }
+                    if (currentLang == 'ua') {
+                        $('#info').text('Такий URL вже існує');
+                    }
+
+                    $('.emptyWrapper').fadeIn(300);
+                }
+                if (data.add_ping == 'false' && data.info == 'no premium') {
+                    if (currentLang == 'en') {
+                        $('#info').text('Need premium to add more');
+                    }
+                    if (currentLang == 'ua') {
+                        $('#info').text('Потрібен преміум, щоб додати більше');
+                    }
+
+                    $('.emptyWrapper').fadeIn(300);
                 }
             }
         );
@@ -688,49 +731,6 @@
         localStorage.setItem('langs', JSON.stringify(langs));
     }
 
-    function addNewServer() {
-        getLocalLang();
-        let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
-        let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
-        let host = $('#addHost').val().replace(/\s/gi, '');
-        $.post(
-            "api/addAgent", {
-                public_key: public_key,
-                secret_key: secret_key,
-                host: host
-            },
-            function (data) {
-                data = JSON.parse(data);
-                console.log(data);
-
-                if (data.add == 'true' && data.info == 'Added') {
-                    location.reload();
-                    $('.emptyWrapper').css('display', 'none');
-                }
-                if (data.add == 'false' && data.info == 'Is exist') {
-                    if (currentLang == 'en') {
-                        $('#info').text('This server is already exist');
-                    }
-                    if (currentLang == 'ua') {
-                        $('#info').text('Такий сервер вже існує');
-                    }
-
-                    $('.emptyWrapper').fadeIn(300);
-                }
-                if (data.add == 'false' && data.info == 'no premium') {
-                    if (currentLang == 'en') {
-                        $('#info').text('You need premium to add more');
-                    }
-                    if (currentLang == 'ua') {
-                        $('#info').text('Аби додати більше аккаунтів потрібен преміум');
-                    }
-                    $('.emptyWrapper').fadeIn(300);
-                }
-            }
-        );
-    }
-
-
     function getLocalLang() {
         let langs;
         if (localStorage.getItem('langs') === null) {
@@ -772,8 +772,8 @@
 
                     //servers
                     $.validator.messages.validPublic = "Перша повинна бути літера. Пробіли не допускаються";
-                    $.validator.messages.validSecret = "Пробіли не допускаються";
-                    $.validator.messages.validHost = "Мінімум одна літера, потом крапка та мінімум 2 літери";
+                    $.validator.messages.validSecret = "Не допускаються пробіли та спецсимволи";
+                    $.validator.messages.validHost = "Мінімум одна літера/цифра, потім крапка та мінімум 2 літери/цифри";
 
 
 
@@ -781,7 +781,7 @@
                 if (lang == 'en') {
                     //URL
                     $.validator.messages.required = "This field must be filled";
-                    $.validator.messages.validAddress = "Enter a valid mail";
+                    $.validator.messages.validAddress = "Enter a valid address";
                     $.validator.messages.greaterThan = "Value must be greater or equal to ping interval";
 
                     $.extend($.validator.messages, {
@@ -794,8 +794,8 @@
 
                     //servers
                     $.validator.messages.validPublic = "First character must be letter. Without spaces";
-                    $.validator.messages.validSecret = "Without spaces";
-                    $.validator.messages.validHost = "At least 1 letter then dot then at least 2 letters";
+                    $.validator.messages.validSecret = "Without spaces and special characters";
+                    $.validator.messages.validHost = "At least 1 letter/number then dot then at least 2 letters/numbers";
 
                 }
 

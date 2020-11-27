@@ -7,6 +7,7 @@
 html {
   width: 100%;
   font-size: 2vw;
+  display: none;
   overflow-x: hidden;
 }
 
@@ -35,6 +36,9 @@ html {
 }
 .pageWrapper .sidebar .navbar {
   text-align: center;
+}
+.pageWrapper .sidebar .navbar ul {
+  list-style: none;
 }
 .pageWrapper .sidebar .navbar ul li {
   padding: 60% 0;
@@ -219,7 +223,7 @@ html {
 }
 .pageWrapper .main .allInfo .infoCard .down .downInfo ul {
   padding: 0.5em 1em;
-  list-style-type: none;
+  list-style: none;
 }
 .pageWrapper .main .allInfo .infoCard .down .downInfo ul li {
   width: 100%;
@@ -296,7 +300,8 @@ html {
 .pageWrapper .main .allInfo .alert {
   display: block;
   position: absolute;
-  left: 25vw;
+  width: 100%;
+  text-align: left;
   top: 20vw;
   z-index: 2;
 }
@@ -313,6 +318,7 @@ html {
   grid-row-start: 2;
   grid-row-end: 4;
   background-color: #221F1F;
+  z-index: 10;
 }
 .pageWrapper .main .allInfo .url .rect {
   background-color: #221F1F;
@@ -332,7 +338,7 @@ html {
 }
 .pageWrapper .main .allInfo .url .nameURLWrapper ul {
   padding: 1.5em 1em 2em 1em;
-  list-style-type: none;
+  list-style: none;
 }
 .pageWrapper .main .allInfo .url .nameURLWrapper ul li {
   position: relative;

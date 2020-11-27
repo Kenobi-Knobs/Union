@@ -630,10 +630,10 @@ html {
   transition: 0.3s;
 }
 .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
+  padding-bottom: 1em;
   text-align: center;
 }
 .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNewServer {
-  margin-bottom: 1em;
   width: 50%;
   padding: 0.2em 0.5em;
   height: 100%;
@@ -716,10 +716,10 @@ html {
   transition: 0.3s;
 }
 .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper {
+  padding-bottom: 1em;
   text-align: center;
 }
 .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper #addNewURL {
-  margin-bottom: 1em;
   width: 50%;
   padding: 0.2em 0.5em;
   height: 100%;

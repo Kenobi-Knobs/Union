@@ -1,7 +1,7 @@
     let arrLang = {
         'en': {
             'statTitle': 'Statistic',
-            '3days': '3 days',
+            //            '3days': '3 days',
             'range': 'Date range: ',
             'now': 'Now',
             'diagram': 'Data diagram',
@@ -14,7 +14,7 @@
         },
         'ua': {
             'statTitle': 'Статистика',
-            '3days': '3 дні',
+            //            '3days': '3 дні',
             'range': 'Діапазон дат: ',
             'now': 'Зараз',
             'diagram': 'Діаграма данних',
@@ -94,6 +94,8 @@
     let sumOfDownload1 = 0; //сумма download
     let sumOfUpload1 = 0; //сумма upload
 
+    let daysAgo; //для обычного пользователя данные хранятся 3 дня, для премиума 5
+
     $(document).ready(function () {
         getLocalLang();
 
@@ -139,11 +141,6 @@
         $(".quit").on('click', function () {
             $(location).attr('href', '/logout');
         });
-
-        //getting agents
-        //    console.log("Getting agents");
-
-
         $.get(
             "/api/getAgentList", {},
             function (data) {
@@ -214,119 +211,18 @@
                         agents.push(public_key);
                     }
 
-                    //получаем промежуток за которые есть данные
-                    $.get(
-                        "/api/getDataTimeInterval", {
-                            public_key: agents[0]
-                        },
-                        function (data) {
-                            data = JSON.parse(data);
-                            //                        console.log(data);
-
-                            //создаем слайдер
-                            currentDate = new Date(data.max * 1000);
-                            currentMonth = currentDate.getMonth() + 1;
-                            currentDay = currentDate.getDate();
-                            currentHours = currentDate.getHours();
-                            currentMinutes = currentDate.getMinutes();
-
-                            agoDate = new Date(data.max * 1000 - 259200000);
-                            agoMonth = agoDate.getMonth() + 1;
-                            agoDay = agoDate.getDate();
-                            agoHours = agoDate.getHours();
-                            agoMinutes = agoDate.getMinutes();
-
-                            $(function () {
-                                $("#slider-range").slider({
-                                    range: true,
-                                    min: agoDate.getTime(),
-                                    max: currentDate.getTime(),
-                                    values: [agoDate.getTime(), currentDate.getTime()],
-                                    step: 3600000,
-                                    slide: function (event, ui) {
-                                        $("#amount").val(new Date(ui.values[0]).getDate() + '.' + (new Date(ui.values[0]).getMonth() + 1) + ' ' + new Date(ui.values[0]).getHours() + ':' + '00' + ' - ' + new Date(ui.values[1]).getDate() + '.' + (new Date(ui.values[1]).getMonth() + 1) + ' ' + new Date(ui.values[1]).getHours() + ':' + '00');
-                                        startInterval = Math.round(ui.values[0] / 1000);
-                                        endInterval = Math.round(ui.values[1] / 1000);
-                                    }
-                                });
-                                $("#amount").val(new Date($("#slider-range").slider("values", 0)).getDate() + '.' + new Date($("#slider-range").slider("values", 0)).getMonth() + ' ' + new Date($("#slider-range").slider("values", 0)).getHours() + ':' + '00' + ' - ' + new Date($("#slider-range").slider("values", 1)).getDate() + '.' + new Date($("#slider-range").slider("values", 1)).getMonth() + ' ' + new Date($("#slider-range").slider("values", 1)).getHours() + ':' + '00');
-                                startInterval = Math.round($("#slider-range").slider("values", 0) / 1000);
-                                endInterval = Math.round($("#slider-range").slider("values", 1) / 1000);
-                            });
-
-
-
-
-                            //                                    currentDate = new Date(data.max * 1000);
-                            //                                    agoDate = new Date((data.max - 259200) * 1000);
-                            //
-                            //                                    $("#slider-range").slider("option", "max", 50);
-                            //                                    $("#slider-range").slider("option", "min", 10);
-                            //                                    $('#amount').text($("#slider-range").slider("option", "max"));
-                            //
-                            //                                    console.log(currentDate + ' current');
-                            //                                    console.log(agoDate + ' ago');
-
-                        });
-
-
-                    //при изменении радиобатонов серверов
-
-                    let children = $(".chart").children(); //получаем все канвасы
-                    let idOfCanvas = []; //массив где хранятся ид канвасов не разделенные сплитом
-
-                    children.each(function (index) {
-                        idOfCanvas.push($(children[index]).attr('id'));
-                    });
-
-                    //                console.log('id of canvases down');
-                    //                console.log(idOfCanvas);
-
-                    let splited = []; //двумерный массив из разделенных идшников канвасов, где [0] - паблик кей сервера, [1] - данные что будут отображаться (cpu/memory/disks)
-                    idOfCanvas.forEach(function (item, index, array) {
-                        splited[index] = item.split('_');
-                    });
-
-                    //                console.log('splited down');
-                    //                console.log(splited);
-
-                    let canvasIdOnlyPublicKeysOfServers = []; //ид канвасов, только разделенные сплитом, т.е. хранятся паблик кеи серверов (могут повторятся)
-                    for (var i = 0; i < splited.length; i++) {
-                        canvasIdOnlyPublicKeysOfServers.push(splited[i][0]);
-                    }
-
-                    //                console.log('canvasIdOnlyPublicKeysOfServers down');
-                    //                console.log(canvasIdOnlyPublicKeysOfServers);
-
-                    let dataToCheck = []; //массив для хранения данных которые будут отображаться на графике (ид канваса разделено split (cpu/memory/disks)) (могут повторятся)
-                    for (var i = 0; i < splited.length; i++) { //добавляем в массив что чекать будем
-                        dataToCheck.push(splited[i][1]);
-                    }
-                    //                console.log('data to check down');
-                    //                console.log(dataToCheck);
-
-                    nonRepeatingCanvasPK = canvasIdOnlyPublicKeysOfServers.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива canvasIdOnlyPublicKeysOfServers
-                        return canvasIdOnlyPublicKeysOfServers.indexOf(elem) == pos;
-                    });
-
-                    //                console.log('nonRepeatingCanvasPK down');
-                    //                console.log(nonRepeatingCanvasPK);
-
-                    nonRepeatingDataToCheck = dataToCheck.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива dataToCheck
-                        return dataToCheck.indexOf(elem) == pos;
-                    });
-
-                    //                console.log('nonRepeatingDataToCheck down');
-                    //                console.log(nonRepeatingDataToCheck);
-
+                    //при изменении сервера получаем интервал и данные
                     //getting info from agent
                     let servers;
 
                     servers = $('input[name=servers]');
 
                     servers.on('change', function () {
+                        $('.slideWrapper').css('display', 'block');
+                        $(`#${checkedRadio}_${currentSelectedDataToCheck}`).css('display', 'none'); //скрываем ту диаграмму которая не выбран
+                        checkedRadio = $(this).val();
 
-                        $('#slider-range').slider('destroy');
+                        //                        $('#slider-range').slider('destroy');
 
                         $(".listOfNetworks").empty(); //при выборе другого сервера очищаем networks предыдущего 
 
@@ -342,10 +238,6 @@
                         isChecked();
                         $('.alert').css('display', 'none');
 
-                        for (let i = 0; i < canvasesNetworkId.length; i++) {
-                            $(`#${canvasesNetworkId[i]}`).css('display', 'none'); //скрываем все графики сети при переключении серверов
-                        }
-
                         labelsTime = [];
                         dataSystem = [];
                         dataUser = [];
@@ -355,10 +247,19 @@
                         dataDisksTotal = [];
                         dataDisksOccupied = [];
 
-                        $(`#${checkedRadio}_${currentSelectedDataToCheck}`).css('display', 'none'); //скрываем ту диаграмму которая не выбран
+                        $.get('api/getUser', {},
+                            function (data) {
+                                data = JSON.parse(data);
+                                if (data.settings.status == 'admin' || data.settings.status == 'premium_user') {
+                                    $('.startTime').text('5 days');
+                                    daysAgo = 432000;
+                                }
+                                if (data.settings.status == 'user') {
+                                    $('.startTime').text('3 days');
+                                    daysAgo = 259200;
+                                }
+                            });
 
-                        checkedRadio = $(this).val();
-                        //                console.log(checkedRadio);
                         agents.forEach(function (item, index, array) {
 
                             if (checkedRadio == item) {
@@ -370,7 +271,13 @@
                                     },
                                     function (data) {
                                         data = JSON.parse(data);
-                                        //                                    console.log(data);
+                                        console.log(data);
+
+                                        startInterval = data.max - daysAgo;
+                                        endInterval = data.max;
+
+                                        console.log(startInterval + '  start');
+                                        console.log(endInterval + '    end');
 
                                         //создаем слайдер
                                         currentDate = new Date(data.max * 1000);
@@ -379,7 +286,7 @@
                                         currentHours = currentDate.getHours();
                                         currentMinutes = currentDate.getMinutes();
 
-                                        agoDate = new Date(data.max * 1000 - 259200000);
+                                        agoDate = new Date(data.max * 1000 - daysAgo * 1000);
                                         agoMonth = agoDate.getMonth() + 1;
                                         agoDay = agoDate.getDate();
                                         agoHours = agoDate.getHours();
@@ -406,19 +313,73 @@
                                             endInterval = Math.round($("#slider-range").slider("values", 1) / 1000);
                                         });
 
+                                        clearInterval(interval);
+                                        getInfoJSONFromAgent(checkedRadio);
+                                        interval = setInterval(getInfoJSONFromAgent, 65000, checkedRadio);
                                     });
-
-                                clearInterval(interval);
-                                getInfoJSONFromAgent(checkedRadio);
-                                interval = setInterval(getInfoJSONFromAgent, 65000, checkedRadio);
                             }
                         });
 
                         prepareDataToShow();
 
+                        //                            });
                     });
                 }
+
+                //при изменении радиобатонов серверов
+
+                let children = $(".chart").children(); //получаем все канвасы
+                let idOfCanvas = []; //массив где хранятся ид канвасов не разделенные сплитом
+
+                children.each(function (index) {
+                    idOfCanvas.push($(children[index]).attr('id'));
+                });
+
+                //                console.log('id of canvases down');
+                //                console.log(idOfCanvas);
+
+                let splited = []; //двумерный массив из разделенных идшников канвасов, где [0] - паблик кей сервера, [1] - данные что будут отображаться (cpu/memory/disks)
+                idOfCanvas.forEach(function (item, index, array) {
+                    splited[index] = item.split('_');
+                });
+
+                //                console.log('splited down');
+                //                console.log(splited);
+
+                let canvasIdOnlyPublicKeysOfServers = []; //ид канвасов, только разделенные сплитом, т.е. хранятся паблик кеи серверов (могут повторятся)
+                for (var i = 0; i < splited.length; i++) {
+                    canvasIdOnlyPublicKeysOfServers.push(splited[i][0]);
+                }
+
+                //                console.log('canvasIdOnlyPublicKeysOfServers down');
+                //                console.log(canvasIdOnlyPublicKeysOfServers);
+
+                let dataToCheck = []; //массив для хранения данных которые будут отображаться на графике (ид канваса разделено split (cpu/memory/disks)) (могут повторятся)
+                for (var i = 0; i < splited.length; i++) { //добавляем в массив что чекать будем
+                    dataToCheck.push(splited[i][1]);
+                }
+                //                console.log('data to check down');
+                //                console.log(dataToCheck);
+
+                nonRepeatingCanvasPK = canvasIdOnlyPublicKeysOfServers.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива canvasIdOnlyPublicKeysOfServers
+                    return canvasIdOnlyPublicKeysOfServers.indexOf(elem) == pos;
+                });
+
+                //                console.log('nonRepeatingCanvasPK down');
+                //                console.log(nonRepeatingCanvasPK);
+
+                nonRepeatingDataToCheck = dataToCheck.filter(function (elem, pos) { //убираем повторяющиеся элементы у массива dataToCheck
+                    return dataToCheck.indexOf(elem) == pos;
+                });
+
+                //                console.log('nonRepeatingDataToCheck down');
+                //                console.log(nonRepeatingDataToCheck);
+
+
+
             });
+
+
 
         $('#itemCpu').on('click', function () {
             if ($('.chart').children().css('display') == 'block') {
@@ -440,107 +401,7 @@
             }
             prepareDataToShow();
         });
-
-        //    setInterval(function () {
-        //
-        //        if ($(window).width() > 576 && $(window).width() < 991.98) {
-        //            fontSizeOfLabels = 3 * $(window).width() / 100;
-        //        }
-        //        if ($(window).width() > 992 && $(window).width() < 1030.98) {
-        //            fontSizeOfLabels = 1.5 * $(window).width() / 100;
-        //        } else {
-        //            fontSizeOfLabels = 1 * $(window).width() / 100;
-        //        }
-        //
-        //    }, 100);
-
     });
-
-    function prepareDataToShowNetwork() {
-
-        $(`#canvas_${checkedRadioNetwork}`).remove(); //эта херня нужна чтобы старые данные не накладывались на новые. Потому что при наведении можно было видеть старые данные
-        $('.chartNetwork').append(`<canvas id="canvas_${checkedRadioNetwork}"></canvas>`); //я хз почему оно так ибо массивы значений я обнуляю. Сlear и destroy не помогают >:(
-
-        let ctxNetwork; // ид канваса куда рисовать график
-        let chartNameNetwork; // ид канваса куда рисовать график
-        let labelDataset_1Network;
-        let labelDataset_2Network;
-        let dataToShow_1Network = []; //данные для графика
-        let dataToShow_2Network = []; //данные для графика
-        let backColor_1Network;
-        let backColor_2Network;
-        let border_1Network;
-        let border_2Network;
-
-
-        //    console.log(checkedRadioNetwork);
-
-        //готовим графики для network
-        ctxNetwork = $(`#canvas_${checkedRadioNetwork}`);
-        chartNameNetwork = $(`#canvas_${checkedRadioNetwork}`);
-        labelDataset_1Network = 'Download';
-        labelDataset_2Network = 'Upload';
-        dataToShow_1Network = dataNetworkDownload;
-        dataToShow_2Network = dataNetworkUpload;
-        backColor_1Network = 'rgba(255, 81, 95, 0.5)';
-        backColor_2Network = 'rgba(103, 164, 255, 0.5)';
-        border_1Network = '#FF941A';
-        border_2Network = '#7F5CFF';
-
-        drawChartNetwork(chartNameNetwork, ctxNetwork, labelsTime, labelDataset_1Network, labelDataset_2Network, dataToShow_1Network, dataToShow_2Network, backColor_1Network, backColor_2Network, border_1Network, border_2Network);
-
-    }
-
-
-    function drawChartNetwork(chartName, ctx, labelsTime, labelDataset_1, labelDataset_2, dataToShow_1, dataToShow_2, backColor_1, backColor_2, border_1, border_2) {
-        //    Chart.defaults.global.defaultFontFamily = 'circe';
-
-        let data = {
-            labels: [],
-            datasets: [
-                {
-                    label: [],
-                    data: [],
-                    backgroundColor: backColor_1,
-                    borderColor: border_1
-            },
-                {
-                    label: [],
-                    data: [],
-                    backgroundColor: backColor_2,
-                    borderColor: border_2
-            }
-        ]
-        };
-
-        let options = {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: true,
-                position: 'bottom'
-            }
-        }
-
-        chartName = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: options,
-
-        });
-
-
-
-        chartName.data.labels = labelsTime;
-        chartName.data.datasets[0].label = labelDataset_1;
-        chartName.data.datasets[0].data = dataToShow_1;
-
-        chartName.data.datasets[1].label = labelDataset_2;
-        chartName.data.datasets[1].data = dataToShow_2;
-
-        chartName.clear();
-        chartName.update();
-    }
 
     function prepareDataToShow() {
         currentSelectedDataToCheck = $('.select__current').text();
@@ -689,6 +550,10 @@
         dataNetworkDownload = [];
         dataNetworkUpload = [];
 
+        console.log(typeof startInterval);
+        console.log(startInterval + ' getJson start');
+        console.log(endInterval + ' getJson end');
+
         $.get(
             "/api/getAgentDataByInterval", {
                 public_key: nameOfServer,
@@ -758,7 +623,8 @@
 
                         serverTime.push(data.dataset[key].scan_time.split(' '));
 
-                        labelsTime.push(serverTime[key][1] + ' ' + serverTime[key][0]);
+                        //                        labelsTime.push(serverTime[key][1] + ' ' + serverTime[key][0]);
+
 
                         dataSystem.push(data.dataset[key].data.cpu[0].system);
                         dataUser.push(data.dataset[key].data.cpu[0].user);
@@ -774,8 +640,13 @@
 
                     }
 
+                    //                    console.log(serverTime);
+                    for (let i = 0; i < serverTime.length; i++) {
+                        labelsTime.push(serverTime[i][0].split('-')[2] + '.' + serverTime[i][0].split('-')[1] + ' ' + serverTime[i][1].split(':')[0] + ':' + serverTime[i][1].split(':')[1]);
+                    }
 
-                    console.log(networksData);
+
+                    //                    console.log(networksData);
 
                     //                console.log((sumOfDataSystem / countAllData).toFixed(2));
                     $('.system').text((sumOfDataSystem / countAllData).toFixed(2) + '%');
@@ -790,7 +661,7 @@
                     //                console.log("networksData");
                     //                console.log(networksData);
 
-                    console.log(networksData[0]);
+                    //                    console.log(networksData[0]);
 
 
                     let countOfNetworks = 0; //число networks в dataset
@@ -927,69 +798,9 @@
 
 
 
-                    console.log($('.downloadSpeed').length);
-                    console.log(countOfNetworks);
+                    //                    console.log($('.downloadSpeed').length);
+                    //                    console.log(countOfNetworks);
 
-
-                    //                console.log(checkedRadioNetwork);
-
-                    let networks = $('input[name=networks]');
-                    networks.on('change', function () {
-
-
-                        $.get(
-                            "/api/getAgentDataByInterval", {
-                                public_key: nameOfServer,
-                                start: startInterval,
-                                end: endInterval
-                            },
-                            function (data) {
-                                data = JSON.parse(data);
-                                console.log(data);
-
-
-                            });
-
-
-
-
-
-                        dataNetworkDownload = [];
-                        dataNetworkUpload = [];
-                        sumOfDownload = 0;
-                        sumOfUpload = 0;
-                        //                    labelsTime = [];
-
-                        checkedRadioNetwork = $(this).val();
-                        console.log(checkedRadioNetwork);
-
-                        //сoбираем данные network ля графика
-                        for (let i = 0; i < networksData.length; i++) {
-                            for (let j = 0; j < countOfNetworks; j++) {
-                                if (checkedRadioNetwork.split('_')[0] == networksData[i][j].name) {
-                                    sumOfDownload += networksData[i][j].in;
-                                    sumOfUpload += networksData[i][j].out;
-                                    dataNetworkDownload.push(networksData[i][j].in / 1000000);
-                                    dataNetworkUpload.push(networksData[i][j].out / 1000000);
-                                }
-                            }
-                        }
-
-
-                        let networksChildren = $('.chartNetwork').children();
-                        canvasesNetworkId = []; //массив для хранения идшников графиков network
-                        networksChildren.each(function (index, elem) {
-                            canvasesNetworkId.push($(networksChildren[index]).attr('id'));
-                        });
-
-                        for (let i = 0; i < canvasesNetworkId.length; i++) {
-                            $(`#${canvasesNetworkId[i]}`).css('display', 'none');
-                        }
-
-                        $(`#canvas_${checkedRadioNetwork}`).css('display', 'block'); //отображаем нужный канвас 
-                        prepareDataToShowNetwork();
-
-                    });
 
                     prepareDataToShow();
                 }

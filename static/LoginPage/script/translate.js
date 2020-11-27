@@ -26,6 +26,7 @@
     };
 
     $(function () {
+        saveLocalLang('en');
         $('.translate').click(function () {
 
             let lang = $(this).attr('id');

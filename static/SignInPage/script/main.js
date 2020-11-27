@@ -52,6 +52,10 @@ $(document).ready(function () {
                 validPass: true
             }
         },
+        message: {
+            mail: {},
+            password: {}
+        },
         submitHandler: function () {
             submitForm();
         }
