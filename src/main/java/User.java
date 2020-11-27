@@ -97,16 +97,16 @@ public class User {
         String pass = ctx.formParam("pass");
         String lang = ctx.formParam("lang");
 
-        if (mail != null && pass != null /*&& lang != null*/) {
+        if (mail != null && pass != null && lang != null) {
             String key = generateKey();
-            if (registrationValidation(mail, pass) /*&& (lang.equals("ua") || lang.equals("en"))*/) {
+            if (registrationValidation(mail, pass) && (lang.equals("ua") || lang.equals("en"))) {
                 try {
                     String query = "SELECT * FROM `Users` WHERE mail = ?";
                     PreparedStatement ps = db.getConnection().prepareStatement(query);
                     ps.setString(1, mail);
                     ResultSet res = ps.executeQuery();
                     if (!res.next()) {
-                        mailService.sendActivationLink(key, mail/*, lang*/);
+                        mailService.sendActivationLink(key, mail, lang);
                         String insertQuery = "INSERT INTO `Users`(`mail`, `salt`, `pwd`, `confirm_code`, `settings`) VALUES (?, ?, ?, ?, ?)";
                         PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
 
@@ -170,12 +170,7 @@ public class User {
                 insertPs.setString(1, publicKey.toLowerCase());
                 insertPs.setString(2, privateKey);
                 insertPs.setString(3, host.toLowerCase());
-                int count = insertPs.executeUpdate();
-                if(count <= 0){
-                    jsonResult.put("add", "false");
-                    jsonResult.put("info", "Is exist");
-                    return jsonResult.toJSONString();
-                }
+                insertPs.executeUpdate();
                 insertPs.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -337,7 +332,6 @@ public class User {
                 if ((ctx.sessionAttribute("status").equals("user")) && (pingInterval < 5 || pingInterval > 60 || Utils.getPingCount(ctx, db) >= 5)) {
                     jsonResult.put("add", "false");
                     jsonResult.put("info", "user has no premium status, invalid data requested");
-                    ctx.status(400);
                     return jsonResult.toJSONString();
                 }
                 if (downTiming < pingInterval || downTiming <= 0 || downTiming > 60) {
@@ -353,13 +347,15 @@ public class User {
                 long currentTime = date.getTime() / 1000L;
 
                 try {
-                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?)";
+                    int code = ActivePing.ping(address);
+                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`, `last_code`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?,?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                     insertPs.setString(1, ctx.sessionAttribute("mail"));
                     insertPs.setString(2, address);
                     insertPs.setInt(3, pingInterval);
                     insertPs.setLong(4, currentTime);
                     insertPs.setInt(5, downTiming);
+                    insertPs.setInt(6, code);
                     int col = insertPs.executeUpdate();
                     insertPs.close();
                     if (col <= 0) {
@@ -370,7 +366,7 @@ public class User {
                     ctx.status(200);
                     jsonResult.put("add_ping", "true");
                     jsonResult.put("info", "Added");
-                    System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing");
+                    System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing ping = " + code );
                     return jsonResult.toJSONString();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();

@@ -5,8 +5,6 @@ import main.java.DBController;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,20 +19,24 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActivePingTest {
+
+    ActivePingTest() throws ParseException, IOException, SQLException, ClassNotFoundException {}
+
     ActivePing ap = new ActivePing();
+
     String config = new String(Files.readAllBytes(Paths.get("config.txt")));
     JSONParser parser = new JSONParser();
     JSONObject jsonConfig = (JSONObject) parser.parse(config);
 
-    public DBController db =new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));;
-
-    ActivePingTest() throws ParseException, IOException, SQLException, ClassNotFoundException {}
+    public DBController db =new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
 
     public void executeUpdate(DBController db, String query) throws SQLException {
         PreparedStatement ps = db.getConnection().prepareStatement(query);
         ps.executeUpdate();
         ps.close();
     }
+
+    /* TESTS */
 
     @BeforeEach
     public void Before() throws SQLException {
@@ -51,6 +53,7 @@ class ActivePingTest {
         expArray.add("https://google.com|0|1|1");
 
         ArrayList<String> actualArray = ap.getPingList(db);
+
         ArrayList<String> preparedActualArray = new ArrayList<>();
         for (String str : actualArray){
             String[] split = str.split("\\|");
@@ -76,5 +79,6 @@ class ActivePingTest {
     @AfterEach
     public void After() throws SQLException {
         executeUpdate(db, "DELETE FROM `PingList` WHERE 1");
+        //executeUpdate(db, "DELETE FROM `DownList` WHERE 1");
     }
 }

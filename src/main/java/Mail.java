@@ -42,23 +42,23 @@ public class Mail {
      * @param token activation token
      * @param mailTo user email
      */
-    public void sendActivationLink(String token, String mailTo/*, String lang*/) throws MessagingException {
+    public void sendActivationLink(String token, String mailTo, String lang) throws MessagingException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(mailTo));
-        /*if(lang.equals("ua")){
+        if(lang.equals("ua")){
             message.setSubject("Union: Вітаємо з приєднанням!");
             message.setText(
                     "Ви успішно зареєструвалися на платформі моніторингу Union," +
                             "щоб продовжити тицніть сюди : https://t5.tss2020.site/api/confirm/" + token  +
                             " (Якщо ви не реєструвалися проігноруйте це повідомлення)");
-        }else{*/
+        }else {
             message.setSubject("Union: Welcome to the club buddy");
             message.setText(
                     "Hello friend, it seems that you have successfully registered your Union," +
-                            "what do you have to do by click the link : https://t5.tss2020.site/api/confirm/" + token  +
+                            "what do you have to do by click the link : https://t5.tss2020.site/api/confirm/" + token +
                             " (if you did not register then just ignore this message)");
-        //}
+        }
         Transport.send(message);
     }
 

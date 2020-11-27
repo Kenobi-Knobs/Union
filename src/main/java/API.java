@@ -418,6 +418,7 @@ public class API {
                     delUPs.executeUpdate();
                     delUPs.close();
                 } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                     jsonResult.put("user_delete", "false");
                     ctx.status(200);
                     return jsonResult.toJSONString();
@@ -471,10 +472,10 @@ public class API {
                     jsonPing.put("down_timing", res.getInt("down_timing"));
                     jsonPing.put("last_ping_time", res.getInt("last_ping_time"));
                     jsonPing.put("last_code", res.getInt("last_code"));
-                    if(res.getInt("current_down") != 0){
-                        jsonPing.put("current_down", "true");
-                    }else{
+                    if(res.getInt("last_code") >= 200 && res.getInt("last_code") <= 399){
                         jsonPing.put("current_down", "false");
+                    }else{
+                        jsonPing.put("current_down", "true");
                     }
                     PreparedStatement ps1 = db.getConnection().prepareStatement(getDown);
                     ps1.setInt(1,res.getInt("id"));
