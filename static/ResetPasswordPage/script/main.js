@@ -55,14 +55,19 @@
         let regMail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/gi;
         let mail = $('#mail').val();
         if (regMail.test(mail)) {
-            $.post(
-                "/api/resetPasswordMail", {
+
+            $.ajax({
+                url: '/api/resetPasswordMail',
+                type: 'post',
+                headers: {
+                    'csrf': getCookie('csrf_token')
+                },
+                data: {
                     mail: mail,
                     lang: currentLang
                 },
-                function (data) {
-                    data = JSON.parse(data);
-                    //                    console.log(data);
+                dataType: 'json',
+                success: function (data) {
                     if (data.reset == 'false') {
                         $('.infoWrapper').fadeIn(300);
                         $('.infoWrapper').css({
@@ -90,7 +95,7 @@
                         $('.infoWrapper').fadeIn(300);
                     }
                 }
-            );
+            });
 
         } else {
             $('.infoWrapper').fadeIn(300);
@@ -130,4 +135,10 @@
                 });
             }, 0);
         })
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }

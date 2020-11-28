@@ -199,16 +199,8 @@
 
 
             $.validator.addMethod("validAddress", function (value, element) {
-                return this.optional(element) || /^[\w0-9.]+\.\w{2,}((\/\w+)*\/)(.*)?(#[\w\-]+)?$/gm.test(value);
+                return this.optional(element) || /^([\w0-9.]+)\.(\w{2,})((\/\w+)*\/?)(.*)?(#[\w\-]+)?$/gm.test(value);
             });
-
-            //            $.validatorUrl.addMethod("validSecret", function (value, element) {
-            //                return this.optional(element) || /^[a-zA-Z0-9]+$/gi.test(value);
-            //            });
-            //            $.validatorUrl.addMethod("validHost", function (value, element) {
-            //                return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
-            //            });
-
 
         });
 
@@ -328,14 +320,18 @@
                         $('.infoWrapper').fadeIn(300);
 
                         $('#Yes').on('click', function () {
-                            $.post(
-                                "/api/deleteAgent", {
+
+                            $.ajax({
+                                url: '/api/deleteAgent',
+                                type: 'post',
+                                headers: {
+                                    'csrf': getCookie('csrf_token')
+                                },
+                                data: {
                                     public_key: public_keyToDelete
                                 },
-                                function (data) {
-                                    data = JSON.parse(data);
-                                    //                            console.log(data);
-
+                                dataType: 'json',
+                                success: function (data) {
                                     if (data.delete == 'true') {
                                         $('.infoWrapper').fadeOut(300);
                                         setTimeout(function () {
@@ -344,7 +340,7 @@
 
                                     }
                                 }
-                            );
+                            });
                         });
                     });
                 }
@@ -418,14 +414,19 @@
                         $('.infoWrapper').fadeIn(300);
 
                         $('#Yes').on('click', function () {
-                            $.post(
-                                "/api/deleteActivePing", {
+
+
+                            $.ajax({
+                                url: '/api/deleteActivePing',
+                                type: 'post',
+                                headers: {
+                                    'csrf': getCookie('csrf_token')
+                                },
+                                data: {
                                     address: addresToDelete
                                 },
-                                function (data) {
-                                    data = JSON.parse(data);
-                                    console.log(data);
-
+                                dataType: 'json',
+                                success: function (data) {
                                     if (data.delete == 'true') {
                                         $('.infoWrapper').fadeOut(300);
                                         setTimeout(function () {
@@ -434,7 +435,7 @@
 
                                     }
                                 }
-                            );
+                            });
                         });
                     });
                 }
@@ -600,14 +601,20 @@
         let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
         let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
         let host = $('#addHost').val().replace(/\s/gi, '');
-        $.post(
-            "api/addAgent", {
+        $.ajax({
+            url: 'api/addAgent',
+            type: 'post',
+            headers: {
+                'csrf': getCookie('csrf_token')
+            },
+            data: {
                 public_key: public_key,
                 secret_key: secret_key,
                 host: host
             },
-            function (data) {
-                data = JSON.parse(data);
+            dataType: 'json',
+            success: function (data) {
+                //                data = JSON.parse(data);
                 console.log(data);
 
                 if (data.add == 'true' && data.info == 'Added') {
@@ -634,7 +641,7 @@
                     $('.emptyWrapper').fadeIn(300);
                 }
             }
-        );
+        });
     }
 
     function addNewURL() {
@@ -642,14 +649,20 @@
         let pingInterval = $('#addPingInterval').val();
         let downTiming = $('#addDownTiming').val();
 
-        $.post(
-            'api/addActivePing', {
+        $.ajax({
+            url: 'api/addActivePing',
+            type: 'post',
+            headers: {
+                'csrf': getCookie('csrf_token')
+            },
+            data: {
                 address: address,
                 ping_interval: pingInterval,
                 down_timing: downTiming
             },
-            function (data) {
-                data = JSON.parse(data);
+            dataType: 'json',
+            success: function (data) {
+                //                data = JSON.parse(data);
                 console.log(data);
                 if (data.add_ping == 'true') {
                     $('.infoWrapper').fadeOut(300);
@@ -678,7 +691,7 @@
                     $('.emptyWrapper').fadeIn(300);
                 }
             }
-        );
+        });
 
     }
 
@@ -800,4 +813,10 @@
 
             }, 0);
         })
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }

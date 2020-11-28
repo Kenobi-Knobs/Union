@@ -74,13 +74,19 @@
 
         if (regPass.test(pass)) {
 
-            $.post(
-                "/api/changePassword", {
+            $.ajax({
+                url: '/api/changePassword',
+                type: 'post',
+                headers: {
+                    'csrf': getCookie('csrf_token')
+                },
+                data: {
                     new_pass: pass,
                     token: token
                 },
-                function (data) {
-                    data = JSON.parse(data);
+                dataType: 'json',
+                success: function (data) {
+                    //                    data = JSON.parse(data);
                     if (data.reset == 'false') {
                         $('.infoWrapper').fadeIn(300);
                         $('.infoWrapper').css({
@@ -109,7 +115,7 @@
 
                     }
                 }
-            );
+            });
 
         } else {
             $('.infoWrapper').fadeIn(300);
@@ -149,4 +155,10 @@
                 });
             }, 0);
         })
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
