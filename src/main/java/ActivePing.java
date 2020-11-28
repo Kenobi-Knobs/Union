@@ -48,7 +48,6 @@ public class ActivePing {
             int pingInterval = Integer.parseInt(parse[4]);
 
             int code = ping(address);
-            System.out.println(code);
             boolean error = !(code >= 200 && code <= 399);
             boolean down = (currentDown != 0);
             // System.out.println(address + " " + code);

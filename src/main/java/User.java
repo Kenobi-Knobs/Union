@@ -335,7 +335,7 @@ public class User {
 
                 if ((ctx.sessionAttribute("status").equals("user")) && (pingInterval < 5 || pingInterval > 60 || Utils.getPingCount(ctx, db) >= 5)) {
                     jsonResult.put("add", "false");
-                    jsonResult.put("info", "user has no premium status, invalid data requested");
+                    jsonResult.put("info", "no premium");
                     return jsonResult.toJSONString();
                 }
                 if (downTiming < pingInterval || downTiming <= 0 || downTiming > 60) {
