@@ -522,20 +522,20 @@ public class API {
     }
 
     public static boolean checkCSRF(Context ctx) {
-        return Objects.equals(ctx.header("csrf"), ctx.cookieStore("csrf_token"));
+        if (ctx.header("csrf") != null && ctx.cookie("csrf_token") != null)
+            return Objects.equals(ctx.header("csrf"), ctx.cookie("csrf_token"));
+        else return false;
     }
 
     public static void createCSRF(Context ctx) {
-        if (ctx.cookieStore("csrf_token") != null) {
-            try {
-                String secret_key = Utils.generateKey();
-                byte[] salt = Utils.getSalt();
-                Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-                String token = encoder.encodeToString(Utils.hash(secret_key, salt));
-                ctx.cookieStore("csrf_token", token);
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-                e.printStackTrace();
-            }
+        try {
+            String secret_key = Utils.generateKey();
+            byte[] salt = Utils.getSalt();
+            Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+            String token = encoder.encodeToString(Utils.hash(secret_key, salt));
+            ctx.cookie("csrf_token", token);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
         }
     }
 }
