@@ -68,9 +68,6 @@ public class Server {
         app.get("/settings", ctx -> API.sendHtml(ctx, "static/SettingsPage/index.html", "auth_only", "/login"));
         app.get("/", ctx -> API.sendHtml(ctx, "static/MainPage/index.html", "auth_only", "/login"));
         app.get("/new-password/:token", ctx -> {
-            if (ctx.sessionAttribute("auth") != null) {
-                ctx.redirect("/");
-            }
             Utils.showChangedPasswordPage(ctx, db);
         });
         app.get("/reset", ctx -> {
