@@ -507,7 +507,7 @@ public class API {
     public static String checkService(Context ctx, DBController db) {
         JSONObject result = new JSONObject();
         result.put("API", "ok");
-        try{
+        try {
             String query = "SELECT * FROM `Users`";
             PreparedStatement ps = db.getConnection().prepareStatement(query);
             ps.executeQuery();

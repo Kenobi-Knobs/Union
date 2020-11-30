@@ -88,7 +88,11 @@ public class Server {
             API.sendHtml(ctx, "static/LoginPage/index.html", "public", "/login");
         });
         app.get("/logout", ctx -> {
-            System.out.println(ctx.sessionAttribute("mail") + " logout");ctx.sessionAttribute("auth", null); ctx.sessionAttribute("mail", null); ctx.redirect("/login");});
+            System.out.println(ctx.sessionAttribute("mail") + " logout");
+            ctx.sessionAttribute("auth", null);
+            ctx.sessionAttribute("mail", null);
+            ctx.redirect("/login");
+        });
 
         app.post("/api/changePassword", ctx -> {
             cors(ctx);
@@ -124,8 +128,16 @@ public class Server {
         app.get("/api/getAgentList", ctx -> { cors(ctx); ctx.result(API.getAgentList(ctx, db)); });
 
         app.get("/api/getUsers", ctx -> {cors(ctx); ctx.result(API.getUsers(ctx, db));});
-        app.get("/api/deleteUser", ctx -> {cors(ctx); ctx.result(API.deleteUser(ctx, db));});
-        app.get("/api/upgradeUser", ctx -> {cors(ctx); ctx.result(API.upgradeUser(ctx, db));});
+        app.get("/api/deleteUser", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(API.deleteUser(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
+        app.get("/api/upgradeUser", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(API.upgradeUser(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
 
         app.post("/api/addActivePing", ctx -> {
             cors(ctx);
@@ -138,9 +150,7 @@ public class Server {
             else ctx.result("CSRF invalid");
         });
         app.get("/api/getActivePingData", ctx -> { cors(ctx); ctx.result(API.getActivePingData(ctx, db)); });
-
         app.get("/api/ping", ctx -> {cors(ctx); ctx.result(API.checkService(ctx, db)); });
-
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));
     }
 

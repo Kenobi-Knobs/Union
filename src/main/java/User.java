@@ -278,7 +278,6 @@ public class User {
             jsonResult.put("info", "mail not found or not sent");
             return jsonResult.toJSONString();
         }
-
     }
 
     public static String changePassword(Context ctx, DBController db) {

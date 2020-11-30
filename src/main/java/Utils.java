@@ -100,7 +100,7 @@ public class Utils {
     }
 
     public static boolean passwordValidation(String password) {
-        Pattern passPattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$");
+        Pattern passPattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\\w{8,}$");
         Matcher passMatcher = passPattern.matcher(password);
 
         return passMatcher.find();
@@ -120,7 +120,7 @@ public class Utils {
         Matcher skMatcher = pattern.matcher(secretKey);
 
         // host
-        pattern = Pattern.compile("^[a-zA-Z.]+\\.[a-zA-Z]{2,}$", Pattern.CASE_INSENSITIVE);
+        pattern = Pattern.compile("^\\w+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
         Matcher hostMatcher = pattern.matcher(host.toLowerCase());
 
         return (pkMatcher.find() && skMatcher.find() && hostMatcher.find() && !(publicKey.equals(host)));
