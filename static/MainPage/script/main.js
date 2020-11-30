@@ -243,6 +243,7 @@
                     servers.on('change', function () {
 
                         $('.listOfServers').css('opacity', '0.1');
+                        $('.listOfNetwork').empty();
                         servers.prop('disabled', 'true');
 
                         setTimeout(function () {
@@ -473,11 +474,8 @@
             },
             function (data) {
                 data = JSON.parse(data);
-                //            console.log(data);
-
-
-
-
+                //                console.log(data);
+                $('.listOfNetwork').empty();
                 if (data['dataset'].length == 0) {
                     $('.realtime').css('opacity', '0');
                     $('.alert').css('display', 'block');
@@ -500,51 +498,51 @@
 
                     $('.barWrapper').css('display', 'block');
                     $('.load').css('marginBottom', '0');
-                    $('.positioning').css('opacity', '1');
 
                     let serverTime = []; //server`s updating time
+                    let allNetworks = [];
                     for (var key in data['dataset']) {
 
                         if (currentLang == 'en') {
-                            $('.wired').text((data.dataset[0].data.memory.wired / 1000000).toFixed(2) + ' Mb');
-                            $('.total').text((data.dataset[0].data.memory.total / 1000000).toFixed(2) + ' Mb');
-                            $('.free').text((data.dataset[0].data.memory.free / 1000000).toFixed(2) + ' Mb');
-                            $('.diskTotal').text((data.dataset[0].data.disks[0].total / 1000000).toFixed(0) + ' Mb');
-                            $('.downloadSpeed1').text((data.dataset[0].data.network[0].in / 1000000).toFixed(1) + ' Mb/s');
-                            $('.uploadSpeed1').text((data.dataset[0].data.network[0].out / 1000000).toFixed(1) + ' Mb/s');
-                            $('.downloadSpeed2').text((data.dataset[0].data.network[1].in / 1000000).toFixed(1) + ' Mb/s');
-                            $('.uploadSpeed2').text((data.dataset[0].data.network[1].out / 1000000).toFixed(1) + ' Mb/s');
+                            $('.wired').text((data.dataset[key].data.memory.wired / 1000000).toFixed(2) + ' Mb');
+                            $('.total').text((data.dataset[key].data.memory.total / 1000000).toFixed(2) + ' Mb');
+                            $('.free').text((data.dataset[key].data.memory.free / 1000000).toFixed(2) + ' Mb');
+                            $('.diskTotal').text((data.dataset[key].data.disks[0].total / 1000000).toFixed(0) + ' Mb');
+                            //                            $('.downloadSpeed1').text((data.dataset[0].data.network[0].in / 1000000).toFixed(1) + ' Mb/s');
+                            //                            $('.uploadSpeed1').text((data.dataset[0].data.network[0].out / 1000000).toFixed(1) + ' Mb/s');
+                            //                            $('.downloadSpeed2').text((data.dataset[0].data.network[1].in / 1000000).toFixed(1) + ' Mb/s');
+                            //                            $('.uploadSpeed2').text((data.dataset[0].data.network[1].out / 1000000).toFixed(1) + ' Mb/s');
                         }
                         if (currentLang == 'ua') {
-                            $('.wired').text((data.dataset[0].data.memory.wired / 1000000).toFixed(2) + ' Мб');
-                            $('.total').text((data.dataset[0].data.memory.total / 1000000).toFixed(2) + ' Мб');
-                            $('.free').text((data.dataset[0].data.memory.free / 1000000).toFixed(2) + ' Мб');
-                            $('.diskTotal').text((data.dataset[0].data.disks[0].total / 1000000).toFixed(0) + ' Мб');
-                            $('.downloadSpeed1').text((data.dataset[0].data.network[0].in / 1000000).toFixed(1) + ' Мб/с');
-                            $('.uploadSpeed1').text((data.dataset[0].data.network[0].out / 1000000).toFixed(1) + ' Мб/с');
-                            $('.downloadSpeed2').text((data.dataset[0].data.network[1].in / 1000000).toFixed(1) + ' Мб/с');
-                            $('.uploadSpeed2').text((data.dataset[0].data.network[1].out / 1000000).toFixed(1) + ' Мб/с');
+                            $('.wired').text((data.dataset[key].data.memory.wired / 1000000).toFixed(2) + ' Мб');
+                            $('.total').text((data.dataset[key].data.memory.total / 1000000).toFixed(2) + ' Мб');
+                            $('.free').text((data.dataset[key].data.memory.free / 1000000).toFixed(2) + ' Мб');
+                            $('.diskTotal').text((data.dataset[key].data.disks[0].total / 1000000).toFixed(0) + ' Мб');
+                            //                            $('.downloadSpeed1').text((data.dataset[0].data.network[0].in / 1000000).toFixed(1) + ' Мб/с');
+                            //                            $('.uploadSpeed1').text((data.dataset[0].data.network[0].out / 1000000).toFixed(1) + ' Мб/с');
+                            //                            $('.downloadSpeed2').text((data.dataset[0].data.network[1].in / 1000000).toFixed(1) + ' Мб/с');
+                            //                            $('.uploadSpeed2').text((data.dataset[0].data.network[1].out / 1000000).toFixed(1) + ' Мб/с');
                         }
 
 
-                        $('.inactive').text(data.dataset[0].data.memory.inactive);
-                        $('.active').text(data.dataset[0].data.memory.active);
+                        $('.inactive').text(data.dataset[key].data.memory.inactive);
+                        $('.active').text(data.dataset[key].data.memory.active);
 
-                        $('.system').text(data.dataset[0].data.cpu[0].system + '%');
-                        $('.idle').text(data.dataset[0].data.cpu[0].idle + '%');
-                        $('.user').text(data.dataset[0].data.cpu[0].user + '%');
+                        $('.system').text(data.dataset[key].data.cpu[0].system + '%');
+                        $('.idle').text(data.dataset[key].data.cpu[0].idle + '%');
+                        $('.user').text(data.dataset[key].data.cpu[0].user + '%');
 
-                        $('.1min').text(data.dataset[0].data.load[0]);
-                        $('.5min').text(data.dataset[0].data.load[1]);
-                        $('.15min').text(data.dataset[0].data.load[2]);
+                        $('.1min').text(data.dataset[key].data.load[0]);
+                        $('.5min').text(data.dataset[key].data.load[1]);
+                        $('.15min').text(data.dataset[key].data.load[2]);
 
-                        $('.diskFree').text((data.dataset[0].data.disks[0].free / 1000000).toFixed(0) + '/');
+                        $('.diskFree').text((data.dataset[key].data.disks[0].free / 1000000).toFixed(0) + '/');
 
-                        $('.nameDisk').text(data.dataset[0].data.disks[0].origin);
+                        $('.nameDisk').text(data.dataset[key].data.disks[0].origin);
 
-                        $('.nameNetwork1').text(data.dataset[0].data.network[0].name);
-
-                        $('.nameNetwork2').text(data.dataset[0].data.network[1].name);
+                        //                        $('.nameNetwork1').text(data.dataset[key].data.network[0].name);
+                        //
+                        //                        $('.nameNetwork2').text(data.dataset[key].data.network[1].name);
 
                         serverTime.push(data.dataset[key].scan_time.split(' '));
                         //                    console.log(serverTime[key][1]);
@@ -560,8 +558,74 @@
                         dataMemoryWired.push((data.dataset[key].data.memory.wired / 1000000).toFixed(2));
                         dataMemoryFree.push((data.dataset[key].data.memory.free / 1000000).toFixed(2));
                         dataMemoryTotal.push((data.dataset[key].data.memory.total / 1000000).toFixed(2));
+
+                        allNetworks.push(data.dataset[key].data.network);
+
+                    }
+                    //                    console.log(allNetworks[0].length);
+
+
+                    for (let i = 0; i < allNetworks[0].length; i++) {
+                        $('.listOfNetwork').append(
+                            $('<li>').append(
+                                $('<div>').attr({
+                                    class: `infoNetwork${i} positioning`
+                                }).append(
+                                    $('<div>').attr({
+                                        class: 'nameOfNetwork'
+                                    }).append(
+                                        $('<i>').attr({
+                                            class: `fas fa-wifi`
+                                        })
+                                    ).append(
+                                        $('<span>').attr({
+                                            class: `nameNetwork${i}`
+                                        })
+                                    )
+                                ).append(
+                                    $('<div>').attr({
+                                        class: 'dataOfNetwork'
+                                    }).append(
+                                        $('<div>').attr({
+                                            class: 'download'
+                                        }).append(
+                                            $('<i>').attr({
+                                                class: 'fas fa-arrow-down'
+                                            })
+                                        ).append(
+                                            $('<span>').attr({
+                                                class: `downloadSpeed${i}`
+                                            })
+                                        )
+                                    ).append(
+                                        $('<div>').attr({
+                                            class: 'upload'
+                                        }).append(
+                                            $('<i>').attr({
+                                                class: 'fas fa-arrow-up'
+                                            })
+                                        ).append(
+                                            $('<span>').attr({
+                                                class: `uploadSpeed${i}`
+                                            })
+                                        )
+                                    )
+                                )
+                            )
+                        );
                     }
 
+
+                    $('.positioning').css('opacity', '1');
+                    for (let i = 0; i < allNetworks[0].length; i++) {
+                        console.log(allNetworks[0][i].in + ' in');
+                        console.log(allNetworks[0][i].out + ' out');
+
+                        $(`.nameNetwork${i}`).text(allNetworks[0][i].name);
+                        $(`.downloadSpeed${i}`).text(allNetworks[0][i].in + ' Mb/s');
+                        $(`.uploadSpeed${i}`).text(allNetworks[0][i].out + ' Mb/s');
+                    }
+                    console.log('__________________________________________________________________');
 
                     labelsTime.reverse();
 

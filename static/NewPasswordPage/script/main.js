@@ -69,7 +69,7 @@
         //get token from URL
         let path = location.pathname.split('/');
         let token = path[path.length - 1];
-        let regPass = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/gi;
+        let regPass = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}$/gm;
         let pass = $('#password').val();
 
         if (regPass.test(pass)) {

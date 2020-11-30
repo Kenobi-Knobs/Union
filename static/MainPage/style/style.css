@@ -527,43 +527,47 @@ html {
 .pageWrapper .main .allInfo .network {
   display: none;
 }
-.pageWrapper .main .allInfo .network .infoNetwork {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork {
+  list-style: none;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li {
+  margin: 0.6em 0.4em;
+  font-size: 0.8em;
+  font-family: circe, sans-serif;
+  border-radius: 1em;
+}
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning {
   opacity: 0;
-  margin: 1em 0.3em 0 0.3em;
-  border-radius: 0.4em;
+  border-radius: 0.7em;
   background-color: #F1F1F1;
+  border: 0.05em solid #e1e1e1;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-family: circe, sans-serif;
   font-style: normal;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork {
   padding: 0.5em;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork i {
   font-size: 0.7em;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork span {
   padding-left: 0.5em;
   font-size: 0.9em;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork {
   padding: 0.5em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   font-size: 0.6em;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .download i {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .download i {
   color: #5DFF2C;
 }
-.pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .upload i {
+.pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .upload i {
   color: #6FA6FF;
 }
 
