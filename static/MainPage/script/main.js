@@ -618,14 +618,13 @@
 
                     $('.positioning').css('opacity', '1');
                     for (let i = 0; i < allNetworks[0].length; i++) {
-                        console.log(allNetworks[0][i].in + ' in');
-                        console.log(allNetworks[0][i].out + ' out');
+                        //                        console.log(allNetworks[0][i].in + ' in');
+                        //                        console.log(allNetworks[0][i].out + ' out');
 
                         $(`.nameNetwork${i}`).text(allNetworks[0][i].name);
-                        $(`.downloadSpeed${i}`).text(allNetworks[0][i].in + ' Mb/s');
-                        $(`.uploadSpeed${i}`).text(allNetworks[0][i].out + ' Mb/s');
+                        $(`.downloadSpeed${i}`).text((allNetworks[0][i].in / 1000000).toFixed(2) + ' Mb/s');
+                        $(`.uploadSpeed${i}`).text((allNetworks[0][i].out / 1000000).toFixed(2) + ' Mb/s');
                     }
-                    console.log('__________________________________________________________________');
 
                     labelsTime.reverse();
 
