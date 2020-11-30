@@ -74,9 +74,6 @@ public class Server {
             Utils.showChangedPasswordPage(ctx, db);
         });
         app.get("/reset", ctx -> {
-            if (ctx.sessionAttribute("auth") != null){
-                ctx.redirect("/");
-            }
             API.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
         });
         app.get("/sign-in", ctx -> {

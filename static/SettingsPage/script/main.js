@@ -18,7 +18,9 @@
             'secret': 'Secret key',
             'host': 'Host',
             'bugReportQuestion': `Did you find bugs and didn't even tell us?`,
-            'bugReportMail': `Write here faster t5@tss2020.repositoryhosting.com`
+            'bugReportMail': `Write here faster t5@tss2020.repositoryhosting.com`,
+            'passwordHeader': `Password`,
+            'passwordLink': `<a href="/reset">Change</a>`
 
         },
         'ua': {
@@ -40,7 +42,9 @@
             'secret': 'Секретний ключ',
             'host': 'Хост',
             'bugReportQuestion': `Ви знайшли баги та не повідомили нас?`,
-            'bugReportMail': `Швидше пишіть сюди t5@tss2020.repositoryhosting.com`
+            'bugReportMail': `Швидше пишіть сюди t5@tss2020.repositoryhosting.com`,
+            'passwordHeader': `Пароль`,
+            'passwordLink': `<a href="/reset">Змінити</a>`
 
         }
     };

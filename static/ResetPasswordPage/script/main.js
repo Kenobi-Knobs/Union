@@ -1,16 +1,16 @@
     let arrLang = {
         'en': {
-            'titleReset': 'Reset password',
+            'titleReset': 'Change password',
             'placeholder': 'Email',
-            'reset': 'Reset',
+            'reset': 'Confirm',
             'ok': 'Ok'
 
 
         },
         'ua': {
-            'titleReset': 'Відновлення паролю',
+            'titleReset': 'Зміна паролю',
             'placeholder': 'Електронна пошта',
-            'reset': 'Відновити',
+            'reset': 'Підтвердити',
             'ok': 'Ок'
 
         }
