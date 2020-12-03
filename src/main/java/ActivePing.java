@@ -110,7 +110,7 @@ public class ActivePing {
             }
             // ошибки нет текущее падение есть
             else if (!error && down){
-                // System.out.println("падение закончилось");
+                //System.out.println("падение закончилось");
                 try{
                     String query0 = "UPDATE `DownList` SET `end` = ? WHERE id = (SELECT current_down from PingList where id = ?)";
                     PreparedStatement ps0 = db.getConnection().prepareStatement(query0);
