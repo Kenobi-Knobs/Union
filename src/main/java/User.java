@@ -28,7 +28,7 @@ public class User {
         String mail = ctx.formParam("mail");
         String pass = ctx.formParam("pass");
         JSONObject jsonResult = new JSONObject();
-        if(mail != null && pass != null) {
+        if (mail != null && pass != null) {
             mail = mail.trim();
             pass = pass.trim();
             try {
@@ -47,12 +47,12 @@ public class User {
                     JSONObject jsonSettings;
                     try {
                         jsonSettings = (JSONObject) parser.parse(settings);
-                    } catch(ClassCastException | ParseException e) {
+                    } catch (ClassCastException | ParseException e) {
                         ctx.status(400);
                         return "bad request";
                     }
                     if (hash.equals(expectedHashString)) {
-                        if(res.getInt("email_confirmed") == 1) {
+                        if (res.getInt("email_confirmed") == 1) {
                             jsonResult.put("auth", "true");
                             jsonResult.put("info", "user is authorized");
                             ctx.sessionAttribute("auth", "true");
@@ -61,8 +61,8 @@ public class User {
                             ctx.sessionAttribute("lang", jsonSettings.get("lang"));
                             API.createCSRF(ctx);
 
-                            System.out.println( mail + " auth");
-                        }else{
+                            System.out.println(mail + " auth");
+                        } else {
                             jsonResult.put("auth", "false");
                             jsonResult.put("info", "confirm account with mail");
                         }
@@ -120,24 +120,24 @@ public class User {
                         insertPs.setString(5, "{\"status\" : \"user\", \"lang\" : \"en\"}");
                         insertPs.executeUpdate();
                         insertPs.close();
-                        jsonResult.put("register","true");
-                        jsonResult.put("info","Confirmation mail sent");
-                        jsonResult.put("mail",mail);
-                        System.out.println( mail + " register");
-                    } else{
-                        jsonResult.put("register","false");
-                        jsonResult.put("info","User already exist");
+                        jsonResult.put("register", "true");
+                        jsonResult.put("info", "Confirmation mail sent");
+                        jsonResult.put("mail", mail);
+                        System.out.println(mail + " register");
+                    } else {
+                        jsonResult.put("register", "false");
+                        jsonResult.put("info", "User already exists");
                     }
                     ps.close();
 
                 } catch (SQLException | MessagingException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
-                throwables.printStackTrace();
-                ctx.status(400);
-                return "Bad request";
+                    throwables.printStackTrace();
+                    ctx.status(400);
+                    return "Bad request";
                 }
             } else {
-                    jsonResult.put("register","false");
-                    jsonResult.put("info","Validation Error: registration data is incorrect");
+                jsonResult.put("register", "false");
+                jsonResult.put("info", "An error occurred: validation not passed");
             }
         }
         return jsonResult.toString();
@@ -160,7 +160,7 @@ public class User {
                 return "Bad request (xss detect)";
             }
             try {
-                if(ctx.sessionAttribute("status").equals("user") && Utils.getAgentCount(ctx, db) >= 3){
+                if (ctx.sessionAttribute("status").equals("user") && Utils.getAgentCount(ctx, db) >= 3){
                     jsonResult.put("add", "false");
                     jsonResult.put("info", "no premium");
                     return jsonResult.toJSONString();
@@ -191,23 +191,25 @@ public class User {
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
                 jsonResult.put("add", "false");
-                jsonResult.put("info", "Is exist");
+                jsonResult.put("info", "agent already exists");
                 return jsonResult.toJSONString();
             }
         } else {
             ctx.status(400);
-            return "Validation Error: incorrect data";
+            return "An error occurred: validation not passed";
         }
     }
 
     public static String deleteAgent(Context ctx, DBController db) {
-        JSONObject jsonResult = new JSONObject();
-        if(!API.authCheck(ctx)){
+        if (!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
+
+        JSONObject jsonResult = new JSONObject();
+
         String publicKey = ctx.formParam("public_key");
-        if (publicKey != null && isOwner(ctx, db, publicKey)){
+        if (publicKey != null && isOwner(ctx, db, publicKey)) {
             try {
                 String insertQuery = "DELETE FROM `User_agents` WHERE `user_id` = (Select id from Users WHERE mail = ?) and `public_key` = ?";
                 PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
@@ -215,6 +217,7 @@ public class User {
                 insertPs.setString(2, publicKey);
                 insertPs.executeUpdate();
                 insertPs.close();
+
                 jsonResult.put("delete", "true");
                 jsonResult.put("info", publicKey + " deleted");
                 System.out.println(ctx.sessionAttribute("mail") + " delete " +  publicKey);
@@ -224,9 +227,9 @@ public class User {
                 ctx.status(400);
                 return "Bad request";
             }
-        }else{
+        } else {
             ctx.status(400);
-            return "Bad request";
+            return "An error occurred: either public key is null or agent's owner is someone else";
         }
     }
 
@@ -263,7 +266,7 @@ public class User {
                 } else {
                     ps.close();
                     jsonResult.put("reset", "false");
-                    jsonResult.put("info", "mail not confirm");
+                    jsonResult.put("info", "mail not confirmed");
                 }
             } else {
                 ps.close();
@@ -272,7 +275,6 @@ public class User {
             }
             return jsonResult.toJSONString();
         } catch (SQLException | MessagingException throwables) {
-
             throwables.printStackTrace();
             jsonResult.put("reset", "false");
             jsonResult.put("info", "mail not found or not sent");
@@ -307,26 +309,31 @@ public class User {
             ps.executeUpdate();
             ps.close();
             jsonResult.put("reset", "true");
-            jsonResult.put("info","new password set");
+            jsonResult.put("info", "new password set");
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException throwables) {
             throwables.printStackTrace();
             jsonResult.put("reset", "false");
-            jsonResult.put("info","token no found");
+            jsonResult.put("info", "token no found");
         }
         return jsonResult.toJSONString();
     }
 
     public static String addActivePing(Context ctx, DBController db) {
-        JSONObject jsonResult = new JSONObject();
-
         if (!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
 
+        JSONObject jsonResult = new JSONObject();
+
         String address = "";
         if (ctx.formParam("address") != null)
             address = ctx.formParam("address");
+        else {
+            ctx.status(400);
+            return "bad request";
+        }
+
         if (Utils.pingValidation(address)) {
             try {
                 int pingInterval = Integer.parseInt(Objects.requireNonNull(ctx.formParam("ping_interval")));
@@ -338,20 +345,18 @@ public class User {
                     return jsonResult.toJSONString();
                 }
                 if (downTiming < pingInterval || downTiming <= 0 || downTiming > 60) {
+                    System.out.println("HERE");
                     ctx.status(400);
                     return "bad request";
                 }
 
-                if (address.contains("<")) {
-                    ctx.status(400);
-                    return "bad request";
-                }
                 Date date = new Date(System.currentTimeMillis());
                 long currentTime = date.getTime() / 1000L;
 
                 try {
                     int code = ActivePing.ping(address);
-                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`, `last_code`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?,?,?)";
+                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`, `last_code`)" +
+                            " VALUES ((SELECT id FROM Users WHERE mail = ?), ?, ?, ?, ?, ?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                     insertPs.setString(1, ctx.sessionAttribute("mail"));
                     insertPs.setString(2, address);
@@ -363,38 +368,42 @@ public class User {
                     insertPs.close();
                     if (col <= 0) {
                         jsonResult.put("add_ping", "false");
-                        jsonResult.put("info", "is exist");
+                        jsonResult.put("info", "ping already exists");
                         return jsonResult.toJSONString();
                     }
                     ctx.status(200);
                     jsonResult.put("add_ping", "true");
-                    jsonResult.put("info", "Added");
+                    jsonResult.put("info", "ping added");
                     System.out.println(ctx.sessionAttribute("mail") + " add " + address + " to activePing ping = " + code );
                     return jsonResult.toJSONString();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                     ctx.status(400);
+                    System.out.println("HERE1");
                     return "bad request";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 ctx.status(400);
+                System.out.println("HERE2");
                 return "bad request";
             }
         } else {
             ctx.status(400);
-            return "incorrect address; validation failed";
+            return "An error occurred: validation not passed";
         }
     }
 
     public static String deleteActivePing(Context ctx, DBController db) {
-        JSONObject jsonResult = new JSONObject();
-        if(!API.authCheck(ctx)){
+        if(!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
-        String address =  ctx.formParam("address");
-        if (address != null){
+
+        JSONObject jsonResult = new JSONObject();
+
+        String address = ctx.formParam("address");
+        if (address != null) {
             try {
                 String update = "UPDATE `PingList` SET current_down = NULL WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?) and `address` = ?";
                 PreparedStatement updatePs = db.getConnection().prepareStatement(update);
@@ -408,21 +417,24 @@ public class User {
                 insertPs.setString(2, ctx.sessionAttribute("mail"));
                 int col = insertPs.executeUpdate();
                 insertPs.close();
-                if(col > 0){
+                if (col > 0) {
                     jsonResult.put("delete", "true");
                     jsonResult.put("info", ctx.sessionAttribute("mail") + " delete " + address);
                     System.out.println(ctx.sessionAttribute("mail") + " delete " + address + " from activePing");
-                }else{
+                } else {
                     ctx.status(400);
+                    System.out.println("HERE3");
                     return "Bad request";
                 }
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 ctx.status(400);
+                System.out.println("HERE2");
                 return "Bad request";
             }
-        }else{
+        } else {
+            System.out.println("HERE1");
             ctx.status(400);
             return "Bad request";
         }
@@ -430,22 +442,22 @@ public class User {
 
     public static String changeLang(Context ctx, DBController db) {
         JSONObject jsonResult = new JSONObject();
-        if(!API.authCheck(ctx)){
+        if (!API.authCheck(ctx)) {
             ctx.status(401);
             return "Unauthorized";
         }
         String lang = ctx.queryParam("lang");
-        if(lang != null && (lang.equals("ua") || lang.equals("en"))){
-            if(Utils.changeSetting(ctx.sessionAttribute("mail"), db, "lang", lang)){
+        if (lang != null && (lang.equals("ua") || lang.equals("en"))) {
+            if (Utils.changeSetting(ctx.sessionAttribute("mail"), db, "lang", lang)) {
                 ctx.status(200);
                 jsonResult.put("change", "true");
 
                 return jsonResult.toJSONString();
-            }else{
+            } else {
                 ctx.status(400);
                 return "Bad Request";
             }
-        }else{
+        } else {
             ctx.status(400);
             return "Bad Request";
         }

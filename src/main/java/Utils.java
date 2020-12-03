@@ -60,7 +60,7 @@ public class Utils {
             String sign = ctx.header("Sign");
             try {
                 jsonBody = (JSONObject) parser.parse(body);
-            } catch(ClassCastException e) {
+            } catch (ClassCastException e) {
                 return false;
             }
             String publicKey = (String) jsonBody.get("public_key");
@@ -181,7 +181,7 @@ public class Utils {
     }
 
     public static Boolean changeSetting(String mail, DBController db, String property, String new_property){
-        try{
+        try {
             String getSettings = "SELECT `settings` FROM `Users` WHERE `mail` = ?";
             PreparedStatement getPs = db.getConnection().prepareStatement(getSettings);
             getPs.setString(1, mail);
@@ -193,13 +193,13 @@ public class Utils {
 
             String setSettings = "UPDATE `Users` SET `settings`= ? WHERE `mail` = ?";
             PreparedStatement setPs = db.getConnection().prepareStatement(setSettings);
-            setPs.setString(1,jsonSettings.toJSONString());
-            setPs.setString(2,mail);
+            setPs.setString(1, jsonSettings.toJSONString());
+            setPs.setString(2, mail);
             setPs.executeUpdate();
             getPs.close();
             setPs.close();
             return true;
-        }catch (SQLException | ParseException throwables) {
+        } catch (SQLException | ParseException throwables) {
             throwables.printStackTrace();
             return false;
         }
@@ -225,7 +225,7 @@ public class Utils {
         ps.setString(1, mail);
         ResultSet res = ps.executeQuery();
         int counter = 0;
-        while (res.next()){
+        while (res.next()) {
             counter++;
         }
         return counter;

@@ -32,5 +32,4 @@ public class DBController {
     public Connection getConnection() {
         return connection;
     }
-
 }

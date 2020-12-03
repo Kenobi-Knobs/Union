@@ -146,11 +146,11 @@ public class ActivePing {
         int code = 0;
         try {
             URL url = new URL(address);
-            if(address.startsWith("http://")){
+            if (address.startsWith("http://")) {
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setInstanceFollowRedirects(true);
                 code = http.getResponseCode();
-            }else if(address.startsWith("https://")){
+            } else if (address.startsWith("https://")) {
                 HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
                 https.setInstanceFollowRedirects(true);
                 code = https.getResponseCode();
