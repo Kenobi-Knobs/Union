@@ -28,7 +28,7 @@
     };
 
     let currentLang; //язык, который выбран    
-
+    let idOfRadioURL; //ид радиобатона урла
     let isCheckedRadio = false; //выбранный сайт
     $(document).ready(function () {
         getLocalLang();
@@ -93,22 +93,55 @@
                     $('.alert').css('display', 'none');
                     for (var key in data['pings']) {
                         //                console.log(data.pings[key]);
+
                         $('.listOfURL').append(
                             $('<li>').append(
                                 $('<input>').attr({
                                     type: 'radio',
                                     name: 'urls',
-                                    id: data.pings[key].address,
+                                    id: `url_${key}`,
                                     value: data.pings[key].address
                                 })
                             ).append(
                                 $('<label>').attr({
-                                    for: data.pings[key].address
+                                    class: 'labelText'
                                 }).append(
-                                    $('<span>').text(data.pings[key].address)
+                                    $('<input>').attr({
+                                        type: 'text',
+                                        class: 'nameURL',
+                                        readonly: true,
+                                        value: data.pings[key].address
+                                    })
+                                )
+                            ).append(
+                                $('<label>').attr({
+                                    class: 'labelCheck',
+                                    for: `url_${key}`
+                                }).append(
+                                    $('<span>').attr({
+                                        class: `check`,
+                                        id: `url_${key}-check`
+                                    })
                                 )
                             )
                         );
+
+                        //                        $('.listOfURL').append(
+                        //                            $('<li>').append(
+                        //                                $('<input>').attr({
+                        //                                    type: 'radio',
+                        //                                    name: 'urls',
+                        //                                    id: data.pings[key].address,
+                        //                                    value: data.pings[key].address
+                        //                                })
+                        //                            ).append(
+                        //                                $('<label>').attr({
+                        //                                    for: data.pings[key].address
+                        //                                }).append(
+                        //                                    $('<span>').text(data.pings[key].address)
+                        //                                )
+                        //                            )
+                        //                        );
                     }
 
                     if (isCheckedRadio == false) {
@@ -122,8 +155,44 @@
 
                     }
 
-                    let urls = $('input[name=urls]')
+                    let urls = $('input[name=urls]');
+                    let checks = $('.check');
+
+                    for (let i = 0; i < checks.length; i++) {
+                        if (currentLang == 'en') {
+                            $(`.check`).text('check');
+                        }
+                        if (currentLang == 'ua') {
+                            $(`.check`).text('перевірити');
+                        }
+
+                    }
+                    //                    console.log(checks);
                     urls.on('change', function () {
+                        isChecked();
+                        //                        console.log(isCheckedRadio);
+                        for (let i = 0; i < checks.length; i++) {
+                            if (currentLang == 'en') {
+                                $(`.check`).text('check');
+                            }
+                            if (currentLang == 'ua') {
+                                $(`.check`).text('перевірити');
+                            }
+
+                        }
+
+                        for (let i = 0; i < checks.length; i++) {
+                            if (checks.eq(i).attr('id').split('-')[0] == idOfRadioURL) {
+                                if (currentLang == 'en') {
+                                    $(`#${idOfRadioURL}-check`).text('checking');
+                                }
+                                if (currentLang == 'ua') {
+                                    $(`#${idOfRadioURL}-check`).text('перевіряється');
+                                }
+
+                            }
+                        }
+
                         $('.infoCard').slideDown(300);
                         $('.alertText').slideUp(300);
                         $('.list').remove();
@@ -135,8 +204,10 @@
                             urls.removeAttr('disabled');
                         }, 800);
 
-                        isChecked();
+
                         //                console.log(isCheckedRadio);
+
+
 
                         for (var key in data['pings']) {
                             if (data.pings[key].address == isCheckedRadio) {
@@ -228,6 +299,7 @@
     function isChecked() {
         $("input[name='urls']:checked").each(function () {
             isCheckedRadio = $(this).val();
+            idOfRadioURL = $(this).attr('id');
         });
     }
 

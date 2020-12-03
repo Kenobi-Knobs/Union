@@ -208,7 +208,7 @@ html {
                 grid-column-start: 1;
                 grid-column-end: 3;
                 grid-row-start: 2;
-                grid-row-end: 4;
+                grid-row-end: 3;
                 //                display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -413,33 +413,50 @@ html {
                             position: relative;
                             width: 100%;
                             padding: 1em 0.7em 0.2em 0;
-                            font-size: 0.8em;
+                            //                            font-size: 0.8em;
                             font-family: circe, sans-serif;
                             border-bottom: 0.05em solid #e1e1e1;
 
-                            label {
+                            .labelText {
                                 display: flex;
                                 flex-direction: column;
                                 padding-left: 0.4em;
                                 color: #676464;
 
-                                &:hover {
-                                    cursor: pointer;
+                                .nameURL {
+                                    display: inline;
+                                    //                                padding-left: 0.4em;
+                                    width: 100%;
                                     color: #FFFFFF;
-                                    transition: 0.3s;
-                                }
-
-                                &:not(:hover) {
+                                    user-select: none;
+                                    font-size: 0.8em;
+                                    outline: none;
+                                    border: 0;
+                                    background-color: rgba(0, 0, 0, 0);
                                     color: #676464;
-                                    transition: 0.3s;
                                 }
                             }
 
-                            input {
+                            .labelCheck {
+                                color: #676464;
+                                cursor: pointer;
+                                padding-left: 0.4em;
+
+                                .check {
+                                    font-size: 0.7em;
+                                }
+
+                                &:hover {
+                                    color: #FFFFFF;
+                                }
+                            }
+
+                            input[type="radio"] {
                                 appearance: none;
                                 position: absolute;
 
-                                &:checked + label {
+                                &:checked + .labelText input[type="text"],
+                                &:checked + .labelText + .labelCheck span {
                                     color: #FFFFFF;
                                 }
                             }

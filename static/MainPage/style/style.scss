@@ -652,50 +652,63 @@ html {
                 display: none;
 
                 .infoNetwork {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
 
-                    .positioning {
-                        opacity: 0;
-                        margin: 1em 0.3em 0 0.3em;
-                        border-radius: 0.4em;
-                        background-color: #F1F1F1;
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: space-between;
-                        font-family: circe, sans-serif;
-                        font-style: normal;
+                    //                    display: flex;
+                    //                    flex-direction: column;
+                    //                    justify-content: space-around;
+                    .listOfNetwork {
+                        list-style: none;
 
-                        .nameOfNetwork {
-                            padding: 0.5em;
+                        li {
+                            margin: 0.6em 0.4em;
+                            font-size: 0.8em;
+                            font-family: circe, sans-serif;
+                            //                            border: 0.05em solid #e1e1e1;
+                            border-radius: 1em;
 
-                            i {
-                                font-size: 0.7em;
-                            }
+                            .positioning {
+                                opacity: 0;
+                                //                                margin: 1em 0.3em 0 0.3em;
+                                border-radius: 0.7em;
+                                background-color: #F1F1F1;
+                                border: 0.05em solid #e1e1e1;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                font-family: circe, sans-serif;
+                                font-style: normal;
 
-                            span {
-                                padding-left: 0.5em;
-                                font-size: 0.9em;
-                            }
-                        }
+                                .nameOfNetwork {
+                                    padding: 0.5em;
 
-                        .dataOfNetwork {
-                            padding: 0.5em;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: space-around;
-                            font-size: 0.6em;
+                                    i {
+                                        font-size: 0.7em;
+                                    }
 
-                            .download {
-                                i {
-                                    color: #5DFF2C;
+                                    span {
+                                        padding-left: 0.5em;
+                                        font-size: 0.9em;
+                                    }
                                 }
-                            }
 
-                            .upload {
-                                i {
-                                    color: #6FA6FF;
+                                .dataOfNetwork {
+                                    padding: 0.5em;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: space-around;
+                                    font-size: 0.6em;
+
+                                    .download {
+                                        i {
+                                            color: #5DFF2C;
+                                        }
+                                    }
+
+                                    .upload {
+                                        i {
+                                            color: #6FA6FF;
+                                        }
+                                    }
                                 }
                             }
                         }

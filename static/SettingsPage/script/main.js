@@ -19,7 +19,7 @@
             'host': 'Host',
             'bugReportQuestion': `Did you find bugs and didn't even tell us?`,
             'bugReportMail': `Write here faster t5@tss2020.repositoryhosting.com`,
-            'passwordHeader': `Password`,
+            'passwordHeader': 'Password',
             'passwordLink': `<a href="/reset">Change</a>`
 
         },
@@ -43,7 +43,7 @@
             'host': 'Хост',
             'bugReportQuestion': `Ви знайшли баги та не повідомили нас?`,
             'bugReportMail': `Швидше пишіть сюди t5@tss2020.repositoryhosting.com`,
-            'passwordHeader': `Пароль`,
+            'passwordHeader': 'Пароль',
             'passwordLink': `<a href="/reset">Змінити</a>`
 
         }
@@ -151,7 +151,7 @@
                 maxDownTiming = 60;
             }
             if (data.settings.status == 'premium_user') {
-                pingIntervalStart = 5;
+                pingIntervalStart = 1;
                 pingIntervalEnd = 100;
                 maxDownTiming = 100;
 
@@ -266,7 +266,7 @@
             return this.optional(element) || /^[a-zA-Z0-9\-]+$/gm.test(value);
         });
         $.validator.addMethod("validHost", function (value, element) {
-            return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gi.test(value);
+            return this.optional(element) || /^\w+\.\w{2,}$/gm.test(value);
         });
 
         //получаем список агентов

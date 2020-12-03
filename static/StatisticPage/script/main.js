@@ -28,8 +28,6 @@
 
     let currentLang; //язык, который выбран    
 
-
-
     let dataDisksFree = []; //data of disks
     let dataDisksTotal = []; //data of disks
     let dataDisksOccupied = []; //data of disks
@@ -44,8 +42,6 @@
     let agents = []; //array of agent`s public key
     let checkedRadio; //value of checked radiobutton (which agent is selected)
     let currentSelectedDataToCheck; //то что находится в head в селекте; 
-
-    let checkedRadioNetwork; //какой радио выбран из networks
 
     let labelsTime = []; //server`s updated time (only hours, minutes and seconds);
 
@@ -67,7 +63,6 @@
     let fontSizeOfLabels; //размер шрифта для лейблов
 
     let isCheckedRadio = false; //выбран ли сервер
-    let isCheckedNetwork = false; //выбран ли network
 
     let startInterval; //значение левого ползунка
     let endInterval; //значение правого ползунка
@@ -85,8 +80,6 @@
     let agoMinutes; //минута 3 дня назад
 
     let interval; //интервал через который будут обновляться данные
-
-    let canvasesNetworkId = []; //массив для хранения идшников графиков network
 
     let sumOfDownload = 0; //сумма download
     let sumOfUpload = 0; //сумма upload
@@ -286,7 +279,7 @@
                                         currentHours = currentDate.getHours();
                                         currentMinutes = currentDate.getMinutes();
 
-                                        agoDate = new Date(data.max * 1000 - daysAgo * 1000);
+                                        agoDate = new Date(startInterval * 1000);
                                         agoMonth = agoDate.getMonth() + 1;
                                         agoDay = agoDate.getDate();
                                         agoHours = agoDate.getHours();
@@ -308,7 +301,7 @@
                                                     getInfoJSONFromAgent(item);
                                                 }
                                             });
-                                            $("#amount").val(new Date($("#slider-range").slider("values", 0)).getDate() + '.' + new Date($("#slider-range").slider("values", 0)).getMonth() + ' ' + new Date($("#slider-range").slider("values", 0)).getHours() + ':' + '00' + ' - ' + new Date($("#slider-range").slider("values", 1)).getDate() + '.' + new Date($("#slider-range").slider("values", 1)).getMonth() + ' ' + new Date($("#slider-range").slider("values", 1)).getHours() + ':' + '00');
+                                            $("#amount").val(new Date($("#slider-range").slider("values", 0)).getDate() + '.' + (new Date($("#slider-range").slider("values", 0)).getMonth() + 1) + ' ' + new Date($("#slider-range").slider("values", 0)).getHours() + ':' + '00' + ' - ' + new Date($("#slider-range").slider("values", 1)).getDate() + '.' + (new Date($("#slider-range").slider("values", 1)).getMonth() + 1) + ' ' + new Date($("#slider-range").slider("values", 1)).getHours() + ':' + '00');
                                             startInterval = Math.round($("#slider-range").slider("values", 0) / 1000);
                                             endInterval = Math.round($("#slider-range").slider("values", 1) / 1000);
                                         });
@@ -638,17 +631,114 @@
 
                         networksData.push(data.dataset[key].data.network);
 
+                        //                        console.log(data.dataset[key].data.network.length + ' network length');
+                        //генерируем networks
+                        for (let i = 0; i < data.dataset[key].data.network.length; i++) {
+                            //                    console.log(data.dataset[key2].data.network[key2]);
+                            let idNetworkInput = data.dataset[key].data.network[i].name + '_' + nameOfServer;
+                            let valueInput = data.dataset[key].data.network[i].name + '_' + nameOfServer;
+
+                            if ($(`#list_${idNetworkInput}`).length == false) {
+                                $('.listOfNetworks').append(
+                                    $('<li>').attr({
+                                        id: `list_${idNetworkInput}`
+                                    }).append(
+                                        $('<input>').attr({
+                                            type: 'radio',
+                                            name: 'networks',
+                                            id: idNetworkInput,
+                                            value: valueInput
+                                        })
+                                    ).append(
+                                        $('<label>').attr({
+                                            for: idNetworkInput
+                                        }).append(
+                                            $('<div>').attr({
+                                                class: 'infoNetwork positioningNetwork'
+                                            }).append(
+                                                $('<div>').attr({
+                                                    class: 'nameOfNetwork'
+                                                }).append(
+                                                    $('<i>').attr({
+                                                        class: 'fas fa-wifi'
+                                                    })
+                                                ).append(
+                                                    $('<span>').attr({
+                                                        class: `nameNetwork${i}`
+                                                    })
+                                                )
+                                            ).append(
+                                                $('<div>').attr({
+                                                    class: 'dataOfNetwork'
+                                                }).append(
+                                                    $('<div>').attr({
+                                                        class: 'download'
+                                                    }).append(
+                                                        $('<i>').attr({
+                                                            class: 'fas fa-arrow-down'
+                                                        })
+                                                    ).append(
+                                                        $('<span>').attr({
+                                                            class: `downloadSpeed${i} downloadSpeed`
+                                                        })
+                                                    )
+                                                ).append(
+                                                    $('<div>').attr({
+                                                        class: 'upload'
+                                                    }).append(
+                                                        $('<i>').attr({
+                                                            class: 'fas fa-arrow-up'
+                                                        })
+                                                    ).append(
+                                                        $('<span>').attr({
+                                                            class: `uploadSpeed${i} uploadSpeed`
+                                                        })
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                );
+                                $('.nameNetwork' + i).text(data.dataset[key].data.network[i].name);
+                            }
+
+                        }
+
+                    }
+                    console.log(networksData.length);
+                    sumOfDownload = 0;
+                    sumOfUpload = 0;
+                    let networksDataALL = [];
+                    let countOfNetworks = 0;
+                    for (let i = 0; i < networksData.length; i++) {
+                        networksDataALL.push(networksData[i]);
                     }
 
-                    //                    console.log(serverTime);
+                    countOfNetworks = networksDataALL[0].length;
+
+                    for (let i = 0; i < countOfNetworks; i++) {
+                        for (let j = 0; j < networksData.length; j++) {
+                            console.log(networksData[j][i].name);
+                            sumOfDownload += networksData[j][i].in;
+                            sumOfUpload += networksData[j][i].out;
+                        }
+                        if (currentLang == 'en') {
+                            $('.downloadSpeed' + i).text((sumOfDownload / networksData.length / 1000000).toFixed(1) + ' Mb/s');
+                            $('.uploadSpeed' + i).text((sumOfUpload / networksData.length / 1000000).toFixed(1) + ' Mb/s');
+                        }
+                        if (currentLang == 'ua') {
+                            $('.downloadSpeed' + i).text((sumOfDownload / networksData.length / 1000000).toFixed(1) + ' Мб/с');
+                            $('.uploadSpeed' + i).text((sumOfUpload / networksData.length / 1000000).toFixed(1) + ' Мб/с');
+                        }
+
+                    }
+
+
+
                     for (let i = 0; i < serverTime.length; i++) {
                         labelsTime.push(serverTime[i][0].split('-')[2] + '.' + serverTime[i][0].split('-')[1] + ' ' + serverTime[i][1].split(':')[0] + ':' + serverTime[i][1].split(':')[1]);
                     }
 
-
-                    //                    console.log(networksData);
-
-                    //                console.log((sumOfDataSystem / countAllData).toFixed(2));
                     $('.system').text((sumOfDataSystem / countAllData).toFixed(2) + '%');
                     $('.idle').text((sumOfDataIdle / countAllData).toFixed(2) + '%');
                     $('.user').text((sumOfDataUser / countAllData).toFixed(2) + '%');
@@ -656,150 +746,6 @@
                     $('.wired').text((sumOfDataMemoryWired / countAllData / 1000000).toFixed(2) + ' Mb');
                     $('.free').text((sumOfDataMemoryFree / countAllData / 1000000).toFixed(2) + ' Mb');
                     $('.total').text((sumOfDataMemoryTotal / countAllData / 1000000).toFixed(2) + ' Mb');
-
-                    //                console.log(nameOfServer);
-                    //                console.log("networksData");
-                    //                console.log(networksData);
-
-                    //                    console.log(networksData[0]);
-
-
-                    let countOfNetworks = 0; //число networks в dataset
-                    //генерируем карточки network
-                    for (let key2 in networksData[0]) {
-                        //                    console.log(data.dataset[key2].data.network[key2]);
-                        let idNetworkInput = networksData[0][key2].name + '_' + nameOfServer;
-                        let valueInput = networksData[0][key2].name + '_' + nameOfServer;
-
-                        countOfNetworks++;
-
-                        if ($(`#list_${idNetworkInput}`).length == false) {
-                            $('.listOfNetworks').append(
-                                $('<li>').attr({
-                                    id: `list_${idNetworkInput}`
-                                }).append(
-                                    $('<input>').attr({
-                                        type: 'radio',
-                                        name: 'networks',
-                                        id: idNetworkInput,
-                                        value: valueInput
-                                    })
-                                ).append(
-                                    $('<label>').attr({
-                                        for: idNetworkInput
-                                    }).append(
-                                        $('<div>').attr({
-                                            class: 'infoNetwork positioningNetwork'
-                                        }).append(
-                                            $('<div>').attr({
-                                                class: 'nameOfNetwork'
-                                            }).append(
-                                                $('<i>').attr({
-                                                    class: 'fas fa-wifi'
-                                                })
-                                            ).append(
-                                                $('<span>').attr({
-                                                    class: `nameNetwork${key2}`
-                                                })
-                                            )
-                                        ).append(
-                                            $('<div>').attr({
-                                                class: 'dataOfNetwork'
-                                            }).append(
-                                                $('<div>').attr({
-                                                    class: 'download'
-                                                }).append(
-                                                    $('<i>').attr({
-                                                        class: 'fas fa-arrow-down'
-                                                    })
-                                                ).append(
-                                                    $('<span>').attr({
-                                                        class: `downloadSpeed${key2} downloadSpeed`
-                                                    })
-                                                )
-                                            ).append(
-                                                $('<div>').attr({
-                                                    class: 'upload'
-                                                }).append(
-                                                    $('<i>').attr({
-                                                        class: 'fas fa-arrow-up'
-                                                    })
-                                                ).append(
-                                                    $('<span>').attr({
-                                                        class: `uploadSpeed${key2} uploadSpeed`
-                                                    })
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-
-                            $('.nameNetwork' + key2).text(networksData[0][key2].name);
-
-                            //                    $('.nameNetwork1').text(data.dataset[key2].data.network[key2].name);
-                            //                    $('.downloadSpeed1').text((data.dataset[key2].data.network[key2].in / 1000000).toFixed(1) + 'Mb/s');
-                            //                    $('.uploadSpeed1').text((data.dataset[key2].data.network[key2].out / 1000000).toFixed(1) + 'Mb/s');
-
-
-
-                            if ($(`#canvas_${networksData[0][key2].name}_${nameOfServer}`).length == false) {
-                                $('.chartNetwork').append(`<canvas id="canvas_${networksData[0][key2].name}_${nameOfServer}"></canvas>`);
-                                $(`#canvas_${networksData[0][key2].name}_${nameOfServer}`).css('display', 'none');
-                            }
-                            //                        console.log($(`#canvas_${networksData[0][key2].name}_${nameOfServer}`));
-
-                        }
-                    }
-
-
-                    sumOfDownload = 0;
-                    sumOfUpload = 0;
-
-                    sumOfDownload1 = 0;
-                    sumOfUpload1 = 0;
-
-                    for (let i = 0; i < networksData.length; i++) {
-                        for (let j = 0; j < countOfNetworks; j++) {
-                            if (j == 0) {
-                                sumOfDownload += networksData[i][j].in;
-                                sumOfUpload += networksData[i][j].out;
-                            }
-                            if (j == 1) {
-                                sumOfDownload1 += networksData[i][j].in;
-                                sumOfUpload1 += networksData[i][j].out;
-                            }
-                        }
-                    }
-
-                    for (let j = 0; j < countOfNetworks; j++) {
-                        if (j == 0) {
-                            if (currentLang == 'en') {
-                                $('.downloadSpeed' + j).text((sumOfDownload / countAllData / 1000000).toFixed(1) + ' Mb/s');
-                                $('.uploadSpeed' + j).text((sumOfUpload / countAllData / 1000000).toFixed(1) + ' Mb/s');
-                            }
-                            if (currentLang == 'ua') {
-                                $('.downloadSpeed' + j).text((sumOfDownload / countAllData / 1000000).toFixed(1) + ' Mб/с');
-                                $('.uploadSpeed' + j).text((sumOfUpload / countAllData / 1000000).toFixed(1) + ' Мб/с');
-                            }
-
-                        }
-                        if (j == 1) {
-                            if (currentLang == 'en') {
-                                $('.downloadSpeed' + j).text((sumOfDownload1 / countAllData / 1000000).toFixed(1) + ' Mb/s');
-                                $('.uploadSpeed' + j).text((sumOfUpload1 / countAllData / 1000000).toFixed(1) + ' Mb/s');
-                            }
-                            if (currentLang == 'ua') {
-                                $('.downloadSpeed' + j).text((sumOfDownload1 / countAllData / 1000000).toFixed(1) + ' Mб/с');
-                                $('.uploadSpeed' + j).text((sumOfUpload1 / countAllData / 1000000).toFixed(1) + ' Mб/с');
-                            }
-                        }
-                    }
-
-
-
-                    //                    console.log($('.downloadSpeed').length);
-                    //                    console.log(countOfNetworks);
 
 
                     prepareDataToShow();

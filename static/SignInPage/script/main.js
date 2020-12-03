@@ -65,7 +65,7 @@ $(document).ready(function () {
         return this.optional(element) || /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/gmi.test(value);
     })
     $.validator.addMethod("validPass", function (value, element) {
-        return this.optional(element) || /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/gm.test(value);
+        return this.optional(element) || /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}$/gm.test(value);
     })
 });
 

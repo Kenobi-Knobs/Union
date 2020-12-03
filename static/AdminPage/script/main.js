@@ -24,6 +24,13 @@
     };
     let currentLang;
     $(document).ready(function () {
+
+        $('body').keydown(function (e) {
+            if (e.keyCode === 13) {
+                getUsers();
+            }
+        });
+
         getLocalLang();
         $(".quit").on('click', function () {
             $(location).attr('href', '/logout');
@@ -73,13 +80,20 @@
     });
 
     function upgradeUser(mailToUpgrade, i) {
-        $.get(
-            'api/upgradeUser', {
-                mail: mailToUpgrade,
+
+        $.ajax({
+            url: 'api/upgradeUser',
+            type: 'get',
+            headers: {
+                'csrf': getCookie('csrf_token')
             },
-            function (data) {
-                data = JSON.parse(data);
-                console.log(data);
+            data: {
+                mail: mailToUpgrade
+            },
+            dataType: 'json',
+            success: function (data) {
+                //                data = JSON.parse(data);
+                //                console.log(data);
                 if (data.user_upgrade == 'true') {
                     $('.popupWrapper').fadeIn(500);
 
@@ -99,7 +113,7 @@
                     getUsers();
                 }
             }
-        );
+        });
     }
 
     function getUsers() {
@@ -109,7 +123,7 @@
             'api/getUsers', {},
             function (data) {
                 data = JSON.parse(data);
-                console.log(data);
+                //                console.log(data);
 
                 for (let i = 0; i < data.users.length; i++) {
                     usersList.push(data.users[i]);
@@ -269,7 +283,7 @@
                     }
                 }
 
-                console.log(usersList);
+                //                console.log(usersList);
 
                 //записываем какие агенты есть у пользователя
                 //если у пользователя есть премиум, то меняем кнопку что у нег оесть премиум 
@@ -335,7 +349,7 @@
 
                             function showPopupDelete() {
                                 let mailToDelete = item.className.split(/\s+/)[2].split('_')[1];
-                                console.log(mailToDelete);
+                                //                                console.log(mailToDelete);
                                 deleteUser(mailToDelete, i);
                             }
                         });
@@ -384,13 +398,20 @@
     }
 
     function deleteUser(mailToDelete, i) {
-        $.get(
-            'api/deleteUser', {
+
+        $.ajax({
+            url: 'api/deleteUser',
+            type: 'get',
+            headers: {
+                'csrf': getCookie('csrf_token')
+            },
+            data: {
                 mail: mailToDelete
             },
-            function (data) {
-                data = JSON.parse(data);
-                console.log(data);
+            dataType: 'json',
+            success: function (data) {
+                //                data = JSON.parse(data);
+                //                console.log(data);
                 $('.popupWrapper').fadeIn(500);
                 if (data.user_delete == 'true') {
                     if (currentLang == 'en') {
@@ -413,7 +434,7 @@
                 }
 
             }
-        );
+        });
     }
 
 
@@ -440,4 +461,10 @@
                 });
             }, 0);
         })
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
