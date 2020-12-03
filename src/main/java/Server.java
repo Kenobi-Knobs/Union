@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Timer;
 
-
 /**
  * Project's server side class<br>
  * <b>enableCors</b> - access to sending requests to the server

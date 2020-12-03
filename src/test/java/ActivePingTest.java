@@ -28,7 +28,7 @@ class ActivePingTest {
     JSONParser parser = new JSONParser();
     JSONObject jsonConfig = (JSONObject) parser.parse(config);
 
-    public DBController db =new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
+    public DBController db = new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
 
     public void executeUpdate(DBController db, String query) throws SQLException {
         PreparedStatement ps = db.getConnection().prepareStatement(query);
