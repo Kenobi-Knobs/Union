@@ -615,12 +615,6 @@ html {
   .pageWrapper .sidebar .navbar ul li:nth-child(1) {
     color: #F98181;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .mobileExit {
     display: block;
     text-align: center;
@@ -656,25 +650,18 @@ html {
     font-size: 3em;
   }
   .pageWrapper .main .head .title .realtime {
-    padding-top: 0;
-    padding-left: 2%;
-    display: block;
-    text-align: center;
+    padding-top: 4%;
+    padding-left: 40%;
   }
   .pageWrapper .main .head .title .realtime .circle {
-    position: relative;
-    top: 1.2em;
-    left: 18em;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-    background-color: #D01515;
+    height: 1.2em;
+    width: 1.2em;
     box-shadow: 0px 0px 0.1em 0.05em #FF0101;
   }
   .pageWrapper .main .head .title .realtime .text {
     position: relative;
     bottom: 0.85vw;
-    left: 0.4vw;
+    left: 1.2vw;
   }
   .pageWrapper .main .head .title .realtime .text span {
     font-family: Circe, sans-serif;
@@ -693,19 +680,6 @@ html {
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .pageWrapper .main .allInfo .alert {
-    position: absolute;
-    left: 10vw;
-    top: 90vw;
-    z-index: 2;
-  }
-  .pageWrapper .main .allInfo .alert span {
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 3em;
-    color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
@@ -732,19 +706,13 @@ html {
   .pageWrapper .main .allInfo .card .infoTitle {
     margin-bottom: 2em;
     margin-top: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
   }
   .pageWrapper .main .allInfo .card .infoTitle span {
-    padding: 0.1em;
+    padding: 0.4em;
     border-radius: 0.4em;
     display: inline;
     margin-left: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
     background-color: #DFDFDF;
   }
@@ -779,16 +747,8 @@ html {
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
     margin-left: auto;
-    margin-top: 0.9em;
-    margin-right: 0.5em;
-    align-items: center;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    height: 1em;
-    text-align: center;
-    width: 1em;
-    font-size: 0.5em;
+    margin-top: 0.8em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
     display: none;
@@ -872,29 +832,16 @@ html {
     justify-content: center;
   }
   .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2em;
+    font-size: 2.3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.5em;
+    font-size: 3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
     padding-right: 1em;
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 1em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
     padding-left: 0.6em;
@@ -980,7 +927,7 @@ html {
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 2.5em;
+    font-size: 2em;
     color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .servers {
@@ -1037,49 +984,35 @@ html {
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
     color: #FFFFFF;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li {
+    margin: 2em 1em;
+    font-size: 0.8em;
+    border-radius: 1em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning {
-    opacity: 1;
-    margin: 1em 1.5em 0 1.5em;
-    border-radius: 2em;
-    background-color: #F1F1F1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-family: circe, sans-serif;
-    font-style: normal;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning {
+    border-radius: 0.7em;
+    align-content: center;
+    align-items: center;
+    border: 0.05em solid #e1e1e1;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-child(1) {
-    margin-top: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-last-child(1) {
-    margin-bottom: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork {
-    padding: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
-    font-size: 2em;
-    padding-left: 0.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork {
     padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    font-size: 1.5em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .download i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork {
+    padding: 0.5em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .download i {
     color: #5DFF2C;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .upload i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .upload i {
     color: #6FA6FF;
   }
 }
@@ -1127,12 +1060,6 @@ html {
   .pageWrapper .sidebar .navbar ul li:nth-child(1) {
     color: #F98181;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .mobileExit {
     display: block;
     text-align: center;
@@ -1168,25 +1095,18 @@ html {
     font-size: 3em;
   }
   .pageWrapper .main .head .title .realtime {
-    padding-top: 0;
-    padding-left: 2%;
-    display: block;
-    text-align: center;
+    padding-top: 4%;
+    padding-left: 40%;
   }
   .pageWrapper .main .head .title .realtime .circle {
-    position: relative;
-    top: 1.2em;
-    left: 18em;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-    background-color: #D01515;
+    height: 1.2em;
+    width: 1.2em;
     box-shadow: 0px 0px 0.1em 0.05em #FF0101;
   }
   .pageWrapper .main .head .title .realtime .text {
     position: relative;
     bottom: 0.85vw;
-    left: 0.4vw;
+    left: 1.2vw;
   }
   .pageWrapper .main .head .title .realtime .text span {
     font-family: Circe, sans-serif;
@@ -1205,19 +1125,6 @@ html {
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .pageWrapper .main .allInfo .alert {
-    position: absolute;
-    left: 10vw;
-    top: 90vw;
-    z-index: 2;
-  }
-  .pageWrapper .main .allInfo .alert span {
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 3em;
-    color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
@@ -1244,19 +1151,13 @@ html {
   .pageWrapper .main .allInfo .card .infoTitle {
     margin-bottom: 2em;
     margin-top: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
   }
   .pageWrapper .main .allInfo .card .infoTitle span {
-    padding: 0.1em;
+    padding: 0.4em;
     border-radius: 0.4em;
     display: inline;
     margin-left: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
     background-color: #DFDFDF;
   }
@@ -1291,16 +1192,8 @@ html {
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
     margin-left: auto;
-    margin-top: 0.9em;
-    margin-right: 0.5em;
-    align-items: center;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    height: 1em;
-    text-align: center;
-    width: 1em;
-    font-size: 0.5em;
+    margin-top: 0.8em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
     display: none;
@@ -1384,29 +1277,16 @@ html {
     justify-content: center;
   }
   .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2em;
+    font-size: 2.3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.5em;
+    font-size: 3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
     padding-right: 1em;
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 1em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
     padding-left: 0.6em;
@@ -1492,24 +1372,7 @@ html {
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 2.5em;
-    color: #9C9C9C;
-  }
-  .pageWrapper .main .allInfo .alert {
-    display: block;
-    width: 100%;
-    position: absolute;
-    left: 0vw;
-    padding: 2em 4em;
-    top: 22vw;
-    z-index: 2;
-    text-align: center;
-  }
-  .pageWrapper .main .allInfo .alert span {
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2.5em;
+    font-size: 2em;
     color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .servers {
@@ -1566,49 +1429,35 @@ html {
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
     color: #FFFFFF;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li {
+    margin: 2em 1em;
+    font-size: 0.8em;
+    border-radius: 1em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning {
-    opacity: 1;
-    margin: 1em 1.5em 0 1.5em;
-    border-radius: 2em;
-    background-color: #F1F1F1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-family: circe, sans-serif;
-    font-style: normal;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning {
+    border-radius: 0.7em;
+    align-content: center;
+    align-items: center;
+    border: 0.05em solid #e1e1e1;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-child(1) {
-    margin-top: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-last-child(1) {
-    margin-bottom: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork {
-    padding: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
-    font-size: 2em;
-    padding-left: 0.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork {
     padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    font-size: 1.5em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .download i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork {
+    padding: 0.5em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .download i {
     color: #5DFF2C;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .upload i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .upload i {
     color: #6FA6FF;
   }
 }
@@ -1656,12 +1505,6 @@ html {
   .pageWrapper .sidebar .navbar ul li:nth-child(1) {
     color: #F98181;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .mobileExit {
     display: block;
     text-align: center;
@@ -1697,25 +1540,18 @@ html {
     font-size: 3em;
   }
   .pageWrapper .main .head .title .realtime {
-    padding-top: 0;
-    padding-left: 2%;
-    display: block;
-    text-align: center;
+    padding-top: 4%;
+    padding-left: 40%;
   }
   .pageWrapper .main .head .title .realtime .circle {
-    position: relative;
-    top: 1.2em;
-    left: 18em;
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-    background-color: #D01515;
+    height: 1.2em;
+    width: 1.2em;
     box-shadow: 0px 0px 0.1em 0.05em #FF0101;
   }
   .pageWrapper .main .head .title .realtime .text {
     position: relative;
     bottom: 0.85vw;
-    left: 0.4vw;
+    left: 1.2vw;
   }
   .pageWrapper .main .head .title .realtime .text span {
     font-family: Circe, sans-serif;
@@ -1734,19 +1570,6 @@ html {
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
-  .pageWrapper .main .allInfo .alert {
-    position: absolute;
-    left: 10vw;
-    top: 90vw;
-    z-index: 2;
-  }
-  .pageWrapper .main .allInfo .alert span {
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 3em;
-    color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .card {
     margin: 2em 0;
@@ -1773,19 +1596,13 @@ html {
   .pageWrapper .main .allInfo .card .infoTitle {
     margin-bottom: 2em;
     margin-top: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
   }
   .pageWrapper .main .allInfo .card .infoTitle span {
-    padding: 0.1em;
+    padding: 0.4em;
     border-radius: 0.4em;
     display: inline;
     margin-left: 2em;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
     font-size: 1em;
     background-color: #DFDFDF;
   }
@@ -1820,16 +1637,8 @@ html {
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
     margin-left: auto;
-    margin-top: 0.9em;
-    margin-right: 0.5em;
-    align-items: center;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    height: 1em;
-    text-align: center;
-    width: 1em;
-    font-size: 0.5em;
+    margin-top: 0.8em;
+    font-size: 1.5em;
   }
   .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
     display: none;
@@ -1913,29 +1722,16 @@ html {
     justify-content: center;
   }
   .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 2em;
+    font-size: 2.3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    font-family: circe, sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.5em;
+    font-size: 3em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
     padding-right: 1em;
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 1em;
   }
   .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
     padding-left: 0.6em;
@@ -2021,7 +1817,7 @@ html {
     font-family: circe, sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 2.5em;
+    font-size: 2em;
     color: #9C9C9C;
   }
   .pageWrapper .main .allInfo .servers {
@@ -2078,49 +1874,35 @@ html {
   .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
     color: #FFFFFF;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li {
+    margin: 2em 1em;
+    font-size: 0.8em;
+    border-radius: 1em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning {
-    opacity: 1;
-    margin: 1em 1.5em 0 1.5em;
-    border-radius: 2em;
-    background-color: #F1F1F1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-family: circe, sans-serif;
-    font-style: normal;
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning {
+    border-radius: 0.7em;
+    align-content: center;
+    align-items: center;
+    border: 0.05em solid #e1e1e1;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-child(1) {
-    margin-top: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning:nth-last-child(1) {
-    margin-bottom: 2em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork {
-    padding: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork i {
-    font-size: 1.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .nameOfNetwork span {
-    font-size: 2em;
-    padding-left: 0.5em;
-  }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork {
     padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    font-size: 1.5em;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .download i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork {
+    padding: 0.5em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .download i {
     color: #5DFF2C;
   }
-  .pageWrapper .main .allInfo .network .infoNetwork .positioning .dataOfNetwork .upload i {
+  .pageWrapper .main .allInfo .network .infoNetwork .listOfNetwork li .positioning .dataOfNetwork .upload i {
     color: #6FA6FF;
   }
 }

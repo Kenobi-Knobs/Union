@@ -164,10 +164,10 @@ html {
 }
 .pageWrapper .infoWrapper .card .emptyWrapper {
   display: none;
-  position: absolute;
-  width: 100%;
+  position: fixed;
   text-align: center;
-  bottom: 15.5em;
+  top: 3em;
+  left: 20em;
 }
 .pageWrapper .infoWrapper .card .emptyWrapper .empty {
   width: 100%;
@@ -778,30 +778,27 @@ html {
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card {
-    position: relative;
-    top: 10%;
-    left: 35%;
-    width: 70vw;
+    left: 20%;
+    top: 3%;
+    width: 60vw;
     border-radius: 1.5em;
     background-color: #FFFFFF;
+    position: fixed;
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper {
-    display: none;
-    position: absolute;
-    left: 8em;
-    bottom: 0vw;
-    top: 83vw;
+    left: 12em;
+    top: 30em;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty {
-    padding: 0.8em 2em;
+    padding: 1em 2em;
     border-radius: 0.4em;
     border: 0.01em solid #FF3B45;
     display: inline;
     background-color: #FFFFFF;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
     letter-spacing: 0.01em;
   }
@@ -813,43 +810,41 @@ html {
     text-align: center;
   }
   .pageWrapper .infoWrapper .card .rect .titleCard {
-    padding: 0.3em 0.7em;
+    padding: 0.5em 0.7em;
     float: left;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close {
-    margin: 0.3em 1em 0 0;
+    margin: 0.5em 1em 0 0;
     float: right;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close:hover {
     cursor: pointer;
   }
-  .pageWrapper .infoWrapper .card .formWrapper {
-    display: none;
-    clear: both;
+  .pageWrapper .infoWrapper .card .formWrapper #formAddURL .form li:nth-child(1) .selectWrapper {
+    top: 7.1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul {
     list-style: none;
     font-family: circe, sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li {
-    margin: 5% 5%;
+    margin: 2% 2%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
     margin-top: 5%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
     text-align: center;
-    height: 15vw;
-    padding-bottom: 8%;
+    padding-bottom: 4%;
   }
   .pageWrapper .infoWrapper .card .formWrapper #Save {
     width: 30%;
@@ -892,7 +887,7 @@ html {
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
     font-family: circe, sans-serif;
-    font-size: 1.9em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
@@ -974,12 +969,6 @@ html {
     padding: 0 1em;
     font-size: 2em;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .navbar ul li:nth-child(4) {
     color: #F98181;
   }
@@ -1030,14 +1019,26 @@ html {
   .pageWrapper .main .settigsBlock .settings {
     margin-bottom: 1em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li {
+    padding: 3em 1em 0.2em 1em;
+  }
   .pageWrapper .main .settigsBlock .settings ul li .titleOption {
     font-size: 2.2em;
   }
   .pageWrapper .main .settigsBlock .settings ul li span {
     font-size: 1.4em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport {
+    font-family: circe, sans-serif;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugQuestion {
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugMail {
+    font-size: 1.4em;
+  }
   .pageWrapper .main .settigsBlock .addServerWrapper {
-    margin: 0 4em;
+    margin: 0;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
     width: 100%;
@@ -1046,9 +1047,7 @@ html {
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
     padding-top: 0.5em;
     text-align: center;
-  }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
-    font-size: 3em;
+    font-size: 3.5em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
     padding: 0.5em 1em 1em 1em;
@@ -1059,14 +1058,59 @@ html {
     font-size: 2em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
-    height: 10vw;
+    padding-bottom: 1em;
     margin: 2em 0;
   }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
-    margin-bottom: 1em;
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNewServer {
     width: 50%;
-    padding: 0.2em 0.5em;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper {
+    margin: 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL {
+    width: 100%;
     border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL span {
+    font-size: 3.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .nameURL {
+    padding-left: 0.4em;
+    color: #FFFFFF;
+    -webkit-user-select: none;
+            user-select: none;
+    font-size: 0.8em;
+    outline: none;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .trashIcon_URL {
+    float: right;
+    color: #A7A7A7;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper {
+    padding-bottom: 1em;
+    margin: 1em 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper #addNewURL {
+    width: 50%;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
     font-size: 2em;
   }
 }
@@ -1097,30 +1141,27 @@ html {
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card {
-    position: relative;
-    top: 10%;
-    left: 35%;
-    width: 70vw;
+    left: 20%;
+    top: 3%;
+    width: 60vw;
     border-radius: 1.5em;
     background-color: #FFFFFF;
+    position: fixed;
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper {
-    display: none;
-    position: absolute;
-    left: 8em;
-    bottom: 0vw;
-    top: 83vw;
+    left: 12em;
+    top: 30em;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty {
-    padding: 0.8em 2em;
+    padding: 1em 2em;
     border-radius: 0.4em;
     border: 0.01em solid #FF3B45;
     display: inline;
     background-color: #FFFFFF;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
     letter-spacing: 0.01em;
   }
@@ -1132,43 +1173,41 @@ html {
     text-align: center;
   }
   .pageWrapper .infoWrapper .card .rect .titleCard {
-    padding: 0.3em 0.7em;
+    padding: 0.5em 0.7em;
     float: left;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close {
-    margin: 0.3em 1em 0 0;
+    margin: 0.5em 1em 0 0;
     float: right;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close:hover {
     cursor: pointer;
   }
-  .pageWrapper .infoWrapper .card .formWrapper {
-    display: none;
-    clear: both;
+  .pageWrapper .infoWrapper .card .formWrapper #formAddURL .form li:nth-child(1) .selectWrapper {
+    top: 7.1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul {
     list-style: none;
     font-family: circe, sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li {
-    margin: 5% 5%;
+    margin: 2% 2%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
     margin-top: 5%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
     text-align: center;
-    height: 15vw;
-    padding-bottom: 8%;
+    padding-bottom: 4%;
   }
   .pageWrapper .infoWrapper .card .formWrapper #Save {
     width: 30%;
@@ -1211,7 +1250,7 @@ html {
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
     font-family: circe, sans-serif;
-    font-size: 1.9em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
@@ -1293,12 +1332,6 @@ html {
     padding: 0 1em;
     font-size: 2em;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .navbar ul li:nth-child(4) {
     color: #F98181;
   }
@@ -1349,14 +1382,26 @@ html {
   .pageWrapper .main .settigsBlock .settings {
     margin-bottom: 1em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li {
+    padding: 3em 1em 0.2em 1em;
+  }
   .pageWrapper .main .settigsBlock .settings ul li .titleOption {
     font-size: 2.2em;
   }
   .pageWrapper .main .settigsBlock .settings ul li span {
     font-size: 1.4em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport {
+    font-family: circe, sans-serif;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugQuestion {
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugMail {
+    font-size: 1.4em;
+  }
   .pageWrapper .main .settigsBlock .addServerWrapper {
-    margin: 0 4em;
+    margin: 0;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
     width: 100%;
@@ -1365,9 +1410,7 @@ html {
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
     padding-top: 0.5em;
     text-align: center;
-  }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
-    font-size: 3em;
+    font-size: 3.5em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
     padding: 0.5em 1em 1em 1em;
@@ -1378,14 +1421,59 @@ html {
     font-size: 2em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
-    height: 10vw;
+    padding-bottom: 1em;
     margin: 2em 0;
   }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
-    margin-bottom: 1em;
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNewServer {
     width: 50%;
-    padding: 0.2em 0.5em;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper {
+    margin: 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL {
+    width: 100%;
     border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL span {
+    font-size: 3.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .nameURL {
+    padding-left: 0.4em;
+    color: #FFFFFF;
+    -webkit-user-select: none;
+            user-select: none;
+    font-size: 0.8em;
+    outline: none;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .trashIcon_URL {
+    float: right;
+    color: #A7A7A7;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper {
+    padding-bottom: 1em;
+    margin: 1em 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper #addNewURL {
+    width: 50%;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
     font-size: 2em;
   }
 }
@@ -1416,30 +1504,27 @@ html {
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card {
-    position: relative;
-    top: 10%;
-    left: 35%;
-    width: 70vw;
+    left: 20%;
+    top: 3%;
+    width: 60vw;
     border-radius: 1.5em;
     background-color: #FFFFFF;
+    position: fixed;
     z-index: 5;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper {
-    display: none;
-    position: absolute;
-    left: 8em;
-    bottom: 0vw;
-    top: 83vw;
+    left: 12em;
+    top: 30em;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty {
-    padding: 0.8em 2em;
+    padding: 1em 2em;
     border-radius: 0.4em;
     border: 0.01em solid #FF3B45;
     display: inline;
     background-color: #FFFFFF;
   }
   .pageWrapper .infoWrapper .card .emptyWrapper .empty span {
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: bold;
     letter-spacing: 0.01em;
   }
@@ -1451,43 +1536,41 @@ html {
     text-align: center;
   }
   .pageWrapper .infoWrapper .card .rect .titleCard {
-    padding: 0.3em 0.7em;
+    padding: 0.5em 0.7em;
     float: left;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close {
-    margin: 0.3em 1em 0 0;
+    margin: 0.5em 1em 0 0;
     float: right;
     color: #FFFFFF;
     font-family: circe, sans-serif;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .rect #close:hover {
     cursor: pointer;
   }
-  .pageWrapper .infoWrapper .card .formWrapper {
-    display: none;
-    clear: both;
+  .pageWrapper .infoWrapper .card .formWrapper #formAddURL .form li:nth-child(1) .selectWrapper {
+    top: 7.1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul {
     list-style: none;
     font-family: circe, sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li {
-    margin: 5% 5%;
+    margin: 2% 2%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(1) {
     margin-top: 5%;
   }
   .pageWrapper .infoWrapper .card .formWrapper ul li:nth-child(4) {
     text-align: center;
-    height: 15vw;
-    padding-bottom: 8%;
+    padding-bottom: 4%;
   }
   .pageWrapper .infoWrapper .card .formWrapper #Save {
     width: 30%;
@@ -1530,7 +1613,7 @@ html {
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper span {
     font-family: circe, sans-serif;
-    font-size: 1.9em;
+    font-size: 1.5em;
     font-weight: bold;
   }
   .pageWrapper .infoWrapper .card .infoDeletingWrapper .answers {
@@ -1612,12 +1695,6 @@ html {
     padding: 0 1em;
     font-size: 2em;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
-    display: none;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(3) {
-    display: none;
-  }
   .pageWrapper .sidebar .navbar ul li:nth-child(4) {
     color: #F98181;
   }
@@ -1668,14 +1745,26 @@ html {
   .pageWrapper .main .settigsBlock .settings {
     margin-bottom: 1em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li {
+    padding: 3em 1em 0.2em 1em;
+  }
   .pageWrapper .main .settigsBlock .settings ul li .titleOption {
     font-size: 2.2em;
   }
   .pageWrapper .main .settigsBlock .settings ul li span {
     font-size: 1.4em;
   }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport {
+    font-family: circe, sans-serif;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugQuestion {
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugMail {
+    font-size: 1.4em;
+  }
   .pageWrapper .main .settigsBlock .addServerWrapper {
-    margin: 0 4em;
+    margin: 0;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver {
     width: 100%;
@@ -1684,9 +1773,7 @@ html {
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer {
     padding-top: 0.5em;
     text-align: center;
-  }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .titleAddServer span {
-    font-size: 3em;
+    font-size: 3.5em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .servers ul {
     padding: 0.5em 1em 1em 1em;
@@ -1697,14 +1784,59 @@ html {
     font-size: 2em;
   }
   .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper {
-    height: 10vw;
+    padding-bottom: 1em;
     margin: 2em 0;
   }
-  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNew {
-    margin-bottom: 1em;
+  .pageWrapper .main .settigsBlock .addServerWrapper .addserver .addServerButtonWrapper #addNewServer {
     width: 50%;
-    padding: 0.2em 0.5em;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper {
+    margin: 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL {
+    width: 100%;
     border-radius: 1.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL {
+    padding-top: 0.5em;
+    text-align: center;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .titleAddURL span {
+    font-size: 3.5em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul {
+    padding: 0.5em 1em 1em 1em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li {
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2em;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .nameURL {
+    padding-left: 0.4em;
+    color: #FFFFFF;
+    -webkit-user-select: none;
+            user-select: none;
+    font-size: 0.8em;
+    outline: none;
+    border: 0;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .URL ul li .trashIcon_URL {
+    float: right;
+    color: #A7A7A7;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper {
+    padding-bottom: 1em;
+    margin: 1em 0;
+  }
+  .pageWrapper .main .settigsBlock .addURLWrapper .addURL .addURLButtonWrapper #addNewURL {
+    width: 50%;
+    padding: 0.4em 0.5em;
+    border-radius: 1em;
     font-size: 2em;
   }
 }

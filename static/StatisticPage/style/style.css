@@ -1,23 +1,23 @@
 .ui-slider-handle {
   border-radius: 50% !important;
   cursor: pointer !important;
-  touch-action: auto !important;
+  touch-action: pan-x !important;
 }
 
 .ui-state-default {
   border-radius: 50% !important;
-  touch-action: auto !important;
+  touch-action: pan-x !important;
 }
 
 .ui-state-active {
   border: 0 !important;
   background-color: #F26B6B !important;
-  touch-action: auto !important;
+  touch-action: pan-x !important;
 }
 
 .ui-state-focus {
   outline: none !important;
-  touch-action: auto !important;
+  touch-action: pan-x !important;
 }
 
 * {
@@ -507,30 +507,30 @@ html {
   border: 0.01em solid rgba(0, 0, 0, 0);
   border: 0.01em solid rgba(0, 0, 0, 0);
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork .nameOfNetwork i {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork .nameOfNetwork i {
   font-size: 1em;
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork .nameOfNetwork span {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork .nameOfNetwork span {
   padding-left: 0.5em;
   font-size: 1.3em;
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork .dataOfNetwork {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork .dataOfNetwork {
   padding-right: 0.5em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   font-size: 1em;
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork .dataOfNetwork .download i {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork .dataOfNetwork .download i {
   color: #5DFF2C;
 }
-.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .infoNetwork .dataOfNetwork .upload i {
+.pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li label .positioningNetwork .dataOfNetwork .upload i {
   color: #6FA6FF;
 }
 .pageWrapper .main .allInfo .network .networkWrapper .infoNetwork ul li input {
@@ -538,4 +538,1475 @@ html {
      -moz-appearance: none;
           appearance: none;
   position: absolute;
+}
+
+@media screen and (max-width: 575.98px) {
+  .ui-slider-handle {
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    touch-action: pan-x !important;
+    width: 2.2em !important;
+    height: 2.2em !important;
+  }
+
+  .ui-slider-horizontal {
+    height: 1.5em !important;
+  }
+
+  .ui-state-default {
+    border-radius: 50% !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-active {
+    border: 0 !important;
+    background-color: #F26B6B !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-focus {
+    outline: none !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-slider-range {
+    height: 2em !important;
+  }
+
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 2em;
+    margin-top: 2em;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .slideWrapper {
+    order: -1;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .slideWrapper .time {
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select {
+    width: 15em;
+    margin: 0.5em 0.5em;
+    position: relative;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select.is-active .select__body {
+    display: block;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header {
+    display: flex;
+    cursor: pointer;
+    border: 0.03em solid #cccccc;
+    background-color: #f2f2f2;
+    border-radius: 0.8em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__current {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7em;
+    line-height: 2em;
+    padding: 0.1em 0.2em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
+    margin-left: auto;
+    margin-top: 0.8em;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
+    display: none;
+    border: 0.03em solid #cccccc;
+    border-radius: 0.8em;
+    border-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0.2em;
+    font-size: 1.4em;
+    cursor: pointer;
+    background-color: #f2f2f2;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item:hover {
+    background-color: #D2D2D2;
+  }
+  .pageWrapper .main .allInfo .diagram .chart {
+    position: relative;
+    height: 60vw;
+    padding: 0.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .chart canvas {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .infoCard {
+    order: -1;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .cpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleUser span {
+    padding-right: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleIdle span {
+    padding-right: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
+    padding-right: 1em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
+    padding-left: 0.6em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleTotal span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleFree span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .loadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo .title5min span {
+    padding-left: 0.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper {
+    display: none;
+    margin: 1em 3em 1em 3em;
+    border-radius: 2em;
+    background-color: #E1E1E1;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .bar {
+    width: 50%;
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
+    background-color: #BDBDBD;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .infoBar {
+    padding: 0.7em 1.3em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .servers {
+    order: -2;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .titleCard {
+    display: block;
+    padding-top: 5%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 4em;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper {
+    margin: 0 auto;
+    width: 90%;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
+    padding: 0.5em 1em 4em 1em;
+    list-style: none;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
+    position: relative;
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2.5em;
+    font-family: circe, sans-serif;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label {
+    padding-left: 0.4em;
+    color: #676464;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:not(:hover) {
+    color: #676464;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
+    color: #FFFFFF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li {
+    margin: 0.9em 0.4em;
+    font-size: 1.5em;
+    font-family: circe, sans-serif;
+    border: 0.05em solid #e1e1e1;
+    border-radius: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label {
+    display: block;
+    color: #676464;
+    border-radius: 1em;
+    border: 0.01em solid rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork {
+    padding-right: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .download i {
+    color: #5DFF2C;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .upload i {
+    color: #6FA6FF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .ui-slider-handle {
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    touch-action: pan-x !important;
+    width: 2.2em !important;
+    height: 2.2em !important;
+  }
+
+  .ui-slider-horizontal {
+    height: 1.5em !important;
+  }
+
+  .ui-state-default {
+    border-radius: 50% !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-active {
+    border: 0 !important;
+    background-color: #F26B6B !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-focus {
+    outline: none !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-slider-range {
+    height: 2em !important;
+  }
+
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 2em;
+    margin-top: 2em;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .slideWrapper {
+    order: -1;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .slideWrapper .time {
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select {
+    width: 15em;
+    margin: 0.5em 0.5em;
+    position: relative;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select.is-active .select__body {
+    display: block;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header {
+    display: flex;
+    cursor: pointer;
+    border: 0.03em solid #cccccc;
+    background-color: #f2f2f2;
+    border-radius: 0.8em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__current {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7em;
+    line-height: 2em;
+    padding: 0.1em 0.2em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
+    margin-left: auto;
+    margin-top: 0.8em;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
+    display: none;
+    border: 0.03em solid #cccccc;
+    border-radius: 0.8em;
+    border-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0.2em;
+    font-size: 1.4em;
+    cursor: pointer;
+    background-color: #f2f2f2;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item:hover {
+    background-color: #D2D2D2;
+  }
+  .pageWrapper .main .allInfo .diagram .chart {
+    position: relative;
+    height: 60vw;
+    padding: 0.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .chart canvas {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .infoCard {
+    order: -1;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .cpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleUser span {
+    padding-right: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleIdle span {
+    padding-right: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
+    padding-right: 1em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
+    padding-left: 0.6em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleTotal span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleFree span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .loadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo .title5min span {
+    padding-left: 0.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper {
+    display: none;
+    margin: 1em 3em 1em 3em;
+    border-radius: 2em;
+    background-color: #E1E1E1;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .bar {
+    width: 50%;
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
+    background-color: #BDBDBD;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .infoBar {
+    padding: 0.7em 1.3em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .servers {
+    order: -2;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .titleCard {
+    display: block;
+    padding-top: 5%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 4em;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper {
+    margin: 0 auto;
+    width: 90%;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
+    padding: 0.5em 1em 4em 1em;
+    list-style: none;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
+    position: relative;
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2.5em;
+    font-family: circe, sans-serif;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label {
+    padding-left: 0.4em;
+    color: #676464;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:not(:hover) {
+    color: #676464;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
+    color: #FFFFFF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li {
+    margin: 0.9em 0.4em;
+    font-size: 1.5em;
+    font-family: circe, sans-serif;
+    border: 0.05em solid #e1e1e1;
+    border-radius: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label {
+    display: block;
+    color: #676464;
+    border-radius: 1em;
+    border: 0.01em solid rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork {
+    padding-right: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .download i {
+    color: #5DFF2C;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .upload i {
+    color: #6FA6FF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1030.98px) {
+  .ui-slider-handle {
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    touch-action: pan-x !important;
+    width: 2.2em !important;
+    height: 2.2em !important;
+  }
+
+  .ui-slider-horizontal {
+    height: 1.5em !important;
+  }
+
+  .ui-state-default {
+    border-radius: 50% !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-active {
+    border: 0 !important;
+    background-color: #F26B6B !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-state-focus {
+    outline: none !important;
+    touch-action: pan-x !important;
+  }
+
+  .ui-slider-range {
+    height: 2em !important;
+  }
+
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 2em;
+    margin-top: 2em;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .slideWrapper {
+    order: -1;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .slideWrapper .time {
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram {
+    display: none;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select {
+    width: 15em;
+    margin: 0.5em 0.5em;
+    position: relative;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select.is-active .select__body {
+    display: block;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header {
+    display: flex;
+    cursor: pointer;
+    border: 0.03em solid #cccccc;
+    background-color: #f2f2f2;
+    border-radius: 0.8em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__current {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.7em;
+    line-height: 2em;
+    padding: 0.1em 0.2em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__header .select__icon {
+    margin-left: auto;
+    margin-top: 0.8em;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body {
+    display: none;
+    border: 0.03em solid #cccccc;
+    border-radius: 0.8em;
+    border-top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0.2em;
+    font-size: 1.4em;
+    cursor: pointer;
+    background-color: #f2f2f2;
+  }
+  .pageWrapper .main .allInfo .diagram .selectWrapper .select .select__body .select__item:hover {
+    background-color: #D2D2D2;
+  }
+  .pageWrapper .main .allInfo .diagram .chart {
+    position: relative;
+    height: 60vw;
+    padding: 0.5em;
+  }
+  .pageWrapper .main .allInfo .diagram .chart canvas {
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo .infoCard {
+    order: -1;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .cpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleUser span {
+    padding-right: 2em;
+  }
+  .pageWrapper .main .allInfo .infoCard .cpu .titleCpuInfo .titleIdle span {
+    padding-right: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .memoryInfo {
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo {
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo span {
+    padding-right: 1em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleWired span {
+    padding-left: 0.6em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleTotal span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .memory .titleMemoryInfo .titleFree span {
+    padding-left: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load {
+    margin-top: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .loadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .load .titleLoadInfo .title5min span {
+    padding-left: 0.5em;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper {
+    display: none;
+    margin: 1em 3em 1em 3em;
+    border-radius: 2em;
+    background-color: #E1E1E1;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .bar {
+    width: 50%;
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
+    background-color: #BDBDBD;
+  }
+  .pageWrapper .main .allInfo .infoCard .disk .barWrapper .infoBar {
+    padding: 0.7em 1.3em;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .servers {
+    order: -2;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .servers .titleCard {
+    display: block;
+    padding-top: 5%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 4em;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper {
+    margin: 0 auto;
+    width: 90%;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul {
+    padding: 0.5em 1em 4em 1em;
+    list-style: none;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li {
+    position: relative;
+    width: 100%;
+    padding: 1em 0.7em 0.2em 0;
+    font-size: 2.5em;
+    font-family: circe, sans-serif;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label {
+    padding-left: 0.4em;
+    color: #676464;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li label:not(:hover) {
+    color: #676464;
+    transition: 0.3s;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
+  .pageWrapper .main .allInfo .servers .nameServersWrapper ul li input:checked + label {
+    color: #FFFFFF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li {
+    margin: 0.9em 0.4em;
+    font-size: 1.5em;
+    font-family: circe, sans-serif;
+    border: 0.05em solid #e1e1e1;
+    border-radius: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label {
+    display: block;
+    color: #676464;
+    border-radius: 1em;
+    border: 0.01em solid rgba(0, 0, 0, 0);
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork i {
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .nameOfNetwork span {
+    padding-left: 0.5em;
+    font-size: 2.3em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork {
+    padding-right: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .download i {
+    color: #5DFF2C;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li label .positioningNetwork .dataOfNetwork .upload i {
+    color: #6FA6FF;
+  }
+  .pageWrapper .main .allInfo .network .infoNetwork ul li input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: absolute;
+  }
 }

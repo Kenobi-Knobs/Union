@@ -380,6 +380,19 @@ html {
 @media screen and (max-width: 575.98px) {
     .pageWrapper {
 
+        .chooseLang {
+            font-size: 2.5em;
+            top: 1em;
+            right: 2em;
+            padding: 0.2em 0.5em;
+            border-radius: 1em;
+
+            .langSeparate {
+                color: #000000;
+                padding: 0 0.2em;
+            }
+        }
+
         .infoWrapper {
             .info {
                 top: 35%;
@@ -401,7 +414,7 @@ html {
         }
 
         .header {
-            margin-top: 10%;
+            margin-top: 20%;
 
             .logo {
 
@@ -508,6 +521,18 @@ html {
 //tablet
 @media screen and (min-width: 576px) and (max-width: 991.98px) {
     .pageWrapper {
+        .chooseLang {
+            font-size: 2.5em;
+            top: 1em;
+            right: 2em;
+            padding: 0.2em 0.5em;
+            border-radius: 1em;
+
+            .langSeparate {
+                color: #000000;
+                padding: 0 0.2em;
+            }
+        }
 
         .infoWrapper {
             .info {
@@ -530,7 +555,7 @@ html {
         }
 
         .header {
-            margin-top: 10%;
+            margin-top: 20%;
 
             .logo {
 
@@ -637,6 +662,18 @@ html {
 //tablet landscape
 @media screen and (min-width: 992px) and (max-width: 1199.98px) {
     .pageWrapper {
+        .chooseLang {
+            font-size: 2.5em;
+            top: 1em;
+            right: 2em;
+            padding: 0.2em 0.5em;
+            border-radius: 1em;
+
+            .langSeparate {
+                color: #000000;
+                padding: 0 0.2em;
+            }
+        }
 
         .infoWrapper {
             .info {
@@ -659,7 +696,7 @@ html {
         }
 
         .header {
-            margin-top: 10%;
+            margin-top: 20%;
 
             .logo {
 

@@ -385,3 +385,673 @@ html {
 .pageWrapper .main .allInfo .url .nameURLWrapper ul li input[type=radio]:checked + .labelText input[type=text], .pageWrapper .main .allInfo .url .nameURLWrapper ul li input[type=radio]:checked + .labelText + .labelCheck span {
   color: #FFFFFF;
 }
+
+@media screen and (max-width: 575.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .infoCard .statusWrapper .status {
+    margin-left: 1em;
+    font-size: 2.25em;
+    padding: 0.5em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul {
+    padding: 0.5em 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul li {
+    padding: 1.5em 0.7em 0 0;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .monitoringInfo span {
+    font-size: 1.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo div {
+    padding: 0 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo span {
+    font-family: circe, sans-serif;
+    font-size: 1.2em;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    padding: 2em 4em;
+    top: 14vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .url {
+    order: -1;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .titleCard {
+    display: block;
+    padding-top: 5%;
+    font-weight: 300;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul {
+    padding: 1.5em 1em 2em 1em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li {
+    padding: 2em 0.7em 0.2em 0;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText .nameURL {
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck .check {
+    font-size: 1.7em;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 991.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .infoCard .statusWrapper .status {
+    margin-left: 1em;
+    font-size: 2.25em;
+    padding: 0.5em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul {
+    padding: 0.5em 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul li {
+    padding: 1.5em 0.7em 0 0;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .monitoringInfo span {
+    font-size: 1.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo div {
+    padding: 0 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo span {
+    font-family: circe, sans-serif;
+    font-size: 1.2em;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    padding: 2em 4em;
+    top: 14vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .url {
+    order: -1;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .titleCard {
+    display: block;
+    padding-top: 5%;
+    font-weight: 300;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul {
+    padding: 1.5em 1em 2em 1em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li {
+    padding: 2em 0.7em 0.2em 0;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText .nameURL {
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck .check {
+    font-size: 1.7em;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1030.98px) {
+  .pageWrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .sidebar {
+    position: inherit;
+    height: 9vw;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .pageWrapper .sidebar .logo {
+    margin-left: 2em;
+    width: 2em;
+    height: 30%;
+    text-align: center;
+  }
+  .pageWrapper .sidebar .logo img {
+    margin-top: 25%;
+    width: 4em;
+  }
+  .pageWrapper .sidebar .navbar {
+    text-align: center;
+  }
+  .pageWrapper .sidebar .navbar ul {
+    margin-top: 1em;
+    list-style: none;
+  }
+  .pageWrapper .sidebar .navbar ul li {
+    display: inline-block;
+    padding: 0 1em;
+    font-size: 2em;
+  }
+  .pageWrapper .sidebar .navbar ul li i {
+    transition: 0.3s;
+  }
+  .pageWrapper .sidebar .navbar ul li:nth-child(2) {
+    color: #F98181;
+  }
+  .pageWrapper .sidebar .mobileExit {
+    display: block;
+    text-align: center;
+    margin-right: 5%;
+    margin-top: 2%;
+  }
+  .pageWrapper .sidebar .mobileExit svg {
+    width: 2.5em;
+    height: 2.5em;
+    padding: 5%;
+    border-radius: 0.4em;
+    box-shadow: 0 0.2em 2em rgba(0, 0, 0, 0.6);
+  }
+  .pageWrapper .main {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .head {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+  .pageWrapper .main .head .title {
+    width: 100%;
+    padding-top: 2%;
+    padding-left: 4%;
+  }
+  .pageWrapper .main .head .title span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 3em;
+  }
+  .pageWrapper .main .head .title .realtime {
+    padding-top: 4%;
+    padding-left: 40%;
+  }
+  .pageWrapper .main .head .title .realtime .circle {
+    height: 1.2em;
+    width: 1.2em;
+    box-shadow: 0px 0px 0.1em 0.05em #FF0101;
+  }
+  .pageWrapper .main .head .title .realtime .text {
+    position: relative;
+    bottom: 0.85vw;
+    left: 1.2vw;
+  }
+  .pageWrapper .main .head .title .realtime .text span {
+    font-family: Circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .head .exit {
+    display: none;
+    width: 100%;
+  }
+  .pageWrapper .main .allInfo {
+    padding: 1em 5em 1em 5em;
+    margin-right: 2%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .pageWrapper .main .allInfo .card {
+    margin: 2em 0;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 1.5em;
+  }
+  .pageWrapper .main .allInfo .card .rect {
+    position: relative;
+    height: auto;
+    border-radius: 1.5em 1.5em 0 0;
+    background-color: #F26B6B;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .card .titleCard {
+    display: block;
+    padding-top: 1%;
+    color: #FDFDFD;
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    font-size: 1.4em;
+  }
+  .pageWrapper .main .allInfo .card .infoTitle span {
+    padding: 0.4em;
+    border-radius: 0.4em;
+    display: inline;
+    margin-left: 2em;
+    font-size: 1em;
+    background-color: #DFDFDF;
+  }
+  .pageWrapper .main .allInfo .infoCard .statusWrapper .status {
+    margin-left: 1em;
+    font-size: 2.25em;
+    padding: 0.5em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul {
+    padding: 0.5em 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .down .downInfo ul li {
+    padding: 1.5em 0.7em 0 0;
+    font-size: 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .monitoringInfo span {
+    font-size: 1.3em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo {
+    padding: 1em 0;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo div {
+    padding: 0 1em;
+  }
+  .pageWrapper .main .allInfo .infoCard .config .monitoringInfoWrapper .titleMonitoringInfo span {
+    font-family: circe, sans-serif;
+    font-size: 1.2em;
+  }
+  .pageWrapper .main .allInfo .alert {
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0vw;
+    padding: 2em 4em;
+    top: 14vw;
+    z-index: 2;
+    text-align: center;
+  }
+  .pageWrapper .main .allInfo .alert span {
+    font-family: circe, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2em;
+    color: #9C9C9C;
+  }
+  .pageWrapper .main .allInfo .url {
+    order: -1;
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .rect {
+    background-color: #221F1F;
+  }
+  .pageWrapper .main .allInfo .url .titleCard {
+    display: block;
+    padding-top: 5%;
+    font-weight: 300;
+    font-size: 3em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul {
+    padding: 1.5em 1em 2em 1em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li {
+    padding: 2em 0.7em 0.2em 0;
+    border-bottom: 0.05em solid #e1e1e1;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelText .nameURL {
+    font-size: 1.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck {
+    padding-left: 0.8em;
+  }
+  .pageWrapper .main .allInfo .url .nameURLWrapper ul li .labelCheck .check {
+    font-size: 1.7em;
+  }
+}

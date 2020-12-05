@@ -479,7 +479,13 @@
                 if (data['dataset'].length == 0) {
                     $('.realtime').css('opacity', '0');
                     $('.alert').css('display', 'block');
-                    $('.alertText').text('There is no data on this server :c');
+                    if (currentLang == 'en') {
+                        $('.alertText').text('There is no data on this server :c');
+                    }
+                    if (currentLang == 'ua') {
+                        $('.alertText').text('На жаль на цьому сервері немає данних :c');
+                    }
+
 
                     $('.diagram').css('display', 'none');
                     $('.infoCard').css('display', 'none');
