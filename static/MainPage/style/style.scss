@@ -768,14 +768,6 @@ html {
                             color: #F98181;
                         }
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                     }
                 }
             }
@@ -822,28 +814,19 @@ html {
                     }
 
                     .realtime {
-                        padding-top: 0;
-                        padding-left: 2%;
-                        display: block;
-                        //                        flex-direction: row;
-                        //                        justify-content: flex-start;
-                        text-align: center;
+                        padding-top: 4%;
+                        padding-left: 40%;
 
                         .circle {
-                            position: relative;
-                            top: 1.2em;
-                            left: 18em;
-                            height: 1em;
-                            width: 1em;
-                            border-radius: 50%;
-                            background-color: #D01515;
-                            box-shadow: 0px 0px 0.1em 0.05em #FF0101; //третий параметр это блюр
+                            height: 1.2em;
+                            width: 1.2em;
+                            box-shadow: 0px 0px 0.1em 0.05em #FF0101;
                         }
 
                         .text {
                             position: relative;
                             bottom: 0.85vw;
-                            left: 0.4vw;
+                            left: 1.2vw;
 
                             span {
                                 font-family: Circe, sans-serif;
@@ -870,21 +853,6 @@ html {
                 //            background-color: aquamarine;
                 display: flex;
                 flex-direction: column;
-
-                .alert {
-                    position: absolute;
-                    left: 10vw;
-                    top: 90vw;
-                    z-index: 2;
-
-                    span {
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 3em;
-                        color: #9C9C9C;
-                    }
-                }
 
                 .card {
                     margin: 2em 0;
@@ -913,19 +881,14 @@ html {
                     .infoTitle {
                         margin-bottom: 2em;
                         margin-top: 2em;
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
                         font-size: 1em;
 
+
                         span {
-                            padding: 0.1em;
+                            padding: 0.4em;
                             border-radius: 0.4em;
                             display: inline;
                             margin-left: 2em;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
                             font-size: 1em;
                             background-color: #DFDFDF;
                         }
@@ -969,16 +932,8 @@ html {
 
                                 .select__icon {
                                     margin-left: auto;
-                                    margin-top: 0.9em;
-                                    margin-right: 0.5em;
-                                    align-items: center;
-                                    display: flex;
-                                    flex-shrink: 0;
-                                    justify-content: center;
-                                    height: 1em;
-                                    text-align: center;
-                                    width: 1em;
-                                    font-size: 0.5em;
+                                    margin-top: 0.8em;
+                                    font-size: 1.5em;
                                 }
                             }
 
@@ -1087,32 +1042,20 @@ html {
                         justify-content: center;
 
                         .memoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 2em;
+                            font-size: 2.3em;
 
                             span {}
                         }
 
                         .titleMemoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 1.5em;
+                            font-size: 3em;
 
                             span {
                                 padding-right: 1em;
                                 font-family: circe, sans-serif;
                                 font-style: normal;
                                 font-weight: bold;
-                                font-size: 1em;
+                                //                                font-size: 1em;
                             }
 
                             .titleWired {
@@ -1235,7 +1178,7 @@ html {
                         font-family: circe, sans-serif;
                         font-style: normal;
                         font-weight: bold;
-                        font-size: 2.5em;
+                        font-size: 2em;
                         color: #9C9C9C;
                     }
                 }
@@ -1307,58 +1250,46 @@ html {
 
                 .network {
                     .infoNetwork {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
+                        .listOfNetwork {
+                            li {
+                                margin: 2em 1em;
+                                font-size: 0.8em;
+                                border-radius: 1em;
 
-                        .positioning {
-                            opacity: 1;
-                            margin: 1em 1.5em 0 1.5em;
-                            border-radius: 2em;
-                            background-color: #F1F1F1;
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-between;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
+                                .positioning {
+                                    border-radius: 0.7em;
+                                    align-content: center;
+                                    align-items: center;
+                                    border: 0.05em solid #e1e1e1;
 
-                            &:nth-child(1) {
-                                margin-top: 2em;
-                            }
+                                    .nameOfNetwork {
+                                        padding: 0.5em;
 
-                            &:nth-last-child(1) {
-                                margin-bottom: 2em;
-                            }
+                                        i {
+                                            font-size: 2em;
+                                        }
 
-                            .nameOfNetwork {
-                                padding: 1.5em;
-
-                                i {
-                                    font-size: 1.5em;
-                                }
-
-                                span {
-                                    font-size: 2em;
-                                    padding-left: 0.5em;
-                                }
-                            }
-
-                            .dataOfNetwork {
-                                padding: 0.5em;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-around;
-                                font-size: 1.5em;
-
-                                .download {
-                                    i {
-                                        color: #5DFF2C;
+                                        span {
+                                            padding-left: 0.5em;
+                                            font-size: 3em;
+                                        }
                                     }
-                                }
 
-                                .upload {
-                                    i {
-                                        color: #6FA6FF;
+                                    .dataOfNetwork {
+                                        padding: 0.5em;
+                                        font-size: 2em;
+
+                                        .download {
+                                            i {
+                                                color: #5DFF2C;
+                                            }
+                                        }
+
+                                        .upload {
+                                            i {
+                                                color: #6FA6FF;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -1419,14 +1350,6 @@ html {
                             color: #F98181;
                         }
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                     }
                 }
             }
@@ -1473,28 +1396,19 @@ html {
                     }
 
                     .realtime {
-                        padding-top: 0;
-                        padding-left: 2%;
-                        display: block;
-                        //                        flex-direction: row;
-                        //                        justify-content: flex-start;
-                        text-align: center;
+                        padding-top: 4%;
+                        padding-left: 40%;
 
                         .circle {
-                            position: relative;
-                            top: 1.2em;
-                            left: 18em;
-                            height: 1em;
-                            width: 1em;
-                            border-radius: 50%;
-                            background-color: #D01515;
-                            box-shadow: 0px 0px 0.1em 0.05em #FF0101; //третий параметр это блюр
+                            height: 1.2em;
+                            width: 1.2em;
+                            box-shadow: 0px 0px 0.1em 0.05em #FF0101;
                         }
 
                         .text {
                             position: relative;
                             bottom: 0.85vw;
-                            left: 0.4vw;
+                            left: 1.2vw;
 
                             span {
                                 font-family: Circe, sans-serif;
@@ -1521,21 +1435,6 @@ html {
                 //            background-color: aquamarine;
                 display: flex;
                 flex-direction: column;
-
-                .alert {
-                    position: absolute;
-                    left: 10vw;
-                    top: 90vw;
-                    z-index: 2;
-
-                    span {
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 3em;
-                        color: #9C9C9C;
-                    }
-                }
 
                 .card {
                     margin: 2em 0;
@@ -1564,19 +1463,14 @@ html {
                     .infoTitle {
                         margin-bottom: 2em;
                         margin-top: 2em;
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
                         font-size: 1em;
 
+
                         span {
-                            padding: 0.1em;
+                            padding: 0.4em;
                             border-radius: 0.4em;
                             display: inline;
                             margin-left: 2em;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
                             font-size: 1em;
                             background-color: #DFDFDF;
                         }
@@ -1620,16 +1514,8 @@ html {
 
                                 .select__icon {
                                     margin-left: auto;
-                                    margin-top: 0.9em;
-                                    margin-right: 0.5em;
-                                    align-items: center;
-                                    display: flex;
-                                    flex-shrink: 0;
-                                    justify-content: center;
-                                    height: 1em;
-                                    text-align: center;
-                                    width: 1em;
-                                    font-size: 0.5em;
+                                    margin-top: 0.8em;
+                                    font-size: 1.5em;
                                 }
                             }
 
@@ -1738,32 +1624,20 @@ html {
                         justify-content: center;
 
                         .memoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 2em;
+                            font-size: 2.3em;
 
                             span {}
                         }
 
                         .titleMemoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 1.5em;
+                            font-size: 3em;
 
                             span {
                                 padding-right: 1em;
                                 font-family: circe, sans-serif;
                                 font-style: normal;
                                 font-weight: bold;
-                                font-size: 1em;
+                                //                                font-size: 1em;
                             }
 
                             .titleWired {
@@ -1886,26 +1760,7 @@ html {
                         font-family: circe, sans-serif;
                         font-style: normal;
                         font-weight: bold;
-                        font-size: 2.5em;
-                        color: #9C9C9C;
-                    }
-                }
-
-                .alert {
-                    display: block;
-                    width: 100%;
-                    position: absolute;
-                    left: 0vw;
-                    padding: 2em 4em;
-                    top: 22vw;
-                    z-index: 2;
-                    text-align: center;
-
-                    span {
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 2.5em;
+                        font-size: 2em;
                         color: #9C9C9C;
                     }
                 }
@@ -1977,58 +1832,46 @@ html {
 
                 .network {
                     .infoNetwork {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
+                        .listOfNetwork {
+                            li {
+                                margin: 2em 1em;
+                                font-size: 0.8em;
+                                border-radius: 1em;
 
-                        .positioning {
-                            opacity: 1;
-                            margin: 1em 1.5em 0 1.5em;
-                            border-radius: 2em;
-                            background-color: #F1F1F1;
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-between;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
+                                .positioning {
+                                    border-radius: 0.7em;
+                                    align-content: center;
+                                    align-items: center;
+                                    border: 0.05em solid #e1e1e1;
 
-                            &:nth-child(1) {
-                                margin-top: 2em;
-                            }
+                                    .nameOfNetwork {
+                                        padding: 0.5em;
 
-                            &:nth-last-child(1) {
-                                margin-bottom: 2em;
-                            }
+                                        i {
+                                            font-size: 2em;
+                                        }
 
-                            .nameOfNetwork {
-                                padding: 1.5em;
-
-                                i {
-                                    font-size: 1.5em;
-                                }
-
-                                span {
-                                    font-size: 2em;
-                                    padding-left: 0.5em;
-                                }
-                            }
-
-                            .dataOfNetwork {
-                                padding: 0.5em;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-around;
-                                font-size: 1.5em;
-
-                                .download {
-                                    i {
-                                        color: #5DFF2C;
+                                        span {
+                                            padding-left: 0.5em;
+                                            font-size: 3em;
+                                        }
                                     }
-                                }
 
-                                .upload {
-                                    i {
-                                        color: #6FA6FF;
+                                    .dataOfNetwork {
+                                        padding: 0.5em;
+                                        font-size: 2em;
+
+                                        .download {
+                                            i {
+                                                color: #5DFF2C;
+                                            }
+                                        }
+
+                                        .upload {
+                                            i {
+                                                color: #6FA6FF;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -2090,14 +1933,6 @@ html {
                             color: #F98181;
                         }
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                     }
                 }
             }
@@ -2144,28 +1979,19 @@ html {
                     }
 
                     .realtime {
-                        padding-top: 0;
-                        padding-left: 2%;
-                        display: block;
-                        //                        flex-direction: row;
-                        //                        justify-content: flex-start;
-                        text-align: center;
+                        padding-top: 4%;
+                        padding-left: 40%;
 
                         .circle {
-                            position: relative;
-                            top: 1.2em;
-                            left: 18em;
-                            height: 1em;
-                            width: 1em;
-                            border-radius: 50%;
-                            background-color: #D01515;
-                            box-shadow: 0px 0px 0.1em 0.05em #FF0101; //третий параметр это блюр
+                            height: 1.2em;
+                            width: 1.2em;
+                            box-shadow: 0px 0px 0.1em 0.05em #FF0101;
                         }
 
                         .text {
                             position: relative;
                             bottom: 0.85vw;
-                            left: 0.4vw;
+                            left: 1.2vw;
 
                             span {
                                 font-family: Circe, sans-serif;
@@ -2192,21 +2018,6 @@ html {
                 //            background-color: aquamarine;
                 display: flex;
                 flex-direction: column;
-
-                .alert {
-                    position: absolute;
-                    left: 10vw;
-                    top: 90vw;
-                    z-index: 2;
-
-                    span {
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
-                        font-size: 3em;
-                        color: #9C9C9C;
-                    }
-                }
 
                 .card {
                     margin: 2em 0;
@@ -2235,19 +2046,14 @@ html {
                     .infoTitle {
                         margin-bottom: 2em;
                         margin-top: 2em;
-                        font-family: circe, sans-serif;
-                        font-style: normal;
-                        font-weight: bold;
                         font-size: 1em;
 
+
                         span {
-                            padding: 0.1em;
+                            padding: 0.4em;
                             border-radius: 0.4em;
                             display: inline;
                             margin-left: 2em;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
                             font-size: 1em;
                             background-color: #DFDFDF;
                         }
@@ -2291,16 +2097,8 @@ html {
 
                                 .select__icon {
                                     margin-left: auto;
-                                    margin-top: 0.9em;
-                                    margin-right: 0.5em;
-                                    align-items: center;
-                                    display: flex;
-                                    flex-shrink: 0;
-                                    justify-content: center;
-                                    height: 1em;
-                                    text-align: center;
-                                    width: 1em;
-                                    font-size: 0.5em;
+                                    margin-top: 0.8em;
+                                    font-size: 1.5em;
                                 }
                             }
 
@@ -2409,32 +2207,20 @@ html {
                         justify-content: center;
 
                         .memoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: bold;
-                            font-size: 2em;
+                            font-size: 2.3em;
 
                             span {}
                         }
 
                         .titleMemoryInfo {
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-around;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
-                            font-weight: 400;
-                            font-size: 1.5em;
+                            font-size: 3em;
 
                             span {
                                 padding-right: 1em;
                                 font-family: circe, sans-serif;
                                 font-style: normal;
                                 font-weight: bold;
-                                font-size: 1em;
+                                //                                font-size: 1em;
                             }
 
                             .titleWired {
@@ -2557,7 +2343,7 @@ html {
                         font-family: circe, sans-serif;
                         font-style: normal;
                         font-weight: bold;
-                        font-size: 2.5em;
+                        font-size: 2em;
                         color: #9C9C9C;
                     }
                 }
@@ -2629,58 +2415,46 @@ html {
 
                 .network {
                     .infoNetwork {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-around;
+                        .listOfNetwork {
+                            li {
+                                margin: 2em 1em;
+                                font-size: 0.8em;
+                                border-radius: 1em;
 
-                        .positioning {
-                            opacity: 1;
-                            margin: 1em 1.5em 0 1.5em;
-                            border-radius: 2em;
-                            background-color: #F1F1F1;
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-between;
-                            font-family: circe, sans-serif;
-                            font-style: normal;
+                                .positioning {
+                                    border-radius: 0.7em;
+                                    align-content: center;
+                                    align-items: center;
+                                    border: 0.05em solid #e1e1e1;
 
-                            &:nth-child(1) {
-                                margin-top: 2em;
-                            }
+                                    .nameOfNetwork {
+                                        padding: 0.5em;
 
-                            &:nth-last-child(1) {
-                                margin-bottom: 2em;
-                            }
+                                        i {
+                                            font-size: 2em;
+                                        }
 
-                            .nameOfNetwork {
-                                padding: 1.5em;
-
-                                i {
-                                    font-size: 1.5em;
-                                }
-
-                                span {
-                                    font-size: 2em;
-                                    padding-left: 0.5em;
-                                }
-                            }
-
-                            .dataOfNetwork {
-                                padding: 0.5em;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-around;
-                                font-size: 1.5em;
-
-                                .download {
-                                    i {
-                                        color: #5DFF2C;
+                                        span {
+                                            padding-left: 0.5em;
+                                            font-size: 3em;
+                                        }
                                     }
-                                }
 
-                                .upload {
-                                    i {
-                                        color: #6FA6FF;
+                                    .dataOfNetwork {
+                                        padding: 0.5em;
+                                        font-size: 2em;
+
+                                        .download {
+                                            i {
+                                                color: #5DFF2C;
+                                            }
+                                        }
+
+                                        .upload {
+                                            i {
+                                                color: #6FA6FF;
+                                            }
+                                        }
                                     }
                                 }
                             }

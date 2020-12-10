@@ -195,11 +195,12 @@ html {
 
             .emptyWrapper {
                 display: none;
-                position: absolute;
-                width: 100%;
+                position: fixed;
+                //                width: 100%;
                 text-align: center;
                 //                left: 2.5em;
-                bottom: 15.5em;
+                top: 3em;
+                left: 20em;
 
                 .empty {
                     width: 100%;
@@ -717,7 +718,6 @@ html {
                                 font-size: 0.5em;
                             }
                         }
-
                     }
                 }
             }
@@ -966,25 +966,22 @@ html {
             }
 
             .card {
-                position: relative;
-                top: 10%;
-                left: 35%;
-                width: 70vw;
+                left: 20%;
+                top: 3%;
+                width: 60vw;
                 border-radius: 1.5em;
                 background-color: #FFFFFF;
+                position: fixed;
                 //            background-color: #C6FFAA;
                 //            text-align: center;
                 z-index: 5;
 
                 .emptyWrapper {
-                    display: none;
-                    position: absolute;
-                    left: 8em;
-                    bottom: 0vw;
-                    top: 83vw;
+                    left: 12em;
+                    top: 30em;
 
                     .empty {
-                        padding: 0.8em 2em;
+                        padding: 1em 2em;
                         border-radius: 0.4em;
                         border: 0.01em solid #FF3B45;
                         display: inline;
@@ -992,7 +989,7 @@ html {
 
                         span {
 
-                            font-size: 1.5em;
+                            font-size: 2em;
                             font-weight: bold;
                             letter-spacing: 0.01em;
                         }
@@ -1007,22 +1004,22 @@ html {
                     text-align: center;
 
                     .titleCard {
-                        padding: 0.3em 0.7em;
+                        padding: 0.5em 0.7em;
                         float: left;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
                     #close {
-                        margin: 0.3em 1em 0 0;
+                        margin: 0.5em 1em 0 0;
                         float: right;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
 
                         &:hover {
@@ -1034,16 +1031,25 @@ html {
                 }
 
                 .formWrapper {
-                    display: none;
-                    clear: both;
+                    #formAddURL {
+                        .form {
+                            li {
+                                &:nth-child(1) {
+                                    .selectWrapper {
+                                        top: 7.1em;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     ul {
                         list-style: none;
                         font-family: circe, sans-serif;
-                        font-size: 1.5em;
+                        font-size: 1em;
 
                         li {
-                            margin: 5% 5%;
+                            margin: 2% 2%;
                             //                        height: 20%;
 
                             &:nth-child(1) {
@@ -1052,8 +1058,8 @@ html {
 
                             &:nth-child(4) {
                                 text-align: center;
-                                height: 15vw;
-                                padding-bottom: 8%;
+                                //                                height: 15vw;
+                                padding-bottom: 4%;
                             }
                         }
                     }
@@ -1106,7 +1112,7 @@ html {
 
                     span {
                         font-family: circe, sans-serif;
-                        font-size: 1.9em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
@@ -1203,14 +1209,6 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                         &:nth-child(4) {
                             color: #F98181;
                         }
@@ -1276,6 +1274,7 @@ html {
 
                     ul {
                         li {
+                            padding: 3em 1em 0.2em 1em;
 
                             .titleOption {
                                 font-size: 2.2em;
@@ -1285,12 +1284,24 @@ html {
                                 font-size: 1.4em;
                             }
 
+                            .bugReport {
+                                font-family: circe, sans-serif;
+
+                                .bugQuestion {
+                                    font-size: 2em;
+                                }
+
+                                .bugMail {
+                                    font-size: 1.4em;
+                                }
+                            }
+
                         }
                     }
                 }
 
                 .addServerWrapper {
-                    margin: 0 4em;
+                    margin: 0;
 
                     .addserver {
                         width: 100%;
@@ -1299,10 +1310,7 @@ html {
                         .titleAddServer {
                             padding-top: 0.5em;
                             text-align: center;
-
-                            span {
-                                font-size: 3em;
-                            }
+                            font-size: 3.5em;
                         }
 
                         .servers {
@@ -1318,16 +1326,72 @@ html {
                         }
 
                         .addServerButtonWrapper {
-                            height: 10vw;
+                            padding-bottom: 1em;
                             margin: 2em 0;
 
-                            #addNew {
-                                margin-bottom: 1em;
+                            #addNewServer {
                                 width: 50%;
-                                padding: 0.2em 0.5em;
-                                border-radius: 1.5em;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
                                 font-size: 2em;
-                                //                                padding: 1% 0;
+                            }
+                        }
+                    }
+                }
+
+                .addURLWrapper {
+                    margin: 0;
+
+                    .addURL {
+                        width: 100%;
+                        border-radius: 1.5em;
+
+                        .titleAddURL {
+                            padding-top: 0.5em;
+                            text-align: center;
+
+                            span {
+                                font-size: 3.5em;
+                            }
+                        }
+
+                        .URL {
+                            ul {
+                                padding: 0.5em 1em 1em 1em;
+
+                                li {
+                                    width: 100%;
+                                    padding: 1em 0.7em 0.2em 0;
+                                    font-size: 2em;
+
+                                    .nameURL {
+                                        padding-left: 0.4em;
+                                        color: #FFFFFF;
+                                        user-select: none;
+                                        font-size: 0.8em;
+                                        outline: none;
+                                        border: 0;
+                                        background-color: rgba(0, 0, 0, 0);
+                                    }
+
+                                    .trashIcon_URL {
+                                        float: right;
+                                        color: #A7A7A7;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        .addURLButtonWrapper {
+                            padding-bottom: 1em;
+                            margin: 1em 0;
+
+                            #addNewURL {
+                                width: 50%;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
+                                font-size: 2em;
                             }
                         }
                     }
@@ -1366,25 +1430,22 @@ html {
             }
 
             .card {
-                position: relative;
-                top: 10%;
-                left: 35%;
-                width: 70vw;
+                left: 20%;
+                top: 3%;
+                width: 60vw;
                 border-radius: 1.5em;
                 background-color: #FFFFFF;
+                position: fixed;
                 //            background-color: #C6FFAA;
                 //            text-align: center;
                 z-index: 5;
 
                 .emptyWrapper {
-                    display: none;
-                    position: absolute;
-                    left: 8em;
-                    bottom: 0vw;
-                    top: 83vw;
+                    left: 12em;
+                    top: 30em;
 
                     .empty {
-                        padding: 0.8em 2em;
+                        padding: 1em 2em;
                         border-radius: 0.4em;
                         border: 0.01em solid #FF3B45;
                         display: inline;
@@ -1392,7 +1453,7 @@ html {
 
                         span {
 
-                            font-size: 1.5em;
+                            font-size: 2em;
                             font-weight: bold;
                             letter-spacing: 0.01em;
                         }
@@ -1407,22 +1468,22 @@ html {
                     text-align: center;
 
                     .titleCard {
-                        padding: 0.3em 0.7em;
+                        padding: 0.5em 0.7em;
                         float: left;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
                     #close {
-                        margin: 0.3em 1em 0 0;
+                        margin: 0.5em 1em 0 0;
                         float: right;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
 
                         &:hover {
@@ -1434,16 +1495,25 @@ html {
                 }
 
                 .formWrapper {
-                    display: none;
-                    clear: both;
+                    #formAddURL {
+                        .form {
+                            li {
+                                &:nth-child(1) {
+                                    .selectWrapper {
+                                        top: 7.1em;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     ul {
                         list-style: none;
                         font-family: circe, sans-serif;
-                        font-size: 1.5em;
+                        font-size: 1em;
 
                         li {
-                            margin: 5% 5%;
+                            margin: 2% 2%;
                             //                        height: 20%;
 
                             &:nth-child(1) {
@@ -1452,8 +1522,8 @@ html {
 
                             &:nth-child(4) {
                                 text-align: center;
-                                height: 15vw;
-                                padding-bottom: 8%;
+                                //                                height: 15vw;
+                                padding-bottom: 4%;
                             }
                         }
                     }
@@ -1506,7 +1576,7 @@ html {
 
                     span {
                         font-family: circe, sans-serif;
-                        font-size: 1.9em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
@@ -1603,14 +1673,6 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                         &:nth-child(4) {
                             color: #F98181;
                         }
@@ -1676,6 +1738,7 @@ html {
 
                     ul {
                         li {
+                            padding: 3em 1em 0.2em 1em;
 
                             .titleOption {
                                 font-size: 2.2em;
@@ -1685,12 +1748,24 @@ html {
                                 font-size: 1.4em;
                             }
 
+                            .bugReport {
+                                font-family: circe, sans-serif;
+
+                                .bugQuestion {
+                                    font-size: 2em;
+                                }
+
+                                .bugMail {
+                                    font-size: 1.4em;
+                                }
+                            }
+
                         }
                     }
                 }
 
                 .addServerWrapper {
-                    margin: 0 4em;
+                    margin: 0;
 
                     .addserver {
                         width: 100%;
@@ -1699,10 +1774,7 @@ html {
                         .titleAddServer {
                             padding-top: 0.5em;
                             text-align: center;
-
-                            span {
-                                font-size: 3em;
-                            }
+                            font-size: 3.5em;
                         }
 
                         .servers {
@@ -1718,16 +1790,72 @@ html {
                         }
 
                         .addServerButtonWrapper {
-                            height: 10vw;
+                            padding-bottom: 1em;
                             margin: 2em 0;
 
-                            #addNew {
-                                margin-bottom: 1em;
+                            #addNewServer {
                                 width: 50%;
-                                padding: 0.2em 0.5em;
-                                border-radius: 1.5em;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
                                 font-size: 2em;
-                                //                                padding: 1% 0;
+                            }
+                        }
+                    }
+                }
+
+                .addURLWrapper {
+                    margin: 0;
+
+                    .addURL {
+                        width: 100%;
+                        border-radius: 1.5em;
+
+                        .titleAddURL {
+                            padding-top: 0.5em;
+                            text-align: center;
+
+                            span {
+                                font-size: 3.5em;
+                            }
+                        }
+
+                        .URL {
+                            ul {
+                                padding: 0.5em 1em 1em 1em;
+
+                                li {
+                                    width: 100%;
+                                    padding: 1em 0.7em 0.2em 0;
+                                    font-size: 2em;
+
+                                    .nameURL {
+                                        padding-left: 0.4em;
+                                        color: #FFFFFF;
+                                        user-select: none;
+                                        font-size: 0.8em;
+                                        outline: none;
+                                        border: 0;
+                                        background-color: rgba(0, 0, 0, 0);
+                                    }
+
+                                    .trashIcon_URL {
+                                        float: right;
+                                        color: #A7A7A7;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        .addURLButtonWrapper {
+                            padding-bottom: 1em;
+                            margin: 1em 0;
+
+                            #addNewURL {
+                                width: 50%;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
+                                font-size: 2em;
                             }
                         }
                     }
@@ -1766,25 +1894,22 @@ html {
             }
 
             .card {
-                position: relative;
-                top: 10%;
-                left: 35%;
-                width: 70vw;
+                left: 20%;
+                top: 3%;
+                width: 60vw;
                 border-radius: 1.5em;
                 background-color: #FFFFFF;
+                position: fixed;
                 //            background-color: #C6FFAA;
                 //            text-align: center;
                 z-index: 5;
 
                 .emptyWrapper {
-                    display: none;
-                    position: absolute;
-                    left: 8em;
-                    bottom: 0vw;
-                    top: 83vw;
+                    left: 12em;
+                    top: 30em;
 
                     .empty {
-                        padding: 0.8em 2em;
+                        padding: 1em 2em;
                         border-radius: 0.4em;
                         border: 0.01em solid #FF3B45;
                         display: inline;
@@ -1792,7 +1917,7 @@ html {
 
                         span {
 
-                            font-size: 1.5em;
+                            font-size: 2em;
                             font-weight: bold;
                             letter-spacing: 0.01em;
                         }
@@ -1807,22 +1932,22 @@ html {
                     text-align: center;
 
                     .titleCard {
-                        padding: 0.3em 0.7em;
+                        padding: 0.5em 0.7em;
                         float: left;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
                     #close {
-                        margin: 0.3em 1em 0 0;
+                        margin: 0.5em 1em 0 0;
                         float: right;
                         color: #FFFFFF;
                         //                color: #000000;
                         font-family: circe, sans-serif;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         font-weight: bold;
 
                         &:hover {
@@ -1834,16 +1959,25 @@ html {
                 }
 
                 .formWrapper {
-                    display: none;
-                    clear: both;
+                    #formAddURL {
+                        .form {
+                            li {
+                                &:nth-child(1) {
+                                    .selectWrapper {
+                                        top: 7.1em;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     ul {
                         list-style: none;
                         font-family: circe, sans-serif;
-                        font-size: 1.5em;
+                        font-size: 1em;
 
                         li {
-                            margin: 5% 5%;
+                            margin: 2% 2%;
                             //                        height: 20%;
 
                             &:nth-child(1) {
@@ -1852,8 +1986,8 @@ html {
 
                             &:nth-child(4) {
                                 text-align: center;
-                                height: 15vw;
-                                padding-bottom: 8%;
+                                //                                height: 15vw;
+                                padding-bottom: 4%;
                             }
                         }
                     }
@@ -1906,7 +2040,7 @@ html {
 
                     span {
                         font-family: circe, sans-serif;
-                        font-size: 1.9em;
+                        font-size: 1.5em;
                         font-weight: bold;
                     }
 
@@ -2003,14 +2137,6 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(2) {
-                            display: none;
-                        }
-
-                        &:nth-child(3) {
-                            display: none;
-                        }
-
                         &:nth-child(4) {
                             color: #F98181;
                         }
@@ -2076,6 +2202,7 @@ html {
 
                     ul {
                         li {
+                            padding: 3em 1em 0.2em 1em;
 
                             .titleOption {
                                 font-size: 2.2em;
@@ -2085,12 +2212,24 @@ html {
                                 font-size: 1.4em;
                             }
 
+                            .bugReport {
+                                font-family: circe, sans-serif;
+
+                                .bugQuestion {
+                                    font-size: 2em;
+                                }
+
+                                .bugMail {
+                                    font-size: 1.4em;
+                                }
+                            }
+
                         }
                     }
                 }
 
                 .addServerWrapper {
-                    margin: 0 4em;
+                    margin: 0;
 
                     .addserver {
                         width: 100%;
@@ -2099,10 +2238,7 @@ html {
                         .titleAddServer {
                             padding-top: 0.5em;
                             text-align: center;
-
-                            span {
-                                font-size: 3em;
-                            }
+                            font-size: 3.5em;
                         }
 
                         .servers {
@@ -2118,16 +2254,72 @@ html {
                         }
 
                         .addServerButtonWrapper {
-                            height: 10vw;
+                            padding-bottom: 1em;
                             margin: 2em 0;
 
-                            #addNew {
-                                margin-bottom: 1em;
+                            #addNewServer {
                                 width: 50%;
-                                padding: 0.2em 0.5em;
-                                border-radius: 1.5em;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
                                 font-size: 2em;
-                                //                                padding: 1% 0;
+                            }
+                        }
+                    }
+                }
+
+                .addURLWrapper {
+                    margin: 0;
+
+                    .addURL {
+                        width: 100%;
+                        border-radius: 1.5em;
+
+                        .titleAddURL {
+                            padding-top: 0.5em;
+                            text-align: center;
+
+                            span {
+                                font-size: 3.5em;
+                            }
+                        }
+
+                        .URL {
+                            ul {
+                                padding: 0.5em 1em 1em 1em;
+
+                                li {
+                                    width: 100%;
+                                    padding: 1em 0.7em 0.2em 0;
+                                    font-size: 2em;
+
+                                    .nameURL {
+                                        padding-left: 0.4em;
+                                        color: #FFFFFF;
+                                        user-select: none;
+                                        font-size: 0.8em;
+                                        outline: none;
+                                        border: 0;
+                                        background-color: rgba(0, 0, 0, 0);
+                                    }
+
+                                    .trashIcon_URL {
+                                        float: right;
+                                        color: #A7A7A7;
+                                    }
+
+                                }
+                            }
+                        }
+
+                        .addURLButtonWrapper {
+                            padding-bottom: 1em;
+                            margin: 1em 0;
+
+                            #addNewURL {
+                                width: 50%;
+                                padding: 0.4em 0.5em;
+                                border-radius: 1em;
+                                font-size: 2em;
                             }
                         }
                     }
