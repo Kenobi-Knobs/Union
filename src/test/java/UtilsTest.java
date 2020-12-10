@@ -1,5 +1,3 @@
-package test.java;
-
 import io.javalin.http.Context;
 import main.java.DBController;
 import main.java.Utils;
@@ -7,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,22 +24,36 @@ class UtilsTest {
 
     UtilsTest() throws ParseException, IOException, SQLException, ClassNotFoundException {}
 
+    @Mock
+    private Context test;
+
     private Context ctx = mock(Context.class);
+
     String config = new String(Files.readAllBytes(Paths.get("config.txt")));
     JSONParser parser = new JSONParser();
     JSONObject jsonConfig = (JSONObject) parser.parse(config);
 
-    public DBController db = new DBController(
-            (String) jsonConfig.get("user"),
-            (String) jsonConfig.get("pass"),
-            (String) jsonConfig.get("url")
-    );
+    public DBController db = new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
+
+    public void executeUpdate(DBController db, String query) throws SQLException {
+        PreparedStatement ps = db.getConnection().prepareStatement(query);
+        ps.executeUpdate();
+        ps.close();
+    }
 
     @Test
     void isOwner() throws SQLException {
-        when(ctx.sessionAttribute("mail")).thenReturn("example@gmail.com");
-        assertTrue(Utils.isOwner(ctx, db, "ewrwe"));
-        assertFalse(Utils.isOwner(ctx, db, "qwerty"));
+        executeUpdate(db,
+                "INSERT INTO `Users` (`mail`, `salt`, `pwd`, `email_confirmed`, `confirm_code`, `settings`) " +
+                        "VALUES ('yura_test@gmail.com', 'wbd55uUmEOErnmDkZ3CZIA', 'eZNyxbDiP3kt9tsCF7ZWfh4zZbPLWLlbVtqMhqwtkf0', 0, 'q8ac1x9jvh9evkal963q', '{\"lang\": \"en\", \"status\": \"user\"}');");
+        executeUpdate(db, "insert into Agents ('public_key', 'secret_key', ')");
+        executeUpdate(db, "INSERT INTO `User_agents` ('public_key') VALUES ('qwerty'");
+        when(ctx.sessionAttribute("mail")).thenReturn("yura_test@gmail.com");
+        assertTrue(Utils.isOwner(ctx, db, "qwerty"));
+        assertFalse(Utils.isOwner(ctx, db, "glsdak"));
+
+        executeUpdate(db, "delete from Users where mail = 'yura_test@gmail.com'");
+        executeUpdate(db, "delete from Users_agents where public_key = 'qwerty'");
 
         db.getConnection().close();
     }
@@ -73,6 +86,7 @@ class UtilsTest {
 
     @Test
     void addAgentValidation() throws SQLException {
+        when(test.formParam("123")).thenReturn("123");
         when(ctx.formParam("public_key")).thenReturn("yura_test");
         when(ctx.formParam("secret_key")).thenReturn("secret-key");
         when(ctx.formParam("host")).thenReturn("google.com");

@@ -31,7 +31,7 @@ public class API {
             jsonResult.put("mail", ctx.sessionAttribute("mail"));
             jsonResult.put("auth", "true");
             jsonResult.put("status", ctx.sessionAttribute("status"));
-        }else{
+        } else {
             jsonResult.put("auth", "false");
         }
 

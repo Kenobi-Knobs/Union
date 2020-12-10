@@ -1,5 +1,3 @@
-package test.java;
-
 import io.javalin.http.Context;
 import main.java.DBController;
 import main.java.Mail;
