@@ -349,18 +349,22 @@ html {
     padding: 0 0.2em;
   }
   .pageWrapper .infoWrapper .info {
-    top: 25%;
-    left: 10%;
-    padding: 3%;
-    width: 80vw;
+    top: 35%;
+    left: 20%;
+    padding: 1%;
+    width: 60vw;
+    border-radius: 0.4em;
   }
-  .pageWrapper .infoWrapper .info span {
+  .pageWrapper .infoWrapper .info .infoContentWrapper span {
+    width: 100%;
+    color: #FFFFFF;
     font-size: 1.5em;
   }
-  .pageWrapper .infoWrapper .info input[type=button] {
-    margin: 10% 0 0 30%;
+  .pageWrapper .infoWrapper .info .infoContentWrapper input[type=button] {
+    margin: 5% 0;
     padding: 1% 3%;
     width: 40%;
+    border-radius: 0.4em;
     font-size: 1.5em;
   }
   .pageWrapper .header {
@@ -460,17 +464,21 @@ html {
   }
   .pageWrapper .infoWrapper .info {
     top: 35%;
-    left: 10%;
-    padding: 3%;
-    width: 80vw;
+    left: 20%;
+    padding: 1%;
+    width: 60vw;
+    border-radius: 0.4em;
   }
-  .pageWrapper .infoWrapper .info span {
+  .pageWrapper .infoWrapper .info .infoContentWrapper span {
+    width: 100%;
+    color: #FFFFFF;
     font-size: 1.5em;
   }
-  .pageWrapper .infoWrapper .info input[type=button] {
-    margin: 10% 0 0 30%;
+  .pageWrapper .infoWrapper .info .infoContentWrapper input[type=button] {
+    margin: 5% 0;
     padding: 1% 3%;
     width: 40%;
+    border-radius: 0.4em;
     font-size: 1.5em;
   }
   .pageWrapper .header {
@@ -570,17 +578,21 @@ html {
   }
   .pageWrapper .infoWrapper .info {
     top: 35%;
-    left: 10%;
-    padding: 3%;
-    width: 80vw;
+    left: 20%;
+    padding: 1%;
+    width: 60vw;
+    border-radius: 0.4em;
   }
-  .pageWrapper .infoWrapper .info span {
+  .pageWrapper .infoWrapper .info .infoContentWrapper span {
+    width: 100%;
+    color: #FFFFFF;
     font-size: 1.5em;
   }
-  .pageWrapper .infoWrapper .info input[type=button] {
-    margin: 10% 0 0 30%;
+  .pageWrapper .infoWrapper .info .infoContentWrapper input[type=button] {
+    margin: 5% 0;
     padding: 1% 3%;
     width: 40%;
+    border-radius: 0.4em;
     font-size: 1.5em;
   }
   .pageWrapper .header {

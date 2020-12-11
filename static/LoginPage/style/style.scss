@@ -425,20 +425,29 @@ html {
 
         .infoWrapper {
             .info {
-                top: 25%;
-                left: 10%;
-                padding: 3%;
-                width: 80vw;
 
-                span {
-                    font-size: 1.5em;
-                }
+                top: 35%;
+                left: 20%;
+                padding: 1%;
+                width: 60vw;
+                border-radius: 0.4em;
 
-                input[type="button"] {
-                    margin: 10% 0 0 30%;
-                    padding: 1% 3%;
-                    width: 40%;
-                    font-size: 1.5em;
+                .infoContentWrapper {
+
+
+                    span {
+                        width: 100%;
+                        color: #FFFFFF;
+                        font-size: 1.5em;
+                    }
+
+                    input[type="button"] {
+                        margin: 5% 0;
+                        padding: 1% 3%;
+                        width: 40%;
+                        border-radius: 0.4em;
+                        font-size: 1.5em;
+                    }
                 }
             }
         }
@@ -589,23 +598,33 @@ html {
 
         .infoWrapper {
             .info {
+
                 top: 35%;
-                left: 10%;
-                padding: 3%;
-                width: 80vw;
+                left: 20%;
+                padding: 1%;
+                width: 60vw;
+                border-radius: 0.4em;
 
-                span {
-                    font-size: 1.5em;
-                }
+                .infoContentWrapper {
 
-                input[type="button"] {
-                    margin: 10% 0 0 30%;
-                    padding: 1% 3%;
-                    width: 40%;
-                    font-size: 1.5em;
+
+                    span {
+                        width: 100%;
+                        color: #FFFFFF;
+                        font-size: 1.5em;
+                    }
+
+                    input[type="button"] {
+                        margin: 5% 0;
+                        padding: 1% 3%;
+                        width: 40%;
+                        border-radius: 0.4em;
+                        font-size: 1.5em;
+                    }
                 }
             }
         }
+
 
         .header {
             margin-top: 20%;
@@ -753,20 +772,29 @@ html {
 
         .infoWrapper {
             .info {
+
                 top: 35%;
-                left: 10%;
-                padding: 3%;
-                width: 80vw;
+                left: 20%;
+                padding: 1%;
+                width: 60vw;
+                border-radius: 0.4em;
 
-                span {
-                    font-size: 1.5em;
-                }
+                .infoContentWrapper {
 
-                input[type="button"] {
-                    margin: 10% 0 0 30%;
-                    padding: 1% 3%;
-                    width: 40%;
-                    font-size: 1.5em;
+
+                    span {
+                        width: 100%;
+                        color: #FFFFFF;
+                        font-size: 1.5em;
+                    }
+
+                    input[type="button"] {
+                        margin: 5% 0;
+                        padding: 1% 3%;
+                        width: 40%;
+                        border-radius: 0.4em;
+                        font-size: 1.5em;
+                    }
                 }
             }
         }
