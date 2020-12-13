@@ -1,12 +1,14 @@
-import static org.junit.jupiter.api.Assertions.*;
+package test.java;
+
+import org.junit.jupiter.api.Test;
 
 class ServerTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void main() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void cors() {
     }
 }

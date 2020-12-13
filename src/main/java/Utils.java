@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 public class Utils {
-    static JSONParser parser = new JSONParser();
+    public static JSONParser parser = new JSONParser();
 
     public static boolean isOwner(Context ctx, DBController db, String publicKey) {
         String mail = ctx.sessionAttribute("mail");
@@ -111,16 +111,13 @@ public class Utils {
         String secretKey = ctx.formParam("secret_key");
         String host = ctx.formParam("host");
 
-        // public key
         Pattern pattern = Pattern.compile("^[a-zA-Z]+[a-zA-Z0-9_-]*$", Pattern.CASE_INSENSITIVE);
         Matcher pkMatcher = pattern.matcher(publicKey.toLowerCase());
 
-        // secret key
         pattern = Pattern.compile("^[a-zA-Z0-9\\-]+$", Pattern.CASE_INSENSITIVE);
         Matcher skMatcher = pattern.matcher(secretKey);
 
-        // host
-        pattern = Pattern.compile("^\\w+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
+        pattern = Pattern.compile("^[\\w0-9.]+\\.\\w{2,}$", Pattern.CASE_INSENSITIVE);
         Matcher hostMatcher = pattern.matcher(host.toLowerCase());
 
         return (pkMatcher.find() && skMatcher.find() && hostMatcher.find() && !(publicKey.equals(host)));

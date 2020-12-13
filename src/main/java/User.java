@@ -345,7 +345,6 @@ public class User {
                     return jsonResult.toJSONString();
                 }
                 if (downTiming < pingInterval || downTiming <= 0 || downTiming > 60) {
-                    System.out.println("HERE");
                     ctx.status(400);
                     return "bad request";
                 }
@@ -379,13 +378,11 @@ public class User {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                     ctx.status(400);
-                    System.out.println("HERE1");
                     return "bad request";
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 ctx.status(400);
-                System.out.println("HERE2");
                 return "bad request";
             }
         } else {
@@ -423,18 +420,15 @@ public class User {
                     System.out.println(ctx.sessionAttribute("mail") + " delete " + address + " from activePing");
                 } else {
                     ctx.status(400);
-                    System.out.println("HERE3");
                     return "Bad request";
                 }
                 return jsonResult.toJSONString();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
                 ctx.status(400);
-                System.out.println("HERE2");
                 return "Bad request";
             }
         } else {
-            System.out.println("HERE1");
             ctx.status(400);
             return "Bad request";
         }

@@ -1,3 +1,5 @@
+package test.java;
+
 import main.java.ActivePing;
 import main.java.DBController;
 import org.json.simple.JSONObject;
@@ -24,10 +26,9 @@ class ActivePingTest {
     String config = new String(Files.readAllBytes(Paths.get("config.txt")));
     JSONParser parser = new JSONParser();
     JSONObject jsonConfig = (JSONObject) parser.parse(config);
+    private DBController db = new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
 
-    public DBController db = new DBController((String) jsonConfig.get("test-user"), (String) jsonConfig.get("test-pass"), (String) jsonConfig.get("test-url"));
-
-    public void executeUpdate(DBController db, String query) throws SQLException {
+    private void executeUpdate(String query) throws SQLException {
         PreparedStatement ps = db.getConnection().prepareStatement(query);
         ps.executeUpdate();
         ps.close();
@@ -37,9 +38,12 @@ class ActivePingTest {
 
     @Test
     void getPingList() throws SQLException {
-        executeUpdate(db, "INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, '3', 'https://googled.com', '1', NULL, '200', '1', NULL);");
-        executeUpdate(db, "INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, '2', 'https://googles.com', '1', NULL, '200', '1', NULL);");
-        executeUpdate(db, "INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, '1', 'https://google.com', '1', NULL, '200', '1', NULL);");
+        executeUpdate("insert into Users (mail, salt, pwd, settings) values ('getPingListExample@test.com', 'prHpPCZF_dqKEQx9AvWXrA', '5eeS2WuWwlX5TujPjtdpI9nHDxOepgtCYa1aiNC80t0', '{}')");
+        executeUpdate("insert into Users (mail, salt, pwd, settings) values ('getPingListAdmin@test.com', 'prHpPCZF_dqKEQx9AvWXrA', '5eeS2WuWwlX5TujPjtdpI9nHDxOepgtCYa1aiNC80t0', '{}')");
+        executeUpdate("insert into Users (mail, salt, pwd, settings) values ('getPingListUser@test.com', 'prHpPCZF_dqKEQx9AvWXrA', '5eeS2WuWwlX5TujPjtdpI9nHDxOepgtCYa1aiNC80t0', '{}')");
+        executeUpdate("INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, (select id from Users where mail = 'getPingListExample@test.com'), 'https://googled.com', '1', NULL, '200', '1', NULL);");
+        executeUpdate("INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, (select id from Users where mail = 'getPingListAdmin@test.com'), 'https://googles.com', '1', NULL, '200', '1', NULL);");
+        executeUpdate("INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, (select id from Users where mail = 'getPingListUser@test.com'), 'https://google.com', '1', NULL, '200', '1', NULL);");
         ArrayList<String> expArray = new ArrayList<>();
         expArray.add("https://googled.com|0|1|1");
         expArray.add("https://googles.com|0|1|1");
@@ -54,13 +58,17 @@ class ActivePingTest {
         }
 
         assertArrayEquals(expArray.toArray(), preparedActualArray.toArray());
-        executeUpdate(db, "DELETE FROM `DownList` WHERE 1");
-        executeUpdate(db, "DELETE FROM `PingList` WHERE 1");
+        executeUpdate("DELETE FROM `DownList` WHERE 1");
+        executeUpdate("DELETE FROM `PingList` WHERE 1");
+        executeUpdate("delete from Users where 1");
+
+        db.getConnection().close();
     }
 
     @Test
     void pingList() throws SQLException, InterruptedException {
-        executeUpdate(db, "INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, '3', 'https://googled.com', '1', NULL, '502', '1', NULL);");
+        executeUpdate("insert into Users (mail, salt, pwd, settings) values ('example@gmail.com', 'prHpPCZF_dqKEQx9AvWXrA', '5eeS2WuWwlX5TujPjtdpI9nHDxOepgtCYa1aiNC80t0', '{}')");
+        executeUpdate("INSERT INTO `PingList` (`id`, `user_id`, `address`, `ping_interval`, `last_ping_time`, `last_code`, `down_timing`, `current_down`) VALUES (NULL, (select id from Users where mail = 'example@gmail.com'), 'https://googled.com', '1', NULL, '502', '1', NULL);");
 
         ArrayList<String> testList1;
         testList1 = ap.getPingList(db);
@@ -72,7 +80,7 @@ class ActivePingTest {
         testList2 = ap.getPingList(db);
         System.out.println(testList2);
         ap.pingList(testList2,db);
-        executeUpdate(db, "UPDATE `PingList` SET address = \"https://google.com\" WHERE 1");
+        executeUpdate("UPDATE `PingList` SET address = \"https://google.com\" WHERE 1");
 
         Thread.sleep(65000);
         ArrayList<String> testList3;
@@ -84,12 +92,15 @@ class ActivePingTest {
         PreparedStatement ps = db.getConnection().prepareStatement(query);
         ResultSet res = ps.executeQuery();
         int counter = 0;
-        while(res.next()){
+        while(res.next()) {
             counter++;
         }
         assertEquals(1, counter);
-        executeUpdate(db, "DELETE FROM `PingList` WHERE 1");
-        executeUpdate(db, "DELETE FROM `DownList` WHERE 1");
+        executeUpdate("DELETE FROM `PingList` WHERE 1");
+        executeUpdate("DELETE FROM `DownList` WHERE 1");
+        executeUpdate("delete from Users where mail = 'example@gmail.com'");
+
+        db.getConnection().close();
     }
 
     @Test
