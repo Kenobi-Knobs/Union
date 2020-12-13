@@ -339,13 +339,13 @@ public class API {
     public static String getActivePingData(Context ctx, DBController db) {
         JSONObject jsonResult = new JSONObject();
         JSONArray jsonPings = new JSONArray();
-        if(authCheck(ctx)){
+        if (authCheck(ctx)) {
             String mail = ctx.sessionAttribute("mail");
             String getPingList = "SELECT * FROM PingList WHERE user_id = (SELECT id FROM Users WHERE mail = ?);";
             String getDown = "SELECT * FROM DownList WHERE ping_id = ? and down_confirm = 1 and end = 1";
             try {
                 PreparedStatement ps = db.getConnection().prepareStatement(getPingList);
-                ps.setString(1,mail);
+                ps.setString(1, mail);
                 ResultSet res = ps.executeQuery();
                 while (res.next()) {
                     JSONArray jsonDowns = new JSONArray();
@@ -355,9 +355,9 @@ public class API {
                     jsonPing.put("down_timing", res.getInt("down_timing"));
                     jsonPing.put("last_ping_time", res.getInt("last_ping_time"));
                     jsonPing.put("last_code", res.getInt("last_code"));
-                    if(res.getInt("last_code") >= 200 && res.getInt("last_code") <= 399){
+                    if (res.getInt("last_code") >= 200 && res.getInt("last_code") <= 399) {
                         jsonPing.put("current_down", "false");
-                    }else{
+                    } else {
                         jsonPing.put("current_down", "true");
                     }
                     PreparedStatement ps1 = db.getConnection().prepareStatement(getDown);
@@ -381,7 +381,7 @@ public class API {
                 ctx.status(400);
                 return "Bad request";
             }
-        }else{
+        } else {
             ctx.status(400);
             return "Unauthorized";
         }
@@ -456,6 +456,7 @@ public class API {
         JSONObject jsonResult = new JSONObject();
         if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
             if (ctx.queryParam("mail") != null && !(ctx.queryParam("mail").equals(ctx.sessionAttribute("mail")))) {
+                System.out.println("works");
                 String mail = ctx.queryParam("mail");
                 String delUserAgent = "DELETE FROM User_agents WHERE user_id = (SELECT id from Users where mail = ?)";
                 String delUser = "DELETE FROM Users WHERE mail = ?";

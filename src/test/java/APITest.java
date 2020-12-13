@@ -11,6 +11,7 @@ import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -110,6 +111,12 @@ class APITest {
     }
 
     @Test
+    void setAgentData() throws SQLException {
+        //executeUpdate("insert into Agents (public_key, secret_key, host) values ('setAgentData', 'D96B6E76CB921F0AA7E981C55BC88C3D184D3C0232D1B1C297B9260C6387263B', 'google.com')");
+
+    }
+
+    @Test
     void getAgentDataByInterval() {
         assertEquals("Unauthorized", API.getAgentDataByInterval(ctx, db));
 
@@ -191,9 +198,42 @@ class APITest {
     }
 
     @Test
-    void setAgentData() throws SQLException {
-        //executeUpdate("insert into Agents (public_key, secret_key, host) values ('setAgentData', 'D96B6E76CB921F0AA7E981C55BC88C3D184D3C0232D1B1C297B9260C6387263B', 'google.com')");
+    void getActivePingData() throws SQLException {
+        JSONObject jsonPing = new JSONObject();
+        JSONObject jsonDown = new JSONObject();
+        JSONArray jsonPings = new JSONArray();
+        JSONArray jsonDowns = new JSONArray();
+        JSONObject json = new JSONObject();
 
+        assertEquals("Unauthorized", API.getActivePingData(ctx, db));
+
+        when(ctx.sessionAttribute("auth")).thenReturn("true");
+        when(ctx.sessionAttribute("mail")).thenReturn("getActivePingData@test.com");
+        executeUpdate("insert into Users (mail, salt, pwd, settings) values ('getActivePingData@test.com', 'wbd55uUmEOErnmDkZ3CZIA', 'eZNyxbDiP3kt9tsCF7ZWfh4zZbPLWLlbVtqMhqwtkf0', '{}')");
+        executeUpdate("insert into PingList (id, user_id, address, ping_interval, last_ping_time, last_code, down_timing, current_down) " +
+         "values (null, (select id from Users where mail = 'getActivePingData@test.com'), 'https://googled.com', '1', null, '502', '1', null);");
+        executeUpdate("insert into DownList (id, ping_id, time, down_time, code, down_confirm, end) values " +
+                "(null, (select id from PingList where user_id = (select id from Users where mail = 'getActivePingData@test.com')), 1, 1, 1, 1, 1);");
+        jsonPing.put("address", "https://googled.com");
+        jsonPing.put("ping_interval", 1);
+        jsonPing.put("down_timing", 1);
+        jsonPing.put("last_ping_time", 0);
+        jsonPing.put("last_code", 502);
+        jsonPing.put("current_down", "true");
+        jsonPings.add(jsonPing);
+        jsonDown.put("start_time", 1);
+        jsonDown.put("down_duration", 1);
+        jsonDown.put("code", 1);
+        jsonDowns.add(jsonDown);
+        jsonPing.put("downs", jsonDowns);
+        json.put("pings", jsonPings);
+        assertEquals(json.toString().replaceAll("\\\\", ""), API.getActivePingData(ctx, db));
+
+        executeUpdate("delete from DownList where 1");
+        executeUpdate("delete from PingList where 1");
+        executeUpdate("delete from Users where 1");
+
+        db.getConnection().close();
     }
 
     @Test
