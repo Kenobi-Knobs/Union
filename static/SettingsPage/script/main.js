@@ -266,7 +266,7 @@
             return this.optional(element) || /^[a-zA-Z0-9\-]+$/gm.test(value);
         });
         $.validator.addMethod("validHost", function (value, element) {
-            return this.optional(element) || /^\w+\.\w{2,}$/gm.test(value);
+            return this.optional(element) || /^[\w0-9.]+\.\w{2,}$/gm.test(value);
         });
 
         //получаем список агентов
