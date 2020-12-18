@@ -124,7 +124,7 @@ public class Utils {
     }
 
     public static boolean pingValidation(String address) {
-        Pattern pattern = Pattern.compile("^((http[s]?|ftp):/)/([\\w0-9.]+)\\.(\\w{2,})((/\\w+)*/?)([.\\w?=#]*)?(#[\\w\\-]+)?$", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("^((http[s]?|ftp):\\/)\\/([\\w0-9-.]+)\\.(\\w{2,})((\\/[\\w-]+)*\\/?)([.-\\w?=#]*)?(#[\\w\\-]+)?$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(address.toLowerCase());
 
         return matcher.find();
