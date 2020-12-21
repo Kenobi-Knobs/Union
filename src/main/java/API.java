@@ -557,7 +557,7 @@ public class API {
             return "Bad request db";
         }
 
-        return jsonResult.toJSONString();
+        return jsonResult.toJSONString().replaceAll("\\\\","");
     }
 
     public static JSONObject getPing(String address, DBController db) throws SQLException {
@@ -571,6 +571,7 @@ public class API {
             int code = res.getInt("last_code");
             item.put("last_ping_time", time);
             item.put("last_code", code);;
+            item.put("url", address.trim());
             pingPs.close();
             return item;
         }else{
