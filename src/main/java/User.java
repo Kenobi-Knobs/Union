@@ -353,9 +353,10 @@ public class User {
                 long currentTime = date.getTime() / 1000L;
 
                 try {
-                    int code = ActivePing.ping(address);
-                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`, `last_code`)" +
-                            " VALUES ((SELECT id FROM Users WHERE mail = ?), ?, ?, ?, ?, ?)";
+                    long[] pingResult = ActivePing.ping(address);
+                    int code = (int) pingResult[0];
+                    String insertQuery = "INSERT IGNORE INTO `PingList`(`user_id`, `address`, `ping_interval`, `last_ping_time`, `down_timing`, `last_code`, `response_time`)" +
+                            " VALUES ((SELECT id FROM Users WHERE mail = ?), ?, ?, ?, ?, ?, ?)";
                     PreparedStatement insertPs = db.getConnection().prepareStatement(insertQuery);
                     insertPs.setString(1, ctx.sessionAttribute("mail"));
                     insertPs.setString(2, address);
@@ -363,6 +364,7 @@ public class User {
                     insertPs.setLong(4, currentTime);
                     insertPs.setInt(5, downTiming);
                     insertPs.setInt(6, code);
+                    insertPs.setInt(7, (int)pingResult[1]);
                     int col = insertPs.executeUpdate();
                     insertPs.close();
                     if (col <= 0) {

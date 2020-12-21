@@ -356,6 +356,7 @@ public class API {
                     jsonPing.put("down_timing", res.getInt("down_timing"));
                     jsonPing.put("last_ping_time", res.getInt("last_ping_time"));
                     jsonPing.put("last_code", res.getInt("last_code"));
+                    jsonPing.put("response_time", res.getInt("response_time"));
                     if (res.getInt("last_code") >= 200 && res.getInt("last_code") <= 399) {
                         jsonPing.put("current_down", "false");
                     } else {
@@ -455,34 +456,34 @@ public class API {
 
     public static String deleteUser(Context ctx, DBController db){
         JSONObject jsonResult = new JSONObject();
-        if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin")){
-            if (ctx.queryParam("mail") != null && !(ctx.queryParam("mail").equals(ctx.sessionAttribute("mail")))) {
-                System.out.println("works");
-                String mail = ctx.queryParam("mail");
-                String delUserAgent = "DELETE FROM User_agents WHERE user_id = (SELECT id from Users where mail = ?)";
-                String delUser = "DELETE FROM Users WHERE mail = ?";
-                try {
-                    PreparedStatement delUAPs = db.getConnection().prepareStatement(delUserAgent);
-                    delUAPs.setString(1, mail);
-                    delUAPs.executeUpdate();
-                    delUAPs.close();
-                    PreparedStatement delUPs = db.getConnection().prepareStatement(delUser);
-                    delUPs.setString(1, mail);
-                    delUPs.executeUpdate();
-                    delUPs.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                    jsonResult.put("user_delete", "false");
-                    ctx.status(200);
-                    return jsonResult.toJSONString();
-                }
-                jsonResult.put("user_delete", "true");
+
+        if (ctx.queryParam("mail") == null ) {
+            ctx.status(400);
+            return "Bad request";
+        }
+
+        if (authCheck(ctx) &&  ctx.sessionAttribute("status").equals("admin") || ctx.queryParam("mail").equals(ctx.sessionAttribute("mail"))){
+            String mail = ctx.queryParam("mail");
+            String delUserAgent = "DELETE FROM User_agents WHERE user_id = (SELECT id from Users where mail = ?)";
+            String delUser = "DELETE FROM Users WHERE mail = ?";
+            try {
+                PreparedStatement delUAPs = db.getConnection().prepareStatement(delUserAgent);
+                delUAPs.setString(1, mail);
+                delUAPs.executeUpdate();
+                delUAPs.close();
+                PreparedStatement delUPs = db.getConnection().prepareStatement(delUser);
+                delUPs.setString(1, mail);
+                delUPs.executeUpdate();
+                delUPs.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                jsonResult.put("user_delete", "false");
                 ctx.status(200);
                 return jsonResult.toJSONString();
-            } else {
-                ctx.status(400);
-                return "Bad request";
             }
+            jsonResult.put("user_delete", "true");
+            ctx.status(200);
+            return jsonResult.toJSONString();
         } else {
             ctx.status(200);
             return "No access";

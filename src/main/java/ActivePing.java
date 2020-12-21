@@ -47,7 +47,8 @@ public class ActivePing {
             int downTiming = Integer.parseInt(parse[3]);
             int pingInterval = Integer.parseInt(parse[4]);
 
-            int code = ping(address);
+            long[] resultPing = ping(address);
+            int code = (int)resultPing[0];
             boolean error = !(code >= 200 && code <= 399);
             boolean down = (currentDown != 0);
             // System.out.println(address + " " + code);
@@ -129,11 +130,12 @@ public class ActivePing {
             }
             // изменяем время последнего пинга
             try{
-                String query = "UPDATE `PingList` SET `last_ping_time`= ?, last_code = ? WHERE `id` = ?";
+                String query = "UPDATE `PingList` SET `last_ping_time`= ?, last_code = ?, `response_time` = ? WHERE `id` = ?";
                 PreparedStatement ps = db.getConnection().prepareStatement(query);
                 ps.setLong(1,currentTime);
                 ps.setInt(2,code);
-                ps.setInt(3,id);
+                ps.setInt(3,(int)resultPing[1]);
+                ps.setInt(4,id);
                 ps.executeUpdate();
                 ps.close();
             } catch (SQLException throwables) {
@@ -142,22 +144,33 @@ public class ActivePing {
         }
     }
 
-    public static int ping(String address) {
+    public static long[] ping(String address) {
+        long[] result = new long[2];
         int code = 0;
+        long elasedTime = 0;
         try {
             URL url = new URL(address);
             if (address.startsWith("http://")) {
+                long starTime = System.currentTimeMillis();
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setInstanceFollowRedirects(true);
                 code = http.getResponseCode();
+                elasedTime = System.currentTimeMillis() - starTime;
             } else if (address.startsWith("https://")) {
+                long starTime = System.currentTimeMillis();
                 HttpsURLConnection https = (HttpsURLConnection) url.openConnection();
                 https.setInstanceFollowRedirects(true);
                 code = https.getResponseCode();
+                elasedTime = System.currentTimeMillis() - starTime;
             }
         } catch (IOException e) {
             code = 1006;
         }
-        return code;
+        result[0] = code;
+        result[1] = elasedTime;
+
+        //System.out.println(code + " | " + elasedTime + " ms");
+
+        return result;
     }
 }
