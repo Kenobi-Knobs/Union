@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
@@ -502,6 +503,77 @@ public class API {
         } else {
             ctx.status(200);
             return "No access";
+        }
+    }
+
+    public static String getDashboard(Context ctx, DBController db) {
+        JSONObject jsonResult = new JSONObject();
+        String token = ctx.queryParam("token");
+        String dashboardQ = "SELECT * FROM `Dashboards` WHERE `token` = ?;";
+        String userQ = "SELECT `mail` FROM `Users` WHERE `id` = ?;";
+
+        String text;
+        String urls;
+        String mail;
+        int userId;
+
+        try{
+            PreparedStatement dashboardPs = db.getConnection().prepareStatement(dashboardQ);
+            dashboardPs.setString(1, token);
+            ResultSet res = dashboardPs.executeQuery();
+            if (res.next()) {
+                userId = res.getInt("user_id");
+                text = res.getString("text");
+                urls = res.getString("urls");
+                jsonResult.put("text",text);
+            }else{
+                ctx.status(400);
+                return "Bad request";
+            }
+
+            PreparedStatement userPs = db.getConnection().prepareStatement(userQ);
+            userPs.setInt(1, userId);
+            ResultSet res1 = userPs.executeQuery();
+            if (res1.next()) {
+                mail = res1.getString("mail");
+                jsonResult.put("mail",mail);
+            }else{
+                ctx.status(400);
+                return "Bad request";
+            }
+
+            JSONArray jsonUrls = new JSONArray();
+            String[] urlArray = urls.split(",");
+
+            for(int i = 0; i < urlArray.length; i++){
+                jsonUrls.add(getPing(urlArray[i], db));
+            }
+            jsonResult.put("urls", jsonUrls);
+
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+            ctx.status(400);
+            return "Bad request db";
+        }
+
+        return jsonResult.toJSONString();
+    }
+
+    public static JSONObject getPing(String address, DBController db) throws SQLException {
+        String pingQ = "SELECT `last_ping_time`, `last_code` FROM `PingList` WHERE `address` = ?;";
+        JSONObject item = new JSONObject();
+        PreparedStatement pingPs = db.getConnection().prepareStatement(pingQ);
+        pingPs.setString(1, address.trim());
+        ResultSet res =  pingPs.executeQuery();
+        if (res.next()) {
+            int time = res.getInt("last_ping_time");
+            int code = res.getInt("last_code");
+            item.put("last_ping_time", time);
+            item.put("last_code", code);;
+            pingPs.close();
+            return item;
+        }else{
+            return null;
         }
     }
 

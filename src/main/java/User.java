@@ -456,4 +456,78 @@ public class User {
             return "Bad Request";
         }
     }
+
+    public static String createOrUpdateDashboard(Context ctx, DBController db) {
+        if (!API.authCheck(ctx)) {
+            ctx.status(401);
+            return "Unauthorized";
+        }
+        if (ctx.formParam("data") == null || ctx.formParam("urls") == null){
+            ctx.status(400);
+            return "Bad request";
+        }
+
+        JSONObject jsonResult = new JSONObject();
+        String mail = ctx.sessionAttribute("mail");
+        String checkQuery = "SELECT id, token FROM `Dashboards` WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?)";
+        try {
+            PreparedStatement psCheck = db.getConnection().prepareStatement(checkQuery);
+            psCheck.setString(1, mail);
+            ResultSet res = psCheck.executeQuery();
+            if(!res.next()){
+                String token = Utils.generateKey();
+                String insertQuery = "INSERT INTO `Dashboards`(`user_id`, `token`, `text`, `urls`) VALUES ((SELECT id FROM Users WHERE mail = ?),?,?,?)";
+                PreparedStatement psInsert = db.getConnection().prepareStatement(insertQuery);
+                psInsert.setString(1, mail);
+                psInsert.setString(2, token);
+                psInsert.setString(3, ctx.formParam("data"));
+                psInsert.setString(4, ctx.formParam("urls"));
+                psInsert.executeUpdate();
+                psInsert.close();
+                jsonResult.put("create_or_update", "true");
+                jsonResult.put("info", "create");
+                jsonResult.put("token", token);
+                return jsonResult.toJSONString();
+            }else{
+                String UpdateQuery = "UPDATE `Dashboards` SET `text`= ?,`urls`= ? WHERE `id` = ?;";
+                PreparedStatement psUpdate = db.getConnection().prepareStatement(UpdateQuery);
+                psUpdate.setString(1, ctx.formParam("data"));
+                psUpdate.setString(2, ctx.formParam("urls"));
+                psUpdate.setInt(3, res.getInt("id"));
+                psUpdate.executeUpdate();
+                psUpdate.close();
+                jsonResult.put("create_or_update", "true");
+                jsonResult.put("info", "update");
+                jsonResult.put("token", res.getString("token"));
+                return jsonResult.toJSONString();
+            }
+        }catch(SQLException throwables){
+            ctx.status(400);
+            return "Bad request";
+        }
+    }
+
+    public static String getDashboardToken(Context ctx, DBController db) {
+        if (!API.authCheck(ctx)) {
+            ctx.status(401);
+            return "Unauthorized";
+        }
+        JSONObject jsonResult = new JSONObject();
+        String mail = ctx.sessionAttribute("mail");
+        String checkQuery = "SELECT token FROM `Dashboards` WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?)";
+        try {
+            PreparedStatement psCheck = db.getConnection().prepareStatement(checkQuery);
+            psCheck.setString(1, mail);
+            ResultSet res = psCheck.executeQuery();
+            if(!res.next()){
+                jsonResult.put("token", "null");
+            }else{
+                jsonResult.put("token", res.getString("token"));
+            }
+            return jsonResult.toJSONString();
+        }catch(SQLException throwables){
+            ctx.status(400);
+            return "Bad request";
+        }
+    }
 }

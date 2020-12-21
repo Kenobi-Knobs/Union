@@ -46,6 +46,9 @@ public class Server {
         app.config.addStaticFiles( "/javadoc","javadoc/", Location.EXTERNAL);
         app.config.addStaticFiles( "/404","static/NotFoundPage", Location.EXTERNAL);
         app.config.addStaticFiles( "/api/404","static/NotFoundPage", Location.EXTERNAL);
+        app.config.addStaticFiles( "/dashboard","static/DashboardPage/", Location.EXTERNAL);
+        app.config.addStaticFiles( "/create-dashboard","static/CreateDashboardPage/", Location.EXTERNAL);
+
 
         DBController db = new DBController((String) jsonConfig.get("user"), (String) jsonConfig.get("pass"), (String) jsonConfig.get("url"));
         System.out.println("Database connect: [OK]");
@@ -61,6 +64,7 @@ public class Server {
 
         app.error(404, ctx -> API.sendHtml(ctx, "static/NotFoundPage/index.html", "public", "/"));
 
+        app.get("/create-dashboard", ctx -> API.sendHtml(ctx, "static/CreateDashboardPage/index.html", "auth_only", "/login"));
         app.get("/url-monitor", ctx -> API.sendHtml(ctx, "static/URLMonitorPage/index.html", "auth_only", "/login"));
         app.get("/admin", ctx -> API.sendHtml(ctx, "static/AdminPage/index.html", "admin_only", "/"));
         app.get("/statistic", ctx -> API.sendHtml(ctx, "static/StatisticPage/index.html", "auth_only", "/login"));
@@ -69,6 +73,10 @@ public class Server {
         app.get("/new-password/:token", ctx -> {
             Utils.showChangedPasswordPage(ctx, db);
         });
+        app.get("/dashboard/:token", ctx -> {
+            Utils.showDashboard(ctx, db);
+        });
+
         app.get("/reset", ctx -> {
             API.sendHtml(ctx, "static/ResetPasswordPage/index.html", "public", "/login");
         });
@@ -148,6 +156,15 @@ public class Server {
             if (API.checkCSRF(ctx)) ctx.result(User.deleteActivePing(ctx, db));
             else ctx.result("CSRF invalid");
         });
+
+        app.post("/api/createOrUpdateDashboard", ctx -> {
+            cors(ctx);
+            if (API.checkCSRF(ctx)) ctx.result(User.createOrUpdateDashboard(ctx, db));
+            else ctx.result("CSRF invalid");
+        });
+        app.get("/api/getDashboardToken", ctx -> { cors(ctx); ctx.result(User.getDashboardToken(ctx, db)); });
+        app.get("/api/getDashboard", ctx -> { cors(ctx); ctx.result(API.getDashboard(ctx, db));});
+
         app.get("/api/getActivePingData", ctx -> { cors(ctx); ctx.result(API.getActivePingData(ctx, db)); });
         app.get("/api/ping", ctx -> {cors(ctx); ctx.result(API.checkService(ctx, db)); });
         app.post("/api/endpoint", ctx -> API.setAgentData(ctx, db));

@@ -227,4 +227,27 @@ public class Utils {
         }
         return counter;
     }
+    // todo
+    public static void showDashboard(Context ctx, DBController db) {
+        String token = ctx.pathParam("token");
+        if (token.length() != 20) {
+            ctx.status(404);
+        }
+
+        try {
+            String query = "SELECT * FROM `Dashboards` WHERE `token` = ?;";
+            PreparedStatement ps = db.getConnection().prepareStatement(query);
+            ps.setString(1, token);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                API.sendHtml(ctx, "static/DashboardPage/index.html", "public", "/login");
+            } else {
+                ctx.status(404);
+            }
+            ps.close();
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+            ctx.status(404);
+        }
+    }
 }
