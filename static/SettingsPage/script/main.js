@@ -203,7 +203,7 @@
 
 
             $.validator.addMethod("validAddress", function (value, element) {
-                return this.optional(element) || /^([\w0-9\-\.]+)\.(\w{2,})((\/\w+)*\/?)([.\w?=#]*)?(#[\w\-]+)?$/gm.test(value);
+                return this.optional(element) || /^([\w0-9-.]+)\.(\w{2,})((\/[\w-.]+)*\/?)([\w?=#&.-]*)?(#[\w\-]+)?$/gm.test(value);
             });
 
         });
