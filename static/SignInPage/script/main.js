@@ -111,7 +111,7 @@ function submitForm() {
         },
         function (data) {
             data = JSON.parse(data);
-            console.log(data);
+            //            console.log(data);
             if (data.register == 'false' && data.info == 'User already exist') {
                 $('.infoWrapper').fadeIn(300);
                 $('.infoWrapper').css({

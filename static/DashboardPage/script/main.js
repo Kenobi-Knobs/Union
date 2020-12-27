@@ -8,7 +8,7 @@
             })
             .done(function (data) {
                 data = JSON.parse(data);
-                console.log(data);
+                //                console.log(data);
                 $("#userName").text(data.mail);
                 $(".userText").html(data.text);
 

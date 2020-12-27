@@ -135,7 +135,7 @@
             function (data) {
                 getLocalLang();
                 data = JSON.parse(data);
-                console.log(data);
+                //                console.log(data);
 
                 if (data.auth == "true") {
                     //                    console.log("ok");
