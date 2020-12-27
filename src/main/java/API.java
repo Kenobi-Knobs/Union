@@ -557,7 +557,7 @@ public class API {
             return "Bad request db";
         }
 
-        return jsonResult.toJSONString().replaceAll("\\\\","");
+        return jsonResult.toJSONString().replaceAll("\\\\","").replaceAll(">n<", "><br><");
     }
 
     public static JSONObject getPing(String address, DBController db) throws SQLException {
