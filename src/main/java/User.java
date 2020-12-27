@@ -468,7 +468,7 @@ public class User {
             ctx.status(400);
             return "Bad request";
         }
-
+        String data = ctx.formParam("data").replaceAll("<script>", "").replaceAll("</script>", "");
         JSONObject jsonResult = new JSONObject();
         String mail = ctx.sessionAttribute("mail");
         String checkQuery = "SELECT id, token FROM `Dashboards` WHERE `user_id` = (SELECT id FROM Users WHERE mail = ?)";
@@ -482,7 +482,7 @@ public class User {
                 PreparedStatement psInsert = db.getConnection().prepareStatement(insertQuery);
                 psInsert.setString(1, mail);
                 psInsert.setString(2, token);
-                psInsert.setString(3, ctx.formParam("data"));
+                psInsert.setString(3, data);
                 psInsert.setString(4, ctx.formParam("urls"));
                 psInsert.executeUpdate();
                 psInsert.close();
@@ -493,7 +493,7 @@ public class User {
             }else{
                 String UpdateQuery = "UPDATE `Dashboards` SET `text`= ?,`urls`= ? WHERE `id` = ?;";
                 PreparedStatement psUpdate = db.getConnection().prepareStatement(UpdateQuery);
-                psUpdate.setString(1, ctx.formParam("data"));
+                psUpdate.setString(1, data);
                 psUpdate.setString(2, ctx.formParam("urls"));
                 psUpdate.setInt(3, res.getInt("id"));
                 psUpdate.executeUpdate();
