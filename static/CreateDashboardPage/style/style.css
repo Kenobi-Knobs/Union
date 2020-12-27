@@ -1,0 +1,317 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  font-size: 2vw;
+  display: block;
+  overflow-x: hidden;
+}
+
+.pageWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.pageWrapper .sidebar {
+  position: fixed;
+  height: 100vh;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 1.5em rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.pageWrapper .sidebar .logo {
+  width: 2em;
+  height: 21%;
+  text-align: center;
+}
+.pageWrapper .sidebar .logo img {
+  margin-top: 50%;
+  width: 1.5em;
+}
+.pageWrapper .sidebar .navbar {
+  text-align: center;
+}
+.pageWrapper .sidebar .navbar ul {
+  list-style: none;
+}
+.pageWrapper .sidebar .navbar ul li {
+  padding: 60% 0;
+  font-size: 0.7em;
+}
+.pageWrapper .sidebar .navbar ul li i {
+  transition: 0.3s;
+}
+.pageWrapper .sidebar .navbar ul li i:hover {
+  cursor: pointer;
+  color: #F98181;
+  transition: 0.3s;
+}
+.pageWrapper .sidebar .navbar ul li:nth-child(4) {
+  color: #F98181;
+}
+.pageWrapper .sidebar .mobileExit {
+  display: none;
+  text-align: center;
+  margin-top: 90%;
+}
+.pageWrapper .sidebar .mobileExit svg {
+  padding: 5%;
+  border-radius: 0.2em;
+  box-shadow: 0 0 1.5em rgba(0, 0, 0, 0.6);
+}
+.pageWrapper .main {
+  margin-left: 2.5em;
+  display: flex;
+  flex-direction: column;
+}
+.pageWrapper .main .head {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.pageWrapper .main .head .title {
+  width: 100%;
+  padding-top: 2%;
+  padding-left: 4%;
+}
+.pageWrapper .main .head .title span {
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.7em;
+}
+.pageWrapper .main .head .exit {
+  width: 100%;
+}
+.pageWrapper .main .head .exit .accountCard {
+  display: inline-block;
+  margin: 7% 0 0 44%;
+  padding: 0.1em 1.4em;
+  border-radius: 0.4em;
+  box-shadow: 0px 0.1em 0.8em rgba(0, 0, 0, 0.25);
+}
+.pageWrapper .main .head .exit .accountCard span {
+  position: relative;
+  bottom: 0.2em;
+  font-family: Circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.7em;
+}
+.pageWrapper .main .head .exit .accountCard svg {
+  position: relative;
+  top: 0.15em;
+  left: 0.7em;
+  width: 1em;
+  height: 1em;
+}
+.pageWrapper .main .head .exit .accountCard svg path {
+  stroke: inherit;
+  stroke-width: inherit;
+  fill: inherit;
+}
+.pageWrapper .main .head .exit .accountCard svg:hover {
+  cursor: pointer;
+  fill: #F98181;
+  transition: 0.3s;
+}
+.pageWrapper .main .head .exit .accountCard svg:not(:hover) {
+  fill: #000000;
+  transition: 0.3s;
+}
+.pageWrapper .main .infoWrapper {
+  display: none;
+  position: absolute;
+  text-align: center;
+}
+.pageWrapper .main .infoWrapper .info {
+  position: relative;
+  padding: 0.5em 1em;
+  left: 20em;
+  top: 5vh;
+  background-color: #F26B6B;
+  border-radius: 0.5em;
+}
+.pageWrapper .main .infoWrapper .info span {
+  font-family: circe, sans-serif;
+  font-size: 0.8em;
+  color: #ffffff;
+}
+.pageWrapper .main .allInfo {
+  padding: 1em 0 1em 1.5em;
+  margin-right: 2%;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 14em 14em 14em;
+  grid-gap: 1em 1em;
+}
+.pageWrapper .main .allInfo .card {
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
+}
+.pageWrapper .main .allInfo .card .rect {
+  position: relative;
+  height: 1.5em;
+  border-radius: 0.4em 0.4em 0 0;
+  background-color: #F26B6B;
+  text-align: center;
+}
+.pageWrapper .main .allInfo .card .titleCard {
+  display: block;
+  padding-top: 1%;
+  color: #FDFDFD;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+.pageWrapper .main .allInfo .card .infoTitle {
+  margin-bottom: 0.3em;
+}
+.pageWrapper .main .allInfo .card .infoTitle span {
+  padding: 0.2em 0.4em;
+  border-radius: 0.4em;
+  display: inline;
+  margin-left: 2em;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.5em;
+  background-color: #DFDFDF;
+}
+.pageWrapper .main .allInfo .infoCard {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 5;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pageWrapper .main .allInfo .infoCard .alertNoUrl {
+  display: none;
+  margin: 0.5em 0.5em;
+  text-align: center;
+}
+.pageWrapper .main .allInfo .infoCard .alertNoUrl span {
+  font-family: circe, sans-serif;
+  font-size: 0.6em;
+  color: #B0B0B0;
+}
+.pageWrapper .main .allInfo .infoCard .urlList {
+  display: none;
+}
+.pageWrapper .main .allInfo .infoCard .urlList ul {
+  font-family: circe, sans-serif;
+  list-style: none;
+  margin: 1em 0.5em;
+}
+.pageWrapper .main .allInfo .infoCard .urlList ul li {
+  padding: 0.2em 0.1em;
+}
+.pageWrapper .main .allInfo .infoCard .urlList ul li input[type=text] {
+  border: 0;
+  outline: 0;
+  width: 80%;
+  font-family: circe, sans-serif;
+  font-size: 0.7em;
+}
+.pageWrapper .main .allInfo .infoCard .urlList input[type=checkbox] {
+  display: none;
+}
+.pageWrapper .main .allInfo .infoCard .urlList label {
+  padding-left: 0.7em;
+}
+.pageWrapper .main .allInfo .infoCard .urlList label::before {
+  content: "";
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  border: 0.02em solid green;
+  cursor: pointer;
+}
+.pageWrapper .main .allInfo .infoCard .urlList input[type=checkbox]:checked + label::before {
+  content: "";
+  background-size: cover;
+  background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+}
+.pageWrapper .main .allInfo .url {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  z-index: 10;
+}
+.pageWrapper .main .allInfo .url #getData {
+  opacity: 0;
+}
+.pageWrapper .main .allInfo .url #getData textarea {
+  resize: none;
+}
+.pageWrapper .main .allInfo .url .submitWrapper {
+  width: 100%;
+  padding: 0.5em;
+  text-align: center;
+}
+.pageWrapper .main .allInfo .url .submitWrapper #submit {
+  padding: 0.5em 1.5em;
+  outline: 0;
+  border: 0;
+  background-color: #F26B6B;
+  color: #ffffff;
+  font-size: 0.5em;
+  font-family: circe, sans-serif;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper {
+  display: none;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink .linkWrapper {
+  margin-right: 0.5em;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink .linkWrapper input {
+  width: 25em;
+  height: 3em;
+  outline: none;
+  border: 0;
+  padding: 0.5em 1em;
+  font-family: circe, sans-serif;
+  font-size: 0.8em;
+  border-radius: 1em;
+  background-color: #D4D4D4;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink .copyIcon {
+  cursor: pointer;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink .copyIcon:hover i {
+  transition: 0.3s;
+  color: #F98181;
+}
+.pageWrapper .main .allInfo .copyLinkWrapper .copyLink .copyIcon:not(:hover) i {
+  transition: 0.3s;
+  color: #000000;
+}

@@ -20,7 +20,9 @@
             'bugReportQuestion': `Did you find bugs and didn't even tell us?`,
             'bugReportMail': `Write here faster t5@tss2020.repositoryhosting.com`,
             'passwordHeader': 'Password',
-            'passwordLink': `<a href="/reset">Change</a>`
+            'passwordLink': `<a href="/reset">Change</a>`,
+            'deleteText': 'Delete me',
+            'deleteButton': `<a class='deleteButton'>Delete</a>`
 
         },
         'ua': {
@@ -44,7 +46,9 @@
             'bugReportQuestion': `Ви знайшли баги та не повідомили нас?`,
             'bugReportMail': `Швидше пишіть сюди t5@tss2020.repositoryhosting.com`,
             'passwordHeader': 'Пароль',
-            'passwordLink': `<a href="/reset">Змінити</a>`
+            'passwordLink': `<a href="/reset">Змінити</a>`,
+            'deleteText': 'Видалити аккаунт',
+            'deleteButton': `<a class='deleteButton'>Видалити</a>`
 
         }
     };
@@ -77,12 +81,50 @@
                     $('.pageWrapper').css('display', 'flex');
                     userName = data.mail.split('@');
                     $('#userName').text(userName[0]);
+
+                    $('.deleteButtonBlock').on('click', function () {
+
+                        $.get('api/getUser', {}, function (data) {
+                            data = JSON.parse(data);
+                            if (data.settings.status == 'admin') {
+                                alert('Can`t delete admin`s account');
+                            } else {
+                                console.log(data.mail);
+                                $.ajax({
+                                    url: 'api/deleteUser',
+                                    type: 'get',
+                                    headers: {
+                                        'csrf': getCookie('csrf_token')
+                                    },
+                                    data: {
+                                        mail: data.mail
+                                    },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        //                                data = JSON.parse(data);
+                                        console.log(data);
+                                        if (data.user_delete == 'true') {
+                                            $(location).attr('href', '/logout');
+                                        }
+                                        if (data.user_delete == 'false') {
+                                            alert('Something went wrong');
+                                        }
+
+                                    }
+                                });
+                                //                    });
+                            }
+                        });
+                    });
                 }
                 if (data.auth == "false") {
                     $(location).attr('href', '/login');
                 }
             }
         );
+
+
+
 
         $(".quit").on('click', function () {
             $(location).attr('href', '/logout');
@@ -102,6 +144,9 @@
 
         $('#monitoring').on('click', function () {
             $(location).attr('href', '/url-monitor');
+        });
+        $('#dashboard').on('click', function () {
+            $(location).attr('href', '/create-dashboard');
         });
 
         //смотрим статус юзера, является ли он админом

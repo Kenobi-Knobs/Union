@@ -107,6 +107,9 @@
         $('#monitoring').on('click', function () {
             $(location).attr('href', '/url-monitor');
         });
+        $('#dashboard').on('click', function () {
+            $(location).attr('href', 'create-dashboard');
+        });
 
         select();
 

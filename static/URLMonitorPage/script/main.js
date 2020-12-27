@@ -10,7 +10,8 @@
             'monitoringConfig': 'Monitoring config',
             'interval': 'Interval',
             'downTimeout': 'Down timeout',
-            'currentCode': 'Current code'
+            'currentCode': 'Current code',
+            'responseTime': 'Response time'
         },
         'ua': {
             'titleUptime': 'Моніторинг',
@@ -23,7 +24,8 @@
             'monitoringConfig': 'Конфігурація моніторингу',
             'interval': 'Інтервал перевірок',
             'downTimeout': 'Час за який URL вважаеться недоступним',
-            'currentCode': 'Поточний код відповіді'
+            'currentCode': 'Поточний код відповіді',
+            'responseTime': 'Час відгуку'
         }
     };
 
@@ -52,6 +54,10 @@
             $(location).attr('href', '/logout');
         });
 
+        $('#dashboard').on('click', function () {
+            $(location).attr('href', '/create-dashboard');
+        });
+
         //    checking authorized user or not
         $.get(
             "api/isAuth", {},
@@ -78,7 +84,7 @@
             "/api/getActivePingData", {},
             function (data) {
                 data = JSON.parse(data);
-                console.log(data['pings'].length);
+                console.log(data);
                 if (data['pings'].length == 0) {
                     $('.url').css('display', 'none');
                     $('.alert').css('display', 'block');
@@ -125,23 +131,6 @@
                                 )
                             )
                         );
-
-                        //                        $('.listOfURL').append(
-                        //                            $('<li>').append(
-                        //                                $('<input>').attr({
-                        //                                    type: 'radio',
-                        //                                    name: 'urls',
-                        //                                    id: data.pings[key].address,
-                        //                                    value: data.pings[key].address
-                        //                                })
-                        //                            ).append(
-                        //                                $('<label>').attr({
-                        //                                    for: data.pings[key].address
-                        //                                }).append(
-                        //                                    $('<span>').text(data.pings[key].address)
-                        //                                )
-                        //                            )
-                        //                        );
                     }
 
                     if (isCheckedRadio == false) {
@@ -225,10 +214,12 @@
                                 if (currentLang == 'en') {
                                     $('.interval').text(data.pings[key].ping_interval + ' min');
                                     $('.downTimeout').text(data.pings[key].down_timing + ' min');
+                                    $('.responseTime').text(data.pings[key].response_time / 1000 + ' s');
                                 }
                                 if (currentLang == 'ua') {
                                     $('.interval').text(data.pings[key].ping_interval + ' хв');
                                     $('.downTimeout').text(data.pings[key].down_timing + ' хв');
+                                    $('.responseTime').text(data.pings[key].response_time / 1000 + ' с');
                                 }
 
 

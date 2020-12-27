@@ -52,6 +52,10 @@
             $(location).attr('href', '/url-monitor');
         });
 
+        $('#dashboard').on('click', function () {
+            $(location).attr('href', '/create-dashboard');
+        });
+
 
         //    checking authorized user or not
         $.get(

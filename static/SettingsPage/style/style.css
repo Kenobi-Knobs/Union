@@ -400,7 +400,7 @@ html {
 }
 .pageWrapper .sidebar .logo {
   width: 2em;
-  height: 30%;
+  height: 21%;
   text-align: center;
 }
 .pageWrapper .sidebar .logo img {
@@ -425,7 +425,7 @@ html {
   color: #F98181;
   transition: 0.3s;
 }
-.pageWrapper .sidebar .navbar ul li:nth-child(4) {
+.pageWrapper .sidebar .navbar ul li:nth-child(5) {
   color: #F98181;
 }
 .pageWrapper .sidebar .mobileExit {
@@ -581,6 +581,13 @@ html {
 }
 .pageWrapper .main .settigsBlock .settings ul li .bugReport .bugMail {
   font-size: 0.5em;
+}
+.pageWrapper .main .settigsBlock .settings ul .deleteButtonBlock {
+  width: 7%;
+}
+.pageWrapper .main .settigsBlock .settings ul .deleteButtonBlock .deleteButton {
+  cursor: pointer;
+  text-decoration: underline;
 }
 .pageWrapper .main .settigsBlock .addServerWrapper {
   grid-column-start: 3;
@@ -969,9 +976,6 @@ html {
     padding: 0 1em;
     font-size: 2em;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
-    color: #F98181;
-  }
   .pageWrapper .sidebar .mobileExit {
     display: block;
     text-align: center;
@@ -1332,9 +1336,6 @@ html {
     padding: 0 1em;
     font-size: 2em;
   }
-  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
-    color: #F98181;
-  }
   .pageWrapper .sidebar .mobileExit {
     display: block;
     text-align: center;
@@ -1694,9 +1695,6 @@ html {
     display: inline-block;
     padding: 0 1em;
     font-size: 2em;
-  }
-  .pageWrapper .sidebar .navbar ul li:nth-child(4) {
-    color: #F98181;
   }
   .pageWrapper .sidebar .mobileExit {
     display: block;

@@ -1,0 +1,211 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 2em;
+}
+
+.pageWrapper {
+  display: grid;
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+.pageWrapper .headerWrapper {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.pageWrapper .headerWrapper .header {
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.pageWrapper .headerWrapper .header .logo img {
+  width: 3em;
+}
+.pageWrapper .headerWrapper .header .title {
+  padding-left: 1em;
+}
+.pageWrapper .headerWrapper .header .title span {
+  font-family: circe, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+}
+.pageWrapper .defaultTextWrapper {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.pageWrapper .defaultTextWrapper .defaultText {
+  font-family: circe, sans-serif;
+  font-size: 0.8em;
+}
+.pageWrapper .userTextWrapper {
+  padding: 0 5em;
+  width: 100%;
+  justify-self: flex-start;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+.pageWrapper .userTextWrapper .userText {
+  font-size: 0.5em;
+}
+.pageWrapper .monitoringInfoWrapper {
+  display: none;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  min-width: 80%;
+}
+.pageWrapper .monitoringInfoWrapper .card {
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+  border-radius: 0.4em;
+  margin-bottom: 2em;
+}
+.pageWrapper .monitoringInfoWrapper .card .rect {
+  position: relative;
+  height: 1.5em;
+  border-radius: 0.4em 0.4em 0 0;
+  background-color: #F26B6B;
+  text-align: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .titleCard {
+  display: block;
+  padding-top: 1%;
+  color: #FDFDFD;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoTitle {
+  margin-bottom: 0.3em;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoTitle span {
+  padding: 0.2em 0.4em;
+  border-radius: 0.4em;
+  display: inline;
+  margin-left: 2em;
+  font-family: circe, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.5em;
+  background-color: #DFDFDF;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info {
+  margin: 0 2em;
+  display: grid;
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
+  justify-items: center;
+  grid-template-columns: 1fr;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .titleMonitoring {
+  font-size: 0.5em;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  background-color: #C5C5C5;
+  font-weight: bold;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper {
+  margin-top: 0.5em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-family: circe, sans-serif;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper .titles {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper .titles div {
+  text-align: center;
+  width: 100%;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper .titlesInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper .titlesInfo div {
+  text-align: center;
+  width: 100%;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .addressAndStatusWrapper .titlesInfo .addressInput {
+  border: 0;
+  outline: none;
+  font-size: 0.7em;
+  width: 100%;
+  text-align: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-family: circe, sans-serif;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .infoTitleWrapper {
+  width: 100%;
+  text-align: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .line {
+  width: 100%;
+  height: 0.07em;
+  background-color: #F26B6B;
+  margin: 1em 0;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0.5em 0;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .configInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .configInfo div {
+  text-align: center;
+  width: 100%;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .configInfo span {
+  font-family: circe, sans-serif;
+  font-size: 0.6em;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .titleConfigInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .titleConfigInfo div {
+  text-align: center;
+  width: 100%;
+}
+.pageWrapper .monitoringInfoWrapper .card .infoWrapper .info .configWrapper .config .configInfoWrapper .titleConfigInfo span {
+  font-family: circe, sans-serif;
+  font-size: 0.7em;
+}

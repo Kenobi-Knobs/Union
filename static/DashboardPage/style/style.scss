@@ -1,0 +1,280 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 2em;
+}
+
+.pageWrapper {
+    display: grid;
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+
+    .headerWrapper {
+        grid-row-start: 1;
+        grid-row-end: 2;
+
+        .header {
+            margin-top: 0.5em;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+
+            .logo {
+                img {
+                    width: 3em;
+                }
+            }
+
+            .title {
+                padding-left: 1em;
+
+                span {
+                    font-family: circe, sans-serif;
+                    font-size: 2em;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+
+    .defaultTextWrapper {
+        grid-row-start: 2;
+        grid-row-end: 3;
+
+        .defaultText {
+            font-family: circe, sans-serif;
+            font-size: 0.8em;
+        }
+    }
+
+
+    .userTextWrapper {
+        padding: 0 5em;
+        width: 100%;
+        justify-self: flex-start;
+        grid-row-start: 3;
+        grid-row-end: 4;
+
+        .userText {
+            font-size: 0.5em;
+        }
+    }
+
+    .monitoringInfoWrapper {
+        display: none;
+        grid-row-start: 4;
+        grid-row-end: 5;
+        min-width: 80%;
+        //        margin: 0 3em;
+
+        .card {
+            background-color: #FFFFFF;
+            box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.25);
+            border-radius: 0.4em;
+            margin-bottom: 2em;
+
+            .rect {
+                position: relative;
+                height: 1.5em;
+                border-radius: 0.4em 0.4em 0 0;
+                background-color: #F26B6B;
+                text-align: center;
+            }
+
+            .titleCard {
+                display: block;
+                padding-top: 1%;
+                color: #FDFDFD;
+                font-family: circe, sans-serif;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 0.8em;
+            }
+
+            .infoTitle {
+                margin-bottom: 0.3em;
+
+                span {
+                    padding: 0.2em 0.4em;
+                    border-radius: 0.4em;
+                    display: inline;
+                    margin-left: 2em;
+                    font-family: circe, sans-serif;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 0.5em;
+                    background-color: #DFDFDF;
+                }
+            }
+
+            .infoWrapper {
+                //                width: 100%;
+
+                .info {
+                    margin: 0 2em;
+                    display: grid;
+                    grid-row-gap: 1em;
+                    grid-column-gap: 1em;
+                    justify-items: center;
+                    grid-template-columns: 1fr;
+
+                    .titleMonitoring {
+                        font-size: 0.5em;
+                        padding: 0.4em 0.8em;
+                        border-radius: 0.5em;
+                        background-color: #C5C5C5;
+                        font-weight: bold;
+                    }
+
+                    .addressAndStatusWrapper {
+                        margin-top: 0.5em;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        font-family: circe, sans-serif;
+
+                        .titles {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-around;
+
+                            div {
+                                text-align: center;
+                                width: 100%;
+                            }
+                        }
+
+                        .titlesInfo {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-around;
+
+                            div {
+                                text-align: center;
+                                width: 100%;
+                            }
+
+                            .addressInput {
+                                border: 0;
+                                outline: none;
+                                font-size: 0.7em;
+                                width: 100%;
+                                text-align: center;
+                            }
+
+                            //                            .statusWrapper {
+                            //                                margin-top: 0.4em;
+                            //                                display: flex;
+                            //                                flex-direction: row;
+                            //                                justify-content: center;
+                            //                                align-items: center;
+                            //                                text-align: center;
+                            //
+                            //                                .currentStatus {
+                            //                                    font-size: 0.6em;
+                            //
+                            //                                    span {
+                            //                                        .indicator {
+                            //                                            display: inline-block;
+                            //                                            margin-right: 0.5em;
+                            //                                            height: 0.8em;
+                            //                                            width: 0.8em;
+                            //                                            border-radius: 50%;
+                            //                                            background-color: #6EFF51;
+                            //                                            //                                    margin-right: 0.3em;
+                            //                                        }
+                            //                                    }
+                            //                                }
+                            //                            }
+                        }
+                    }
+
+
+                    .configWrapper {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        font-family: circe, sans-serif;
+
+                        .config {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+
+                            .infoTitleWrapper {
+                                width: 100%;
+                                text-align: center;
+                            }
+
+                            .line {
+                                width: 100%;
+                                height: 0.07em;
+                                background-color: #F26B6B;
+                                margin: 1em 0;
+                            }
+
+                            .configInfoWrapper {
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-around;
+                                padding: 0.5em 0;
+
+                                .configInfo {
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-around;
+                                    align-content: center;
+                                    align-items: center;
+
+                                    div {
+                                        text-align: center;
+                                        width: 100%;
+                                    }
+
+                                    span {
+                                        font-family: circe, sans-serif;
+                                        font-size: 0.6em;
+                                    }
+                                }
+
+                                .titleConfigInfo {
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-around;
+                                    align-content: center;
+                                    align-items: center;
+
+                                    div {
+                                        text-align: center;
+                                        width: 100%;
+                                    }
+
+                                    span {
+                                        font-family: circe, sans-serif;
+                                        font-size: 0.7em;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

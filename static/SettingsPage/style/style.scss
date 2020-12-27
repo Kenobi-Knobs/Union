@@ -496,7 +496,7 @@ html {
 
         .logo {
             width: 2em;
-            height: 30%;
+            height: 21%;
             text-align: center;
 
             img {
@@ -525,7 +525,7 @@ html {
                         }
                     }
 
-                    &:nth-child(4) {
+                    &:nth-child(5) {
                         color: #F98181;
                     }
 
@@ -717,6 +717,15 @@ html {
                             .bugMail {
                                 font-size: 0.5em;
                             }
+                        }
+                    }
+
+                    .deleteButtonBlock {
+                        width: 7%;
+
+                        .deleteButton {
+                            cursor: pointer;
+                            text-decoration: underline;
                         }
                     }
                 }
@@ -1209,9 +1218,9 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(4) {
-                            color: #F98181;
-                        }
+                        //                        &:nth-child(5) {
+                        //                            color: #F98181;
+                        //                        }
 
                     }
                 }
@@ -1673,9 +1682,9 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(4) {
-                            color: #F98181;
-                        }
+                        //                        &:nth-child(4) {
+                        //                            color: #F98181;
+                        //                        }
 
                     }
                 }
@@ -2137,9 +2146,9 @@ html {
                         padding: 0 1em;
                         font-size: 2em;
 
-                        &:nth-child(4) {
-                            color: #F98181;
-                        }
+                        //                        &:nth-child(4) {
+                        //                            color: #F98181;
+                        //                        }
 
                     }
                 }
