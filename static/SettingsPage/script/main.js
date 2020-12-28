@@ -266,7 +266,7 @@
                     //                console.log(data);
                     if (data.change == 'true') {
                         saveLocalLang(currentLang);
-                        AcceptCookie = AcceptCookie();
+                        //                        AcceptCookie = AcceptCookie();
                     }
                 }
             );
@@ -500,7 +500,7 @@
 
         $('#addNewURL').on('click', function () {
             getLocalLang();
-            AcceptCookie = AcceptCookie();
+            //            AcceptCookie = AcceptCookie();
             $('#formAddServer').css('display', 'none');
 
             select();
@@ -528,7 +528,7 @@
 
         $('#addNewServer').on('click', function () {
             getLocalLang();
-            AcceptCookie = AcceptCookie();
+            //            AcceptCookie = AcceptCookie();
             $('#formAddURL').css('display', 'none');
             $('#formAddServer').css('display', 'block');
             $('.formWrapper').css('display', 'block');
@@ -650,7 +650,7 @@
 
     function addNewServer() {
         getLocalLang();
-        AcceptCookie = AcceptCookie();
+        //        AcceptCookie = AcceptCookie();
         let public_key = $('#addPublicKey').val().replace(/\s/gi, '');
         let secret_key = $('#addSecretKey').val().replace(/\s/gi, '');
         let host = $('#addHost').val().replace(/\s/gi, '');
